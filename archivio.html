@@ -1,0 +1,36 @@
+---
+layout: default
+title: Archivio
+---
+<style>
+  .archive-wrap { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
+  .page-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; border-top: 3px solid var(--ink); padding-top: 1.5rem; margin-bottom: 2rem; }
+  .year-group { margin-bottom: 2.5rem; }
+  .year-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  .archive-row { display: flex; gap: 1.5rem; padding: 0.8rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--ink); transition: opacity 0.15s; align-items: baseline; }
+  .archive-row:hover { opacity: 0.7; }
+  .archive-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); white-space: nowrap; min-width: 80px; }
+  .archive-row h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; }
+  .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--border); color: var(--muted); margin-left: 0.5rem; }
+</style>
+
+<div class="archive-wrap">
+  <h1 class="page-title">Archivio</h1>
+
+  {% assign postsByYear = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+  {% for year in postsByYear %}
+  <div class="year-group">
+    <div class="year-label">{{ year.name }}</div>
+    {% for post in year.items %}
+    <a href="{{ post.url }}" class="archive-row">
+      <span class="archive-date">{{ post.date | date: "%d %b" }}</span>
+      <h3>{{ post.title }}{% if post.category %}<span class="tag">{{ post.category }}</span>{% endif %}</h3>
+    </a>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+  {% if site.posts.size == 0 %}
+  <p style="color:var(--muted); font-style:italic; font-family:'Playfair Display',serif;">Nessun articolo ancora pubblicato.</p>
+  {% endif %}
+</div>

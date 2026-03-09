@@ -1,0 +1,159 @@
+---
+layout: default
+title: Home
+---
+<style>
+  /* HERO */
+  .hero-stripe { background: var(--ink); color: var(--paper); padding: 3.5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+  .hero-stripe::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px); }
+  .hero-stripe .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .hero-stripe h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.25; max-width: 700px; margin: 0 auto 1.2rem; }
+  .hero-stripe h2 em { font-style: italic; color: var(--gold); }
+  .hero-stripe p { font-size: 0.95rem; color: rgba(245,240,232,0.65); max-width: 520px; margin: 0 auto 2rem; }
+  .btn-primary { display: inline-block; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.75rem 2rem; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost { display: inline-block; background: transparent; color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.75rem 2rem; border: 1px solid rgba(245,240,232,0.3); margin-left: 1rem; transition: border-color 0.2s; }
+  .btn-ghost:hover { border-color: var(--paper); }
+
+  /* LAYOUT */
+  .main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; padding: 2.5rem 0; }
+  .section-label { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.5rem; }
+  .section-label span { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ARTICLES */
+  .article-list { border-top: 2px solid var(--ink); }
+  .article-row { display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--ink); transition: opacity 0.15s; }
+  .article-row:hover { opacity: 0.7; }
+  .article-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--border); line-height: 1; min-width: 2rem; text-align: right; padding-top: 0.1rem; }
+  .article-row h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.4rem; }
+  .article-row p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+  .article-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+  .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid var(--border); color: var(--muted); margin-right: 0.3rem; margin-bottom: 0.3rem; }
+
+  /* SIDEBAR */
+  .sidebar { border-top: 3px solid var(--ink); padding-top: 1.5rem; }
+  .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  .sidebar-block:last-child { border-bottom: none; }
+  .sidebar-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .market-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; }
+  .up { color: #2a7a45; } .dn { color: var(--accent); }
+
+  /* NEWSLETTER */
+  .newsletter-box { background: var(--ink); color: var(--paper); padding: 1.5rem; margin: 2.5rem 0; }
+  .newsletter-box h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .newsletter-box p { font-size: 0.82rem; color: rgba(245,240,232,0.65); margin-bottom: 1.2rem; }
+  .newsletter-box input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; padding: 0.7rem 1rem; margin-bottom: 0.7rem; outline: none; }
+  .newsletter-box input::placeholder { color: rgba(255,255,255,0.35); }
+  .newsletter-box button { width: 100%; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem; border: none; cursor: pointer; }
+
+  /* TICKER */
+  .ticker-bar { background: var(--ink); color: var(--gold); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; padding: 0.4rem 0; overflow: hidden; white-space: nowrap; }
+  .ticker-inner { display: inline-block; animation: scroll-left 35s linear infinite; }
+  @keyframes scroll-left { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+  /* EMPTY STATE */
+  .empty-state { padding: 3rem 0; text-align: center; color: var(--muted); font-family: 'Playfair Display', serif; font-style: italic; }
+
+  @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } .btn-ghost { margin-left: 0; margin-top: 0.5rem; display: block; text-align: center; } }
+</style>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <span class="ticker-inner">
+    ▲ S&P 500 · ▼ BTP 10Y · ▲ EUR/USD · ▲ ORO · ▼ FTSE MIB · ▼ PETROLIO WTI · ▲ DAX · Analisi indipendente · Nessun conflitto di interesse · Mercati · Geopolitica · Macro
+  </span>
+</div>
+
+<!-- HERO: mostra l'ultimo articolo in evidenza -->
+{% assign latest = site.posts.first %}
+{% if latest %}
+<section class="hero-stripe">
+  <p class="kicker">{% if latest.category %}{{ latest.category }}{% else %}Ultimo articolo{% endif %}</p>
+  <h2>{{ latest.title }}</h2>
+  {% if latest.excerpt %}<p>{{ latest.excerpt | strip_html | truncate: 180 }}</p>{% endif %}
+  <div>
+    <a href="{{ latest.url }}" class="btn-primary">Leggi l'analisi</a>
+    <a href="/consulenza/" class="btn-ghost">Consulenza privata</a>
+  </div>
+</section>
+{% else %}
+<section class="hero-stripe">
+  <p class="kicker">Analisi Finanziaria Indipendente</p>
+  <h2>Mercati, geopolitica e macro.<br><em>Senza conflitti di interesse.</em></h2>
+  <p>Analisi curate per chi vuole capire davvero cosa muove i mercati globali.</p>
+  <div>
+    <a href="/consulenza/" class="btn-primary">Richiedi una consulenza</a>
+  </div>
+</section>
+{% endif %}
+
+<!-- MAIN GRID -->
+<div class="page-wrap">
+  <div class="main-grid">
+
+    <main>
+      <div class="section-label"><span>Ultimi articoli</span></div>
+
+      {% if site.posts.size > 0 %}
+      <div class="article-list">
+        {% for post in site.posts limit:8 %}
+        <a href="{{ post.url }}" class="article-row">
+          <div class="article-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          <div>
+            {% if post.tags %}<div>{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>{% endif %}
+            <h3>{{ post.title }}</h3>
+            {% if post.excerpt %}<p>{{ post.excerpt | strip_html | truncate: 140 }}</p>{% endif %}
+            <div class="article-meta">
+              <span>{{ post.date | date: "%d %B %Y" }}</span>
+              {% if post.reading_time %}<span>{{ post.reading_time }}</span>{% endif %}
+              {% if post.category %}<span>{{ post.category }}</span>{% endif %}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <p>I primi articoli arriveranno presto.</p>
+      </div>
+      {% endif %}
+
+      <div class="newsletter-box">
+        <h3>Analisi nella tua inbox, ogni settimana.</h3>
+        <p>Niente spam. Solo un'analisi curata dei temi che contano per chi investe.</p>
+        <input type="email" placeholder="La tua email">
+        <button>Iscriviti — è gratuito</button>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-title">Categorie</div>
+        {% assign categories = site.posts | map: 'category' | uniq | compact %}
+        {% if categories.size > 0 %}
+          {% for cat in categories %}
+          <a href="/{{ cat | downcase | replace: ' ', '-' }}/" style="display:block; font-size:0.85rem; color:var(--muted); text-decoration:none; padding:0.4rem 0; border-bottom:1px solid var(--border);">{{ cat }}</a>
+          {% endfor %}
+        {% else %}
+          <p style="font-size:0.8rem; color:var(--muted);">Mercati · Geopolitica · Macro</p>
+        {% endif %}
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Citazione</div>
+        <blockquote style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.9rem; line-height:1.6; color:var(--muted);">
+          "I mercati possono rimanere irrazionali più a lungo di quanto tu possa rimanere solvibile."
+        </blockquote>
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--border); margin-top:0.5rem;">— J.M. Keynes</p>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Consulenza</div>
+        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1rem; line-height:1.6;">Analisi del portafoglio, scenari macro, pianificazione indipendente.</p>
+        <a href="/consulenza/" class="btn-primary" style="display:block; text-align:center; font-size:0.65rem;">Scopri di più</a>
+      </div>
+    </aside>
+
+  </div>
+</div>

@@ -1,0 +1,12 @@
+title: "Meridiano Capitale"
+tagline: "Analisi Finanziaria Indipendente"
+description: "Analisi indipendente su mercati, geopolitica e macro."
+url: "https://alessandromartelli.github.io"
+author: "Alessandro Martelli"
+email: "info@tuosito.it"
+
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+
+exclude:
+  - README.md
