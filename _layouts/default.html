@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+<meta name="description" content="{{ page.excerpt | default: site.description | strip_html | truncate: 160 }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f0e8;
+    --accent: #c8392b;
+    --gold: #b8952a;
+    --muted: #6b6560;
+    --border: #d4cec4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.7; }
+
+  /* MASTHEAD */
+  .masthead { border-bottom: 3px double var(--ink); padding: 0 2rem; background: var(--paper); position: sticky; top: 0; z-index: 100; }
+  .masthead-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; border-bottom: 1px solid var(--border); }
+  .dateline { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+  .logo { text-align: center; flex: 1; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; }
+  .logo h1 a { text-decoration: none; color: var(--ink); }
+  .logo .tagline { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-top: 0.25rem; }
+  .logo .rule-accent { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.3rem; }
+  .logo .rule-accent span { height: 1px; width: 40px; background: var(--gold); display: block; }
+  .logo .rule-accent em { color: var(--gold); font-size: 0.7rem; font-style: normal; }
+  nav { display: flex; justify-content: center; padding: 0.5rem 0 0; }
+  nav a { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; padding: 0.4rem 1.2rem; border-right: 1px solid var(--border); transition: background 0.15s; }
+  nav a:first-child { border-left: 1px solid var(--border); }
+  nav a:hover { background: var(--ink); color: var(--paper); }
+
+  /* PAGE WRAP */
+  .page-wrap { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+
+  /* FOOTER */
+  footer { border-top: 3px double var(--ink); padding: 2.5rem 2rem 1.5rem; margin-top: 3rem; }
+  .footer-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+  footer h4 { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
+  footer p, footer a { font-size: 0.82rem; color: var(--muted); text-decoration: none; display: block; line-height: 2; }
+  footer a:hover { color: var(--ink); }
+  .footer-bottom { max-width: 1160px; margin: 1.5rem auto 0; border-top: 1px solid var(--border); padding-top: 1rem; display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: var(--muted); }
+  .disclaimer { background: #f0ebe0; border-left: 3px solid var(--gold); padding: 0.8rem 1rem; font-size: 0.72rem; color: var(--muted); margin-top: 2rem; max-width: 1160px; margin-left: auto; margin-right: auto; }
+
+  @media (max-width: 768px) {
+    .masthead-top { flex-direction: column; gap: 0.5rem; text-align: center; }
+    nav a { padding: 0.4rem 0.7rem; font-size: 0.6rem; }
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="dateline" id="dateline"></div>
+    <div class="logo">
+      <h1><a href="/">{{ site.title }}</a></h1>
+      <div class="tagline">{{ site.tagline }}</div>
+      <div class="rule-accent"><span></span><em>◆</em><span></span></div>
+    </div>
+    <div style="width:120px"></div>
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/mercati/">Mercati</a>
+    <a href="/geopolitica/">Geopolitica</a>
+    <a href="/macro/">Macro</a>
+    <a href="/archivio/">Archivio</a>
+    <a href="/consulenza/">Consulenza</a>
+  </nav>
+</header>
+
+{{ content }}
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4>{{ site.title }}</h4>
+      <p>{{ site.description }}</p>
+    </div>
+    <div>
+      <h4>Navigazione</h4>
+      <a href="/">Home</a>
+      <a href="/archivio/">Archivio</a>
+      <a href="/consulenza/">Consulenza</a>
+    </div>
+    <div>
+      <h4>Contatti</h4>
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </div>
+  </div>
+  <div class="disclaimer">
+    ⚠️ <strong>Disclaimer:</strong> I contenuti hanno scopo puramente informativo e non costituiscono consulenza finanziaria. Ogni decisione di investimento è responsabilità esclusiva del lettore.
+  </div>
+  <div class="footer-bottom">
+    <span>© {{ site.time | date: "%Y" }} {{ site.title }}</span>
+    <span>{{ site.author }}</span>
+  </div>
+</footer>
+
+<script>
+  const d = new Date();
+  const giorni = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  const mesi = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  document.getElementById('dateline').textContent = giorni[d.getDay()] + ', ' + d.getDate() + ' ' + mesi[d.getMonth()] + ' ' + d.getFullYear();
+</script>
+</body>
+</html>
