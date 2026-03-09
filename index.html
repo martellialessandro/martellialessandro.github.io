@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridiano Capitale — Analisi Indipendente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f0e8;
+    --accent: #c8392b;
+    --gold: #b8952a;
+    --muted: #6b6560;
+    --border: #d4cec4;
+    --col-width: 720px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── MASTHEAD ─── */
+  .masthead {
+    border-bottom: 3px double var(--ink);
+    padding: 0 2rem;
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .masthead-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dateline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .logo {
+    text-align: center;
+    flex: 1;
+  }
+
+  .logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .logo .tagline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  .logo .rule-accent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+  }
+
+  .logo .rule-accent span {
+    height: 1px;
+    width: 40px;
+    background: var(--gold);
+    display: block;
+  }
+
+  .logo .rule-accent em {
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-style: normal;
+  }
+
+  .market-ticker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    text-align: right;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .market-ticker .up { color: #2a7a45; }
+  .market-ticker .dn { color: var(--accent); }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0.5rem 0 0;
+  }
+
+  nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    border-right: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  nav a:first-child { border-left: 1px solid var(--border); }
+
+  nav a:hover, nav a.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ─── HERO STRIPE ─── */
+  .hero-stripe {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-stripe::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.02) 60px,
+      rgba(255,255,255,0.02) 61px
+    );
+  }
+
+  .hero-stripe .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .hero-stripe h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.25;
+    max-width: 700px;
+    margin: 0 auto 1.2rem;
+  }
+
+  .hero-stripe h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-stripe p {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.65);
+    max-width: 520px;
+    margin: 0 auto 2rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.75rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    display: inline-block;
+    background: transparent;
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.75rem 2rem;
+    border: 1px solid rgba(245,240,232,0.3);
+    margin-left: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--paper); }
+
+  /* ─── LAYOUT ─── */
+  .page-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
+  }
+
+  .section-label span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── MAIN GRID ─── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    padding: 2.5rem 0;
+  }
+
+  /* ─── FEATURED ARTICLE ─── */
+  .featured {
+    border-top: 3px solid var(--ink);
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .article-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+  }
+
+  .article-title:hover { color: var(--accent); }
+
+  .article-deck {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .article-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+    margin-right: 0.3rem;
+  }
+
+  /* ─── ARTICLE LIST ─── */
+  .article-list { border-top: 2px solid var(--ink); }
+
+  .article-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .article-row:hover { opacity: 0.7; }
+
+  .article-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    min-width: 2rem;
+    text-align: right;
+    padding-top: 0.1rem;
+  }
+
+  .article-row h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+  }
+
+  .article-row p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar { border-top: 3px solid var(--ink); padding-top: 1.5rem; }
+
+  .sidebar-block {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-block:last-child { border-bottom: none; }
+
+  .sidebar-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  /* ─── MARKET PANEL ─── */
+  .market-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+  }
+
+  .market-row .name { color: var(--ink); }
+  .market-row .val { font-weight: 500; }
+  .market-row .chg { font-size: 0.68rem; }
+  .up { color: #2a7a45; }
+  .dn { color: var(--accent); }
+
+  /* ─── NEWSLETTER BOX ─── */
+  .newsletter-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  .newsletter-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .newsletter-box p {
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 1.2rem;
+  }
+
+  .newsletter-box input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.7rem 1rem;
+    margin-bottom: 0.7rem;
+    outline: none;
+  }
+
+  .newsletter-box input::placeholder { color: rgba(255,255,255,0.35); }
+
+  .newsletter-box button {
+    width: 100%;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.7rem;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .newsletter-box button:hover { opacity: 0.85; }
+
+  /* ─── QUOTE BLOCK ─── */
+  .pull-quote {
+    border-left: 4px solid var(--gold);
+    padding: 0.5rem 1.5rem;
+    margin: 2rem 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ─── CONSULENZA SECTION ─── */
+  .consulting-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4rem 2rem;
+    margin: 3rem 0 0;
+    text-align: center;
+  }
+
+  .consulting-section .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .consulting-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+  }
+
+  .consulting-section p {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.6);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    text-align: left;
+  }
+
+  .service-card {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .service-card:hover { border-color: var(--gold); }
+
+  .service-card .icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .service-card h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-card p {
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ─── CONTACT FORM ─── */
+  .contact-form {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+    outline: none;
+    resize: none;
+    transition: border-color 0.2s;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--gold); }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 3px double var(--ink);
+    padding: 2.5rem 2rem 1.5rem;
+    margin-top: 0;
+  }
+
+  .footer-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+
+  footer h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  footer p, footer a {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-decoration: none;
+    display: block;
+    line-height: 2;
+  }
+
+  footer a:hover { color: var(--ink); }
+
+  .footer-bottom {
+    max-width: 1160px;
+    margin: 1.5rem auto 0;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .disclaimer {
+    background: #f0ebe0;
+    border-left: 3px solid var(--gold);
+    padding: 0.8rem 1rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 2rem;
+    max-width: 1160px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .masthead-top { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .market-ticker { text-align: center; }
+    nav a { padding: 0.4rem 0.7rem; font-size: 0.6rem; }
+    .btn-ghost { margin-left: 0; margin-top: 0.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-stripe h2 { animation: fadeUp 0.6s ease both; }
+  .hero-stripe p { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-stripe .cta-row { animation: fadeUp 0.6s 0.2s ease both; }
+
+  .ticker-bar {
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.4rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: scroll-left 30s linear infinite;
+  }
+
+  @keyframes scroll-left {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER BAR -->
+<div class="ticker-bar">
+  <span class="ticker-inner">
+    ▲ S&P 500 &nbsp;5.614 &nbsp;+0.42% &nbsp;&nbsp;|&nbsp;&nbsp; ▼ BTP 10Y &nbsp;3.78% &nbsp;+0.04 &nbsp;&nbsp;|&nbsp;&nbsp; ▲ EUR/USD &nbsp;1.0842 &nbsp;+0.21% &nbsp;&nbsp;|&nbsp;&nbsp; ▲ ORO &nbsp;$2.341 &nbsp;+0.67% &nbsp;&nbsp;|&nbsp;&nbsp; ▼ FTSE MIB &nbsp;34.128 &nbsp;-0.18% &nbsp;&nbsp;|&nbsp;&nbsp; ▼ PETROLIO WTI &nbsp;$78.4 &nbsp;-0.55% &nbsp;&nbsp;|&nbsp;&nbsp; ▲ BTC/USD &nbsp;$67.200 &nbsp;+1.2% &nbsp;&nbsp;|&nbsp;&nbsp; ▲ DAX &nbsp;18.302 &nbsp;+0.31%
+  </span>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="dateline">Lunedì, 9 Marzo 2026</div>
+    <div class="logo">
+      <h1>Meridiano Capitale</h1>
+      <div class="tagline">Analisi Finanziaria Indipendente</div>
+      <div class="rule-accent">
+        <span></span><em>◆</em><span></span>
+      </div>
+    </div>
+    <div class="market-ticker">
+      <div><span class="up">▲</span> S&P 500 &nbsp;5.614</div>
+      <div><span class="dn">▼</span> BTP 10Y &nbsp;3.78%</div>
+      <div><span class="up">▲</span> EUR/USD &nbsp;1.084</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="active">Home</a>
+    <a href="#">Mercati</a>
+    <a href="#">Geopolitica</a>
+    <a href="#">Macro</a>
+    <a href="#">Archivio</a>
+    <a href="#consulenza">Consulenza</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero-stripe">
+  <p class="kicker">Editoriale della settimana</p>
+  <h2>La Fed tra inflazione <em>persistente</em> e pressioni politiche senza precedenti</h2>
+  <p>Un'analisi indipendente sulle dinamiche che guideranno la politica monetaria americana nei prossimi 12 mesi — e cosa significa per i portafogli italiani.</p>
+  <div class="cta-row">
+    <a href="#" class="btn-primary">Leggi l'analisi</a>
+    <a href="#consulenza" class="btn-ghost">Consulenza privata</a>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="page-wrap">
+  <div class="main-grid">
+
+    <!-- LEFT: ARTICLES -->
+    <main>
+      <div class="section-label"><span>Ultimi articoli</span></div>
+
+      <!-- FEATURED -->
+      <article class="featured">
+        <div>
+          <span class="tag">Geopolitica</span>
+          <span class="tag">Europa</span>
+        </div>
+        <div class="article-kicker">Analisi approfondita</div>
+        <h2 class="article-title">Il riarmo europeo e i vincitori inattesi: difesa, infrastrutture e il ritorno dei bond sovrani</h2>
+        <p class="article-deck">Con il consenso politico che si sposta verso una spesa per la difesa senza precedenti, l'Europa ridisegna le sue priorità fiscali. Chi guadagna davvero — e chi paga il conto.</p>
+        <div class="pull-quote">
+          "Non si tratta solo di spese militari. È una riscrittura completa del patto fiscale europeo che dura da trent'anni."
+        </div>
+        <p style="font-size:0.88rem; line-height:1.7; color:#3a3530;">
+          Il voto del Parlamento Europeo sullo scudo difensivo comune segna un punto di non ritorno. Per la prima volta dalla crisi del debito del 2012, i governi dell'Eurozona hanno ricevuto un implicito via libera a espandere i deficit per ragioni di sicurezza. Le implicazioni per i mercati obbligazionari — e per chi detiene BTP in portafoglio — sono profonde e ancora sottovalutate.
+        </p>
+        <div class="article-meta">
+          <span>9 Marzo 2026</span>
+          <span>Lettura: 8 min</span>
+          <span>Mercati · Macro</span>
+        </div>
+      </article>
+
+      <!-- ARTICLE LIST -->
+      <div class="section-label"><span>In evidenza</span></div>
+      <div class="article-list">
+
+        <div class="article-row">
+          <div class="article-num">01</div>
+          <div>
+            <span class="tag">Mercati</span>
+            <h3>Settimana di volatilità sui tech: correzione sana o inizio di qualcosa di più grande?</h3>
+            <p>Il Nasdaq cede il 4% in tre sessioni. Analizziamo i livelli tecnici chiave e i catalyst macro che potrebbero determinare la direzione nelle prossime settimane.</p>
+            <div class="article-meta" style="margin-top:0.5rem; padding-top:0.5rem;">
+              <span>7 Marzo 2026</span><span>5 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-row">
+          <div class="article-num">02</div>
+          <div>
+            <span class="tag">Macro Italia</span>
+            <h3>Il debito pubblico italiano al 140% del PIL: perché i mercati (per ora) non se ne preoccupano</h3>
+            <p>Il differenziale BTP-Bund rimane compresso nonostante i fondamentali restino fragili. Un'analisi dei meccanismi di stabilizzazione — e dei rischi nascosti.</p>
+            <div class="article-meta" style="margin-top:0.5rem; padding-top:0.5rem;">
+              <span>5 Marzo 2026</span><span>6 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-row">
+          <div class="article-num">03</div>
+          <div>
+            <span class="tag">Geopolitica</span>
+            <h3>Cina–Taiwan: la finestra strategica si stringe. Le implicazioni per i semiconduttori e i portafogli globali</h3>
+            <p>Un aggiornamento sulla situazione nello Stretto e una mappatura dei titoli e settori più esposti a un eventuale deterioramento della situazione.</p>
+            <div class="article-meta" style="margin-top:0.5rem; padding-top:0.5rem;">
+              <span>3 Marzo 2026</span><span>7 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-row">
+          <div class="article-num">04</div>
+          <div>
+            <span class="tag">Commodities</span>
+            <h3>L'oro sopra $2.300: inflazione strutturale, domanda delle banche centrali e il crollo della fiducia nel dollaro</h3>
+            <p>Tre fattori distinti spingono il metallo prezioso verso nuovi massimi. Valutazione della componente speculativa versus acquisti strutturali.</p>
+            <div class="article-meta" style="margin-top:0.5rem; padding-top:0.5rem;">
+              <span>28 Feb 2026</span><span>4 min</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div class="newsletter-box">
+        <h3>Analisi nella tua inbox, ogni settimana.</h3>
+        <p>Niente spam, niente noise. Solo un'analisi curata dei temi che contano davvero per chi investe con la testa.</p>
+        <input type="email" placeholder="La tua email">
+        <button>Iscriviti — è gratuito</button>
+      </div>
+
+    </main>
+
+    <!-- RIGHT: SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Mercati in tempo reale</div>
+        <div class="market-row"><span class="name">S&P 500</span><span class="val">5.614</span><span class="chg up">▲ +0.42%</span></div>
+        <div class="market-row"><span class="name">FTSE MIB</span><span class="val">34.128</span><span class="chg dn">▼ −0.18%</span></div>
+        <div class="market-row"><span class="name">DAX</span><span class="val">18.302</span><span class="chg up">▲ +0.31%</span></div>
+        <div class="market-row"><span class="name">EUR/USD</span><span class="val">1.0842</span><span class="chg up">▲ +0.21%</span></div>
+        <div class="market-row"><span class="name">BTP 10Y</span><span class="val">3.78%</span><span class="chg dn">▼ +4bp</span></div>
+        <div class="market-row"><span class="name">Oro $/oz</span><span class="val">2.341</span><span class="chg up">▲ +0.67%</span></div>
+        <div class="market-row"><span class="name">WTI</span><span class="val">$78.4</span><span class="chg dn">▼ −0.55%</span></div>
+        <p style="font-size:0.6rem; color:var(--muted); margin-top:0.8rem; font-family:'IBM Plex Mono',monospace;">Aggiornato: 09:32 CET · Dati indicativi</p>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Temi della settimana</div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.4rem;">
+          <span class="tag" style="cursor:pointer">Riarmo EU</span>
+          <span class="tag" style="cursor:pointer">Fed pivot</span>
+          <span class="tag" style="cursor:pointer">BTP</span>
+          <span class="tag" style="cursor:pointer">Tech sell-off</span>
+          <span class="tag" style="cursor:pointer">Oro</span>
+          <span class="tag" style="cursor:pointer">Taiwan</span>
+          <span class="tag" style="cursor:pointer">Petrolio</span>
+          <span class="tag" style="cursor:pointer">Inflazione</span>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Citazione della settimana</div>
+        <blockquote style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.9rem; line-height:1.6; color:var(--muted);">
+          "I mercati possono rimanere irrazionali più a lungo di quanto tu possa rimanere solvibile."
+        </blockquote>
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--border); margin-top:0.5rem;">— J.M. Keynes</p>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Agenda macro</div>
+        <div style="font-size:0.8rem; line-height:2;">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding:0.3rem 0;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--muted);">12 Mar</span>
+            <span>CPI USA (Feb)</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding:0.3rem 0;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--muted);">13 Mar</span>
+            <span>PPI USA</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding:0.3rem 0;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--muted);">18 Mar</span>
+            <span>Riunione FOMC</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:0.3rem 0;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--muted);">20 Mar</span>
+            <span>BCE — conferenza</span>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<!-- CONSULENZA SECTION -->
+<section class="consulting-section" id="consulenza">
+  <p class="kicker">Consulenza Finanziaria Indipendente</p>
+  <h2>Analisi su misura.<br>Senza conflitti di interesse.</h2>
+  <p>Lavoro esclusivamente per il cliente — nessuna commissione su prodotti, nessuna banca dietro di me. Solo analisi onesta e indipendente.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="icon">📊</div>
+      <h4>Analisi Portafoglio</h4>
+      <p>Revisione critica delle tue posizioni attuali: costi nascosti, rischi non percepiti, concentrazioni settoriali.</p>
+    </div>
+    <div class="service-card">
+      <div class="icon">🌍</div>
+      <h4>Scenari Macro</h4>
+      <p>Sessioni dedicate per capire come le dinamiche geopolitiche e macroeconomiche impattano i tuoi investimenti.</p>
+    </div>
+    <div class="service-card">
+      <div class="icon">🛡️</div>
+      <h4>Pianificazione</h4>
+      <p>Costruzione di una strategia di lungo periodo adatta al tuo profilo di rischio, orizzonte temporale e obiettivi.</p>
+    </div>
+    <div class="service-card">
+      <div class="icon">📞</div>
+      <h4>Advisory Continuativo</h4>
+      <p>Supporto mensile per navigare i mercati: aggiornamenti, ribilanciamenti, e risposte a ogni tua domanda.</p>
+    </div>
+  </div>
+
+  <div class="contact-form">
+    <input type="text" placeholder="Nome e cognome">
+    <input type="email" placeholder="Email">
+    <input type="text" placeholder="Patrimonio da gestire (indicativo)">
+    <textarea rows="4" placeholder="Descrivi brevemente la tua situazione e cosa stai cercando..."></textarea>
+    <button class="btn-primary" style="width:100%; display:block; text-align:center;">Richiedi un colloquio gratuito</button>
+    <p style="font-size:0.7rem; color:rgba(245,240,232,0.4); margin-top:0.8rem; text-align:center; font-family:'IBM Plex Mono',monospace;">Rispondo personalmente entro 48 ore. Nessun impegno.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4>Meridiano Capitale</h4>
+      <p>Analisi finanziaria indipendente su mercati, macro e geopolitica. Pubblicazione settimanale ogni lunedì.</p>
+    </div>
+    <div>
+      <h4>Navigazione</h4>
+      <a href="#">Home</a>
+      <a href="#">Mercati</a>
+      <a href="#">Geopolitica</a>
+      <a href="#">Macro</a>
+      <a href="#consulenza">Consulenza</a>
+      <a href="#">Archivio</a>
+    </div>
+    <div>
+      <h4>Contatti</h4>
+      <a href="mailto:info@meridianocapitale.it">info@meridianocapitale.it</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter / X</a>
+    </div>
+  </div>
+  <div class="disclaimer">
+    ⚠️ <strong>Disclaimer:</strong> I contenuti di questo sito hanno scopo puramente informativo e non costituiscono consulenza finanziaria, legale o fiscale. Ogni decisione di investimento è responsabilità esclusiva del lettore. Prestazioni passate non garantiscono risultati futuri.
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Meridiano Capitale — Tutti i diritti riservati</span>
+    <span>P.IVA 00000000000 · Milano, Italia</span>
+  </div>
+</footer>
+
+</body>
+</html>
