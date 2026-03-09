@@ -1,0 +1,49 @@
+---
+layout: default
+---
+<style>
+  .post-wrap { max-width: 720px; margin: 0 auto; padding: 3rem 2rem; }
+  .post-header { border-top: 3px solid var(--ink); padding-top: 1.5rem; margin-bottom: 2.5rem; }
+  .post-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+  .post-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .post-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); display: flex; gap: 1.5rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0.75rem 0; margin-bottom: 2rem; }
+  .post-content { font-size: 1rem; line-height: 1.85; }
+  .post-content h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 2.5rem 0 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+  .post-content h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin: 2rem 0 0.75rem; color: var(--muted); }
+  .post-content p { margin-bottom: 1.4rem; }
+  .post-content strong { font-weight: 500; }
+  .post-content blockquote { border-left: 4px solid var(--gold); padding: 0.5rem 1.5rem; margin: 2rem 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--muted); }
+  .post-content ul, .post-content ol { padding-left: 1.5rem; margin-bottom: 1.4rem; }
+  .post-content li { margin-bottom: 0.4rem; }
+  .post-content a { color: var(--accent); }
+  .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid var(--border); color: var(--muted); margin-right: 0.3rem; }
+  .back-link { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: inline-block; margin-bottom: 2rem; }
+  .back-link:hover { color: var(--ink); }
+</style>
+
+<div class="post-wrap">
+  <a href="/" class="back-link">← Torna alla home</a>
+
+  <div class="post-header">
+    {% if page.category %}
+    <div class="post-kicker">{{ page.category }}</div>
+    {% endif %}
+    <h1 class="post-title">{{ page.title }}</h1>
+    {% if page.tags %}
+    <div style="margin-bottom:1rem">
+      {% for tag in page.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="post-meta">
+      <span>{{ page.date | date: "%d %B %Y" }}</span>
+      {% if page.reading_time %}<span>Lettura: {{ page.reading_time }}</span>{% endif %}
+      {% if page.author %}<span>{{ page.author }}</span>{% endif %}
+    </div>
+  </div>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+</div>
