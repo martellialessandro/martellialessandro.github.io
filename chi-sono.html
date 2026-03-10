@@ -1,0 +1,210 @@
+---
+layout: default
+title: Chi sono
+---
+<style>
+  .about-wrap { max-width: 800px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+  /* ── INTRO ── */
+  .about-intro { border-top: 3px solid var(--ink); padding-top: 1.8rem; margin-bottom: 2rem; }
+  .about-intro h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.1; margin-bottom: 0.4rem; }
+  .about-intro .role { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.4rem; }
+  .about-intro .bio { font-size: 0.97rem; line-height: 1.9; color: #3a3530; columns: 2; column-gap: 2.5rem; }
+  .about-intro .bio p { margin-bottom: 1rem; break-inside: avoid; }
+
+  /* ── CONTACT ROW ── */
+  .contact-row { display: flex; gap: 1.5rem; flex-wrap: wrap; padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .contact-row a, .contact-row span { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.06em; color: var(--muted); text-decoration: none; }
+  .contact-row a:hover { color: var(--accent); }
+
+  /* ── CFA BATTERY ── */
+  .cfa-block { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: center; background: var(--ink); color: var(--paper); padding: 1.4rem 1.8rem; margin-bottom: 2rem; }
+  .cfa-text .cfa-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .cfa-text h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .cfa-text p { font-size: 0.8rem; color: rgba(245,240,232,0.6); line-height: 1.6; margin: 0; }
+
+  /* BATTERY */
+  .battery-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .battery { position: relative; width: 44px; height: 80px; border: 2.5px solid rgba(255,255,255,0.4); border-radius: 4px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+  .battery::before { content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 16px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 2px 2px 0 0; }
+  .battery-cell { height: 33.33%; border-top: 1px solid rgba(255,255,255,0.15); position: relative; }
+  .battery-cell.filled { background: var(--gold); }
+  .battery-cell.active { background: var(--gold); animation: pulse-cell 1.4s ease-in-out infinite; }
+  .battery-cell.empty { background: transparent; }
+  @keyframes pulse-cell {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .battery-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: rgba(245,240,232,0.5); letter-spacing: 0.1em; text-align: center; }
+
+  /* ── SECTION ── */
+  .section-label { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.2rem; }
+  .section-label span { font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── TIMELINE ── */
+  .timeline-item { display: grid; grid-template-columns: 120px 1fr; gap: 1.2rem; padding: 1.2rem 0; border-bottom: 1px solid var(--border); }
+  .timeline-item:last-child { border-bottom: none; }
+  .tl-left { text-align: right; padding-top: 0.15rem; }
+  .tl-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); line-height: 1.5; }
+  .tl-org { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); margin-top: 0.2rem; }
+  .tl-loc { font-family: 'IBM Plex Mono', monospace; font-size: 0.56rem; color: var(--border); margin-top: 0.15rem; }
+  .tl-right h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.25; margin-bottom: 0.4rem; }
+  .tl-right p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin: 0; }
+
+  /* ── EDUCATION ── */
+  .edu-item { display: grid; grid-template-columns: 120px 1fr; gap: 1.2rem; padding: 1.2rem 0; border-bottom: 1px solid var(--border); }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); text-align: right; padding-top: 0.15rem; }
+  .edu-right h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; line-height: 1.25; }
+  .edu-inst { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.35rem; }
+  .edu-right p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin: 0; }
+  .badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; padding: 0.18rem 0.5rem; background: var(--ink); color: var(--paper); margin-right: 0.3rem; vertical-align: middle; }
+
+  /* ── CTA ── */
+  .about-cta { background: var(--ink); color: var(--paper); padding: 2.5rem; margin-top: 2.5rem; text-align: center; }
+  .about-cta h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.6rem; }
+  .about-cta p { font-size: 0.86rem; color: rgba(245,240,232,0.6); margin-bottom: 1.4rem; }
+  .btn-primary { display: inline-block; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.7rem 1.8rem; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.85; }
+
+  @media (max-width: 640px) {
+    .about-intro .bio { columns: 1; }
+    .cfa-block { grid-template-columns: 1fr; }
+    .battery-wrap { flex-direction: row; }
+    .battery { width: 80px; height: 44px; flex-direction: row; justify-content: flex-start; }
+    .battery::before { top: 50%; left: auto; right: -8px; transform: translateY(-50%); width: 6px; height: 16px; border-radius: 0 2px 2px 0; }
+    .battery-cell { width: 33.33%; height: 100%; border-top: none; border-left: 1px solid rgba(255,255,255,0.15); }
+    .timeline-item, .edu-item { grid-template-columns: 1fr; gap: 0.2rem; }
+    .tl-left, .edu-year { text-align: left; }
+  }
+</style>
+
+<div class="about-wrap">
+
+  <!-- INTRO -->
+  <div class="about-intro">
+    <h1>Alessandro Martelli</h1>
+    <div class="role">Analista Finanziario Indipendente</div>
+    <div class="bio">
+      <p>Ho trascorso gli ultimi anni a lavorare sui mercati finanziari all'interno di grandi realtà corporate italiane — occupandomi di strategie di investimento, modelli quantitativi e posizionamento su mercati obbligazionari e dei capitali.</p>
+      <p>Nel tempo ho maturato diverse convinzione e altrettanti interrogativi. Analizzare in maniera onesta, indipendente, e concreta è stato il reale motore di questo percorso. <em>L'analista imperfetto</em> nasce da questo: un posto dove condividere letture dei mercati e riflessioni macro senza la pressione di dimostrare nulla.</p>
+      <p>Non sono certo infallibile. Tutt'altro. Mi reputo qualcuno che studia con metodo, accetta di sbagliare e cerca di correggere la rotta con trasparenza.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT ROW -->
+  <div class="contact-row">
+    <a href="mailto:alessandro__martelli@libero.it">✉ alessandro__martelli@libero.it</a>
+    <span>📍 Milano · Bologna</span>
+    <a href="https://www.linkedin.com/in/alessandro-martelli-" target="_blank">🔗 LinkedIn</a>
+  </div>
+
+  <!-- CFA BATTERY BLOCK -->
+  <div class="cfa-block">
+    <div class="cfa-text">
+      <div class="cfa-label">Certificazione in corso</div>
+      <h3>CFA Program — Chartered Financial Analyst</h3>
+      <p>Uno dei percorsi più esigenti nella finanza globale: 900+ ore di studio, tre livelli, copertura completa di portfolio management, etica, analisi quantitativa e mercati dei capitali. Il Level I è superato — ora il percorso continua.</p>
+    </div>
+    <div class="battery-wrap">
+      <div class="battery">
+        <!-- Level 3 (top) - empty -->
+        <div class="battery-cell empty"></div>
+        <!-- Level 2 (middle) - pulsing/charging -->
+        <div class="battery-cell active"></div>
+        <!-- Level 1 (bottom) - filled -->
+        <div class="battery-cell filled"></div>
+      </div>
+      <div class="battery-label">I · II · III</div>
+    </div>
+  </div>
+
+  <!-- ESPERIENZA -->
+  <div class="section-label"><span>Percorso professionale</span></div>
+
+  <div class="timeline-item">
+    <div class="tl-left">
+      <div class="tl-date">2025 — oggi</div>
+      <div class="tl-org">ENI Group</div>
+      <div class="tl-loc">Milano</div>
+    </div>
+    <div class="tl-right">
+      <h3>Strategy Financial Specialist</h3>
+      <p>Strategia di investimento e posizionamento finanziario su mercati obbligazionari e strumenti derivati. Modellistica previsionale, analisi VaR e simulazioni di scenario a supporto delle decisioni strategiche di lungo periodo.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="tl-left">
+      <div class="tl-date">2022 — 2025</div>
+      <div class="tl-org">Allianz — Corporate</div>
+      <div class="tl-loc">Milano</div>
+    </div>
+    <div class="tl-right">
+      <h3>Business & Data Analyst</h3>
+      <p>Tre anni nel corporate di un primario gruppo assicurativo europeo: pianificazione finanziaria P&L, analisi di posizionamento competitivo e digital transformation a supporto del Top Management.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="tl-left">
+      <div class="tl-date">2021</div>
+      <div class="tl-org">OCSE — OECD</div>
+      <div class="tl-loc">Parigi</div>
+    </div>
+    <div class="tl-right">
+      <h3>Economist Trainee — Technology & Innovation</h3>
+      <p>Divisione Scienza, Tecnologia e Innovazione. Coding e data analysis per ricerca economica internazionale su innovazione e policy pubblica, in un team multidisciplinare e multilingue.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="tl-left">
+      <div class="tl-date">2021</div>
+      <div class="tl-org">UNIL-EPFL</div>
+      <div class="tl-loc">Losanna</div>
+    </div>
+    <div class="tl-right">
+      <h3>Teaching Assistant — Behavioral Finance</h3>
+      <p>Collaborazione di ricerca accademica in finanza comportamentale — un campo che continua a informare il mio approccio ai mercati quanto l'analisi quantitativa.</p>
+    </div>
+  </div>
+
+  <!-- FORMAZIONE -->
+  <div class="section-label"><span>Formazione</span></div>
+
+  <div class="edu-item">
+    <div class="edu-year">2024</div>
+    <div class="edu-right">
+      <div class="edu-inst">Politecnico di Milano — MIP</div>
+      <h3>Master II Livello in Fintech <span class="badge">Borsa merit-based</span></h3>
+      <p>Finance, Insurance & New Technologies. Quantitative Finance, Machine Learning applicato ai mercati, modelli attuariali, valutazione derivati e time series forecasting.</p>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-year">2022</div>
+    <div class="edu-right">
+      <div class="edu-inst">Università di Bologna</div>
+      <h3>MSc Economics & Econometrics <span style="color:var(--accent); font-weight:400; font-size:0.9rem">110/110 con Lode</span> <span class="badge">Honor List — Top 5%</span></h3>
+      <p>Asset Pricing, Econometria avanzata, Macro e Micro, Quantitative Finance, Machine Learning per dati ad alta dimensione.</p>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-year">2020</div>
+    <div class="edu-right">
+      <div class="edu-inst">Università di Bologna</div>
+      <h3>Laurea in Economics & Finance <span style="color:var(--accent); font-weight:400; font-size:0.9rem">110/110 con Lode</span></h3>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="about-cta">
+    <h2>Parliamo del tuo portafoglio.</h2>
+    <p>Analisi indipendente, senza conflitti di interesse. Un colloquio esplorativo è sempre gratuito.</p>
+    <a href="/consulenza/" class="btn-primary">Richiedi una consulenza</a>
+  </div>
+
+</div>
