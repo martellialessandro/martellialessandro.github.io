@@ -45,7 +45,7 @@ title: Home
   .newsletter-box p { font-size: 0.82rem; color: rgba(245,240,232,0.65); margin-bottom: 1.2rem; }
   .newsletter-box input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; padding: 0.7rem 1rem; margin-bottom: 0.7rem; outline: none; }
   .newsletter-box input::placeholder { color: rgba(255,255,255,0.35); }
-  .newsletter-box button { width: 100%; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem; border: none; cursor: pointer; }
+  .newsletter-box button { width: 100%; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem; border: none; cursor: pointer; margin-top: 0.7rem; }
 
   /* TICKER */
   .ticker-bar { background: var(--ink); color: var(--gold); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; padding: 0.4rem 0; overflow: hidden; white-space: nowrap; }
@@ -65,7 +65,7 @@ title: Home
   </span>
 </div>
 
-<!-- HERO: mostra l'ultimo articolo in evidenza -->
+<!-- HERO -->
 {% assign latest = site.posts.first %}
 {% if latest %}
 <section class="hero-stripe">
@@ -93,6 +93,7 @@ title: Home
   <div class="main-grid">
 
     <main>
+
       <div class="section-label"><span>Ultimi articoli</span></div>
 
       {% if site.posts.size > 0 %}
@@ -119,18 +120,20 @@ title: Home
       </div>
       {% endif %}
 
-<!-- NEWSLETTER -->
-<div class="newsletter-box">
-  <h3>Analisi nella tua inbox, ogni settimana.</h3>
-  <p>Niente spam. Solo un'analisi curata dei temi che contano per chi investe.</p>
-  <form action="https://e92453f7.sibforms.com/serve/MUIFANKjpqRUpCU_NhzKBNTdpxuEriTNLAWH-vCNhI0SKG8pKcwD1qjDVU0tElk2OoH-XZVNugKuM70BLvw1oc-yssH1uE7asraFMw4x5FtQbKlF2g83KmRCtg5evYrncuIfKlXOOQjOwKMwOrgi7Nae2sPvtqqOIJX73DyB-wQyxfZNg_oVbLG2NManyPP6lVCfFM8pRjcnDLlCnQ==" method="POST" data-type="subscription">
-    <input type="email" name="EMAIL" placeholder="La tua email" required>
-    <input type="text" name="email_address_check" value="" style="display:none;">
-    <input type="hidden" name="locale" value="it">
-    <div class="g-recaptcha" data-sitekey="6LfSEIcsAAAAACgowYV7zXnhnkVLWuxvU_X7oK67" style="margin-bottom:0.7rem; transform:scale(0.85); transform-origin:left;"></div>
-    <button type="submit">Iscriviti — è gratuito</button>
-  </form>
-</div>
+      <!-- NEWSLETTER -->
+      <div class="newsletter-box">
+        <h3>Analisi nella tua inbox, ogni settimana.</h3>
+        <p>Niente spam. Solo un'analisi curata dei temi che contano per chi investe.</p>
+        <form action="https://e92453f7.sibforms.com/serve/MUIFANKjpqRUpCU_NhzKBNTdpxuEriTNLAWH-vCNhI0SKG8pKcwD1qjDVU0tElk2OoH-XZVNugKuM70BLvw1oc-yssH1uE7asraFMw4x5FtQbKlF2g83KmRCtg5evYrncuIfKlXOOQjOwKMwOrgi7Nae2sPvtqqOIJX73DyB-wQyxfZNg_oVbLG2NManyPP6lVCfFM8pRjcnDLlCnQ==" method="POST" data-type="subscription">
+          <input type="email" name="EMAIL" placeholder="La tua email" required>
+          <input type="text" name="email_address_check" value="" style="display:none;">
+          <input type="hidden" name="locale" value="it">
+          <div class="g-recaptcha" data-sitekey="6LfSEIcsAAAAACgowYV7zXnhnkVLWuxvU_X7oK67" style="margin-bottom:0.7rem; transform:scale(0.85); transform-origin:left;"></div>
+          <button type="submit">Iscriviti — è gratuito</button>
+        </form>
+      </div>
+
+    </main>
 
     <aside class="sidebar">
       <div class="sidebar-block">
@@ -162,5 +165,7 @@ title: Home
 
   </div>
 </div>
-   <script src="https://www.google.com/recaptcha/api.js?hl=it"></script>
-   <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+
+<!-- SCRIPTS CAPTCHA E BREVO -->
+<script src="https://www.google.com/recaptcha/api.js?hl=it"></script>
+<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
