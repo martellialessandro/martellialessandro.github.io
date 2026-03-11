@@ -119,16 +119,17 @@ title: Home
       </div>
       {% endif %}
 
-      <!-- NEWSLETTER -->
+<!-- NEWSLETTER -->
 <div class="newsletter-box">
   <h3>Analisi nella tua inbox, ogni settimana.</h3>
   <p>Niente spam. Solo un'analisi curata dei temi che contano per chi investe.</p>
-  <a href="https://e92453f7.sibforms.com/serve/MUIFANKjpqRUpCU_NhzKBNTdpxuEriTNLAWH-vCNhI0SKG8pKcwD1qjDVU0tElk2OoH-XZVNugKuM70BLvw1oc-yssH1uE7asraFMw4x5FtQbKlF2g83KmRCtg5evYrncuIfKlXOOQjOwKMwOrgi7Nae2sPvtqqOIJX73DyB-wQyxfZNg_oVbLG2NManyPP6lVCfFM8pRjcnDLlCnQ==" 
-     target="_blank" 
-     class="btn-primary" 
-     style="display:block; text-align:center; padding:0.9rem;">
-    Iscriviti alla newsletter
-  </a>
+  <form action="https://e92453f7.sibforms.com/serve/MUIFANKjpqRUpCU_NhzKBNTdpxuEriTNLAWH-vCNhI0SKG8pKcwD1qjDVU0tElk2OoH-XZVNugKuM70BLvw1oc-yssH1uE7asraFMw4x5FtQbKlF2g83KmRCtg5evYrncuIfKlXOOQjOwKMwOrgi7Nae2sPvtqqOIJX73DyB-wQyxfZNg_oVbLG2NManyPP6lVCfFM8pRjcnDLlCnQ==" method="POST" data-type="subscription">
+    <input type="email" name="EMAIL" placeholder="La tua email" required>
+    <input type="text" name="email_address_check" value="" style="display:none;">
+    <input type="hidden" name="locale" value="it">
+    <div class="g-recaptcha" data-sitekey="6LfSEIcsAAAAACgowYV7zXnhnkVLWuxvU_X7oK67" style="margin-bottom:0.7rem; transform:scale(0.85); transform-origin:left;"></div>
+    <button type="submit">Iscriviti — è gratuito</button>
+  </form>
 </div>
 
     <aside class="sidebar">
@@ -160,4 +161,7 @@ title: Home
     </aside>
 
   </div>
+
+  <script src="https://www.google.com/recaptcha/api.js?hl=it"></script>
+<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 </div>
