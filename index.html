@@ -48,7 +48,7 @@ title: Home
   .newsletter-box button { width: 100%; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem; border: none; cursor: pointer; margin-top: 0.7rem; }
 
   /* TICKER */
-  .ticker-bar { background: var(--ink); color: var(--gold); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; padding: 0.4rem 0; overflow: hidden; white-space: nowrap; }
+  .ticker-bar { background: var(--ink); color: var(--gold); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; padding: 0.4rem 0; overflow: hidden; white-space: nowrap; min-height: 1.6rem; }
   .ticker-inner { display: inline-block; animation: scroll-left 35s linear infinite; }
   @keyframes scroll-left { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
@@ -71,7 +71,12 @@ title: Home
 <section class="hero-stripe">
   <p class="kicker">{% if latest.category %}{{ latest.category }}{% else %}Ultimo articolo{% endif %}</p>
   <h2>{{ latest.title }}</h2>
-  {% if latest.excerpt %}<p>{{ latest.excerpt | strip_html | truncate: 180 }}</p>{% endif %}
+  {% assign excerpt_text = latest.excerpt | strip_html | truncate: 180 %}
+  {% if excerpt_text and excerpt_text != "" %}
+  <p>{{ excerpt_text }}</p>
+  {% else %}
+  <p>Leggi l'ultima analisi pubblicata.</p>
+  {% endif %}
   <div>
     <a href="{{ latest.url }}" class="btn-primary">Leggi l'analisi</a>
     <a href="/consulenza/" class="btn-ghost">Consulenza privata</a>
