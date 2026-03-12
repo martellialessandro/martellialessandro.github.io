@@ -61,7 +61,7 @@ title: Home
 <!-- TICKER -->
 <div class="ticker-bar">
   <span class="ticker-inner">
-    ▲ S&P 500 · ▼ BTP 10Y · ▲ EUR/USD · ▲ ORO · ▼ FTSE MIB · ▼ PETROLIO WTI · ▲ DAX · Analisi indipendente · Nessun conflitto di interesse · Mercati · Geopolitica · Macro
+    ▲ S&P 500 · ▼ BTP 10Y · ▲ EUR/USD · ▲ ORO · ▼ FTSE MIB · ▼ PETROLIO WTI · ▲ DAX · Analisi indipendente ·  · Mercati · Geopolitica · Macro
   </span>
 </div>
 
@@ -78,8 +78,8 @@ title: Home
   <p>Leggi l'ultima analisi pubblicata.</p>
   {% endif %}
   <div>
-    <a href="{{ latest.url }}" class="btn-primary">Leggi l'analisi</a>
-    <a href="/consulenza/" class="btn-ghost">Consulenza privata</a>
+    <a href="{{ latest.url | relative_url }}" class="btn-primary">Leggi l'analisi</a>
+    <a href="{{ '/consulenza/' | relative_url }}" class="btn-ghost">Consulenza privata</a>
   </div>
 </section>
 {% else %}
@@ -88,7 +88,7 @@ title: Home
   <h2>Mercati, geopolitica e macro.<br><em>Senza conflitti di interesse.</em></h2>
   <p>Analisi curate per chi vuole capire davvero cosa muove i mercati globali.</p>
   <div>
-    <a href="/consulenza/" class="btn-primary">Richiedi una consulenza</a>
+    <a href="/consulenza/" class="btn-primary">Richiedi un servizio</a>
   </div>
 </section>
 {% endif %}
@@ -163,7 +163,7 @@ title: Home
 
       <div class="sidebar-block">
         <div class="sidebar-title">Consulenza</div>
-        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1rem; line-height:1.6;">Analisi del portafoglio, scenari macro, pianificazione indipendente.</p>
+        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1rem; line-height:1.6;">Analisi finanziarie, scenari macro, pianificazione indipendente.</p>
         <a href="/consulenza/" class="btn-primary" style="display:block; text-align:center; font-size:0.65rem;">Scopri di più</a>
       </div>
     </aside>
