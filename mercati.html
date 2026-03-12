@@ -84,6 +84,22 @@ permalink: /mercati/
   </div>
 </div>
 
+<!-- BARRA RICERCA -->
+<div style="background:var(--paper); border-bottom:1px solid var(--border); padding:1rem 2rem;">
+  <div style="max-width:1160px; margin:0 auto; display:flex; gap:0.8rem; flex-wrap:wrap; align-items:center;">
+    <div style="flex:1; min-width:200px; position:relative;">
+      <input id="search-input" type="text" placeholder="Cerca per parola chiave…" style="width:100%; font-family:'IBM Plex Mono',monospace; font-size:0.78rem; padding:0.6rem 1rem; border:1px solid var(--border); background:white; color:var(--ink); outline:none; box-sizing:border-box;">
+    </div>
+    <select id="filter-tag" style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; padding:0.6rem 1rem; border:1px solid var(--border); background:white; color:var(--muted); outline:none;">
+      <option value="">Tutti i tag</option>
+    </select>
+    <select id="filter-year" style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; padding:0.6rem 1rem; border:1px solid var(--border); background:white; color:var(--muted); outline:none;">
+      <option value="">Tutti gli anni</option>
+    </select>
+    <div id="search-count" style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--muted); white-space:nowrap;"></div>
+  </div>
+</div>
+
 <!-- CONTENUTO -->
 <div class="cat-wrap">
   <div class="cat-grid">
@@ -92,7 +108,7 @@ permalink: /mercati/
       <div class="section-label"><span>Tutti gli articoli</span></div>
       {% assign mkt_posts = site.posts | where: 'category', 'Mercati' %}
       {% if mkt_posts.size > 0 %}
-      <div class="article-list">
+      <div class="article-list" id="dynamic-list">
         {% for post in mkt_posts %}
         <a href="{{ post.url | relative_url }}" class="article-row">
           <div class="article-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
@@ -119,12 +135,10 @@ permalink: /mercati/
 
       <div class="sidebar-block">
         <div class="sidebar-title">Dati indicativi</div>
-        <div class="market-row"><span>S&P 500</span><span class="up">▲ 5.614</span></div>
-        <div class="market-row"><span>FTSE MIB</span><span class="dn">▼ 34.128</span></div>
-        <div class="market-row"><span>DAX</span><span class="up">▲ 18.302</span></div>
-        <div class="market-row"><span>EUR/USD</span><span class="up">▲ 1.084</span></div>
-        <div class="market-row"><span>BTP 10Y</span><span class="dn">▼ 3.78%</span></div>
-        <div class="market-row"><span>Oro $/oz</span><span class="up">▲ 2.341</span></div>
+        <div class="market-row"><span>S&P 500</span><span class="up">▼ 6.775</span></div>
+        <div class="market-row"><span>FTSE MIB</span><span class="dn">▼ 44.669</span></div>
+        <div class="market-row"><span>EUR/USD</span><span class="up">▲ 1.156</span></div>
+        <div class="market-row"><span>Oro $/oz</span><span class="up">▲ 5.185</span></div>
         <p style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--border); margin-top:0.8rem;">Dati indicativi · Non in tempo reale</p>
       </div>
 
@@ -132,15 +146,15 @@ permalink: /mercati/
         <div class="sidebar-title">Da tenere d'occhio</div>
         <div class="watch-item">
           <div class="watch-title">Fed — prossima riunione FOMC</div>
-          <div class="watch-desc">18 Marzo 2026. Mercati divisi tra pausa e taglio. Il dato CPI di febbraio sarà determinante.</div>
+          <div class="watch-desc">18 Marzo 2026. Mercati divisi tra pausa e aumenti. La durata del conflitto in Medio Oriente sarà determinante.</div>
         </div>
         <div class="watch-item">
           <div class="watch-title">BTP — spread BTP/Bund</div>
           <div class="watch-desc">Compresso nonostante il debito al 140% PIL. Quanto durerà la stabilità?</div>
         </div>
         <div class="watch-item">
-          <div class="watch-title">Oro sopra $2.300</div>
-          <div class="watch-desc">Tre driver distinti: inflazione strutturale, acquisti banche centrali, sfiducia nel dollaro.</div>
+          <div class="watch-title">Oro sopra $5.000</div>
+          <div class="watch-desc">Tre driver distinti: inflazione strutturale, acquisti banche centrali, tensioni geopolitiche.</div>
         </div>
       </div>
 
@@ -160,3 +174,81 @@ permalink: /mercati/
     </aside>
   </div>
 </div>
+
+
+<script>
+const CATEGORY = 'Mercati'; // ← cambia in 'Mercati' per mercati.html
+
+let allPosts = [];
+
+fetch('/search.json')
+  .then(r => r.json())
+  .then(data => {
+    allPosts = data.filter(p => p.category === CATEGORY);
+
+    // Popola tag dropdown
+    const tags = [...new Set(allPosts.flatMap(p => p.tags.split(' ').filter(t => t)))];
+    const tagSelect = document.getElementById('filter-tag');
+    tags.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t; opt.textContent = t;
+      tagSelect.appendChild(opt);
+    });
+
+    // Popola anni dropdown
+    const years = [...new Set(allPosts.map(p => p.date.split(' ')[2]))].sort().reverse();
+    const yearSelect = document.getElementById('filter-year');
+    years.forEach(y => {
+      const opt = document.createElement('option');
+      opt.value = y; opt.textContent = y;
+      yearSelect.appendChild(opt);
+    });
+
+    renderResults(allPosts);
+  });
+
+function renderResults(posts) {
+  const list = document.getElementById('dynamic-list');
+  const count = document.getElementById('search-count');
+  count.textContent = posts.length + ' articol' + (posts.length === 1 ? 'o' : 'i');
+
+  if (posts.length === 0) {
+    list.innerHTML = '<div style="padding:2rem 0; text-align:center; font-family:\'Playfair Display\',serif; font-style:italic; color:var(--muted);">Nessun articolo trovato.</div>';
+    return;
+  }
+
+  list.innerHTML = posts.map((p, i) => `
+    <a href="${p.url}" class="article-row">
+      <div class="article-num">${String(i+1).padStart(2,'0')}</div>
+      <div>
+        ${p.tags ? p.tags.split(' ').filter(t=>t).map(t=>`<span class="tag">${t}</span>`).join('') : ''}
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <div class="article-meta">
+          <span>${p.date}</span>
+          <span>${p.category}</span>
+        </div>
+      </div>
+    </a>
+  `).join('');
+}
+
+function filter() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const tag = document.getElementById('filter-tag').value;
+  const year = document.getElementById('filter-year').value;
+
+  const results = allPosts.filter(p => {
+    const matchQ = !q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.tags.toLowerCase().includes(q);
+    const matchTag = !tag || p.tags.split(' ').includes(tag);
+    const matchYear = !year || p.date.includes(year);
+    return matchQ && matchTag && matchYear;
+  });
+
+  renderResults(results);
+}
+
+document.getElementById('search-input').addEventListener('input', filter);
+document.getElementById('filter-tag').addEventListener('change', filter);
+document.getElementById('filter-year').addEventListener('change', filter);
+</script>
