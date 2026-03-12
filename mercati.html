@@ -1,0 +1,162 @@
+---
+layout: default
+title: Mercati
+permalink: /mercati/
+---
+<style>
+  .cat-hero { background: var(--ink); color: var(--paper); padding: 3rem 2rem; position: relative; overflow: hidden; }
+  .cat-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px); pointer-events: none; }
+  .cat-hero .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .cat-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 1rem; }
+  .cat-hero p { font-size: 0.92rem; color: rgba(245,240,232,0.6); max-width: 580px; line-height: 1.8; }
+  .cat-hero .stat-row { display: flex; gap: 2.5rem; margin-top: 1.8rem; flex-wrap: wrap; }
+  .cat-hero .stat { border-left: 2px solid var(--gold); padding-left: 1rem; }
+  .cat-hero .stat .num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .cat-hero .stat .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.4); margin-top: 0.2rem; }
+
+  .cat-wrap { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  .cat-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; padding: 2.5rem 0; }
+
+  .section-label { display: flex; align-items: center; gap: 1rem; margin: 0 0 1.5rem; }
+  .section-label span { font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ARTICLE LIST */
+  .article-list { border-top: 2px solid var(--ink); }
+  .article-row { display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--ink); transition: opacity 0.15s; }
+  .article-row:hover { opacity: 0.7; }
+  .article-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--border); line-height: 1; min-width: 2rem; text-align: right; padding-top: 0.1rem; }
+  .article-row h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.4rem; }
+  .article-row p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+  .article-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+  .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid var(--border); color: var(--muted); margin-right: 0.3rem; margin-bottom: 0.3rem; }
+
+  /* SIDEBAR */
+  .sidebar { border-top: 2px solid var(--ink); padding-top: 1.5rem; margin-top: 2.6rem; }
+  .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  .sidebar-block:last-child { border-bottom: none; }
+  .sidebar-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+
+  /* MARKET DATA */
+  .market-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; }
+  .market-row:last-child { border-bottom: none; }
+  .up { color: #2a7a45; } .dn { color: var(--accent); }
+
+  /* WATCHLIST */
+  .watch-item { padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+  .watch-item:last-child { border-bottom: none; }
+  .watch-title { font-family: 'Playfair Display', serif; font-size: 0.88rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .watch-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+
+  /* EMPTY */
+  .empty-state { padding: 3rem 0; text-align: center; color: var(--muted); font-family: 'Playfair Display', serif; font-style: italic; }
+
+  /* CTA */
+  .cta-box { background: var(--ink); color: var(--paper); padding: 1.5rem; }
+  .cta-box h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .cta-box p { font-size: 0.8rem; color: rgba(245,240,232,0.6); margin-bottom: 1rem; line-height: 1.6; }
+  .btn-primary { display: inline-block; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.65rem 1.5rem; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.85; }
+
+  @media (max-width: 768px) { .cat-grid { grid-template-columns: 1fr; } .cat-hero .stat-row { gap: 1.5rem; } }
+</style>
+
+<!-- HERO -->
+<div class="cat-hero">
+  <div style="max-width:1160px; margin:0 auto; padding:0 2rem; position:relative; z-index:1;">
+    <div class="kicker">Sezione</div>
+    <h1>Mercati</h1>
+    <p>Azionario, obbligazionario, valute e commodity. Analisi dei movimenti di mercato con un occhio sempre puntato sui fondamentali macro e sui catalyst geopolitici.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="num">{% assign mkt_posts = site.posts | where: 'category', 'Mercati' %}{{ mkt_posts | size }}</div>
+        <div class="label">Articoli pubblicati</div>
+      </div>
+      <div class="stat">
+        <div class="num">VIX</div>
+        <div class="label">Volatilità elevata</div>
+      </div>
+      <div class="stat">
+        <div class="num">↗</div>
+        <div class="label">Oro ai massimi storici</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENUTO -->
+<div class="cat-wrap">
+  <div class="cat-grid">
+
+    <main>
+      <div class="section-label"><span>Tutti gli articoli</span></div>
+      {% assign mkt_posts = site.posts | where: 'category', 'Mercati' %}
+      {% if mkt_posts.size > 0 %}
+      <div class="article-list">
+        {% for post in mkt_posts %}
+        <a href="{{ post.url | relative_url }}" class="article-row">
+          <div class="article-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          <div>
+            {% if post.tags %}<div>{% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>{% endif %}
+            <h3>{{ post.title }}</h3>
+            {% if post.excerpt %}<p>{{ post.excerpt | strip_html | truncate: 160 }}</p>{% endif %}
+            <div class="article-meta">
+              <span>{{ post.date | date: "%d %B %Y" }}</span>
+              {% if post.reading_time %}<span>{{ post.reading_time }}</span>{% endif %}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <p>I primi articoli sui mercati arriveranno presto.</p>
+      </div>
+      {% endif %}
+    </main>
+
+    <aside class="sidebar">
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Dati indicativi</div>
+        <div class="market-row"><span>S&P 500</span><span class="up">▲ 5.614</span></div>
+        <div class="market-row"><span>FTSE MIB</span><span class="dn">▼ 34.128</span></div>
+        <div class="market-row"><span>DAX</span><span class="up">▲ 18.302</span></div>
+        <div class="market-row"><span>EUR/USD</span><span class="up">▲ 1.084</span></div>
+        <div class="market-row"><span>BTP 10Y</span><span class="dn">▼ 3.78%</span></div>
+        <div class="market-row"><span>Oro $/oz</span><span class="up">▲ 2.341</span></div>
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; color:var(--border); margin-top:0.8rem;">Dati indicativi · Non in tempo reale</p>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Da tenere d'occhio</div>
+        <div class="watch-item">
+          <div class="watch-title">Fed — prossima riunione FOMC</div>
+          <div class="watch-desc">18 Marzo 2026. Mercati divisi tra pausa e taglio. Il dato CPI di febbraio sarà determinante.</div>
+        </div>
+        <div class="watch-item">
+          <div class="watch-title">BTP — spread BTP/Bund</div>
+          <div class="watch-desc">Compresso nonostante il debito al 140% PIL. Quanto durerà la stabilità?</div>
+        </div>
+        <div class="watch-item">
+          <div class="watch-title">Oro sopra $2.300</div>
+          <div class="watch-desc">Tre driver distinti: inflazione strutturale, acquisti banche centrali, sfiducia nel dollaro.</div>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Altre sezioni</div>
+        <a href="/geopolitica/" style="display:block; font-size:0.85rem; color:var(--muted); text-decoration:none; padding:0.4rem 0; border-bottom:1px solid var(--border);">Geopolitica</a>
+        <a href="/archivio/" style="display:block; font-size:0.85rem; color:var(--muted); text-decoration:none; padding:0.4rem 0; border-bottom:1px solid var(--border);">Archivio completo</a>
+        <a href="/chi-sono/" style="display:block; font-size:0.85rem; color:var(--muted); text-decoration:none; padding:0.4rem 0;">Chi sono</a>
+      </div>
+
+      <div class="cta-box">
+        <h3>Analisi del portafoglio</h3>
+        <p>Come i movimenti di mercato impattano le tue posizioni. Analisi indipendente e senza secondi fini.</p>
+        <a href="/consulenza/" class="btn-primary">Scopri la consulenza</a>
+      </div>
+
+    </aside>
+  </div>
+</div>
