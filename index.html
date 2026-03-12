@@ -153,13 +153,32 @@ title: Home
         {% endif %}
       </div>
 
-      <div class="sidebar-block">
-        <div class="sidebar-title">Citazione</div>
-        <blockquote style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.9rem; line-height:1.6; color:var(--muted);">
-          "I mercati possono rimanere irrazionali più a lungo di quanto tu possa rimanere solvibile."
-        </blockquote>
-        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--border); margin-top:0.5rem;">— J.M. Keynes</p>
-      </div>
+<div class="sidebar-block">
+  <div class="sidebar-title">Citazione del giorno</div>
+  <blockquote id="random-quote" style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.9rem; line-height:1.6; color:var(--muted);"></blockquote>
+  <p id="random-author" style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--border); margin-top:0.5rem;"></p>
+</div>
+
+<script>
+const quotes = [
+  { text: "I mercati possono rimanere irrazionali più a lungo di quanto tu possa rimanere solvibile.", author: "J.M. Keynes" },
+  { text: "Il rischio viene dal non sapere quello che stai facendo.", author: "Warren Buffett" },
+  { text: "In investing, what is comfortable is rarely profitable.", author: "Robert Arnott" },
+  { text: "Il mercato azionario è un dispositivo per trasferire denaro dall'impaziente al paziente.", author: "Warren Buffett" },
+  { text: "Non è il ritorno sul mio investimento che mi preoccupa, è il ritorno del mio investimento.", author: "Will Rogers" },
+  { text: "La borsa è piena di individui che conoscono il prezzo di tutto ma il valore di niente.", author: "Philip Fisher" },
+  { text: "Diversificare è l'unico pasto gratis della finanza.", author: "Harry Markowitz" },
+  { text: "Il modo migliore per misurare il tuo successo di investimento non è se stai battendo il mercato, ma se hai messo in atto un piano finanziario che ti permette di raggiungere i tuoi obiettivi.", author: "Benjamin Graham" },
+  { text: "L'inflazione è l'unica forma di tassazione che può essere imposta senza legislazione.", author: "Milton Friedman" },
+  { text: "I mercati finanziari sono creati dall'uomo e quindi riflettono le debolezze umane.", author: "George Soros" }
+];
+
+const today = new Date();
+const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+const q = quotes[seed % quotes.length];
+document.getElementById('random-quote').textContent = '\u201C' + q.text + '\u201D';
+document.getElementById('random-author').textContent = '\u2014 ' + q.author;
+</script>
 
       <div class="sidebar-block">
         <div class="sidebar-title">Consulenza</div>
