@@ -37,7 +37,7 @@ Nulla è gratis. Il conto arriverà sotto forma di:
 
 ## Implicazioni per il portafoglio
 
-Per un investitore italiano con esposizione ai BTP, lo scenario attuale presenta una biforcazione...
+Per un investitore italiano con esposizione esclusiva ai BTP statali, lo scenario attuale presenta diversi punti interrogativi.
 
 ---
 
