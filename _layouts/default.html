@@ -54,10 +54,16 @@
 <header class="masthead">
   <div class="masthead-top">
     <div class="dateline" id="dateline"></div>
-    <div class="logo">
-      <a href="/"><img src="/logo.svg" alt="L'Analista Imperfetto" style="height:52px; width:auto; display:block; margin:0 auto;"></a>
-      <div class="tagline" style="margin-top:0.5rem;">{{ site.tagline }}</div>
+<div class="logo">
+  <div style="display:flex; align-items:center; justify-content:center; gap:1.5rem;">
+    <a href="/"><img src="/logo.svg" alt="L'Analista Imperfetto" style="height:48px; width:auto; display:block;"></a>
+    <div>
+      <h1 style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.4rem); font-weight:700;"><a href="/" style="text-decoration:none; color:var(--ink);">{{ site.title }}</a></h1>
+      <div class="tagline">{{ site.tagline }}</div>
+      <div style="display:flex; align-items:center; justify-content:center; gap:0.5rem; margin-top:0.3rem;"><span style="height:1px; width:40px; background:var(--gold); display:block;"></span><em style="color:var(--gold); font-size:0.7rem; font-style:normal;">◆</em><span style="height:1px; width:40px; background:var(--gold); display:block;"></span></div>
     </div>
+  </div>
+</div>
     <div style="width:120px"></div>
   </div>
   <nav>
