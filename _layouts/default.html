@@ -24,12 +24,7 @@
   .masthead-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; border-bottom: 1px solid var(--border); }
   .dateline { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
   .logo { text-align: center; flex: 1; }
-  .logo h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; }
-  .logo h1 a { text-decoration: none; color: var(--ink); }
-  .logo .tagline { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-top: 0.25rem; }
-  .logo .rule-accent { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.3rem; }
-  .logo .rule-accent span { height: 1px; width: 40px; background: var(--gold); display: block; }
-  .logo .rule-accent em { color: var(--gold); font-size: 0.7rem; font-style: normal; }
+  .logo img { display: block; margin: 0 auto; }
   nav { display: flex; justify-content: center; padding: 0.5rem 0 0; }
   nav a { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; padding: 0.4rem 1.2rem; border-right: 1px solid var(--border); transition: background 0.15s; }
   nav a:first-child { border-left: 1px solid var(--border); }
@@ -60,9 +55,8 @@
   <div class="masthead-top">
     <div class="dateline" id="dateline"></div>
     <div class="logo">
-      <h1><a href="/">{{ site.title }}</a></h1>
-      <div class="tagline">{{ site.tagline }}</div>
-      <div class="rule-accent"><span></span><em>◆</em><span></span></div>
+      <a href="/"><img src="/logo.svg" alt="L'Analista Imperfetto" style="height:52px; width:auto; display:block; margin:0 auto;"></a>
+      <div class="tagline" style="margin-top:0.5rem;">{{ site.tagline }}</div>
     </div>
     <div style="width:120px"></div>
   </div>
