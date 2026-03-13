@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Archivio
+permalink: /archivio/
 ---
 <style>
   .archive-wrap { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
@@ -12,14 +13,23 @@ title: Archivio
   .archive-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); white-space: nowrap; min-width: 80px; }
   .archive-row h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; }
   .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--border); color: var(--muted); margin-left: 0.5rem; }
+  .article-row { display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--ink); transition: opacity 0.15s; }
+  .article-row:hover { opacity: 0.7; }
+  .article-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--border); line-height: 1; min-width: 2rem; text-align: right; padding-top: 0.1rem; }
+  .article-row h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.4rem; }
+  .article-row p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+  .article-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); display: flex; gap: 1.5rem; margin-top: 0.5rem; }
 </style>
 
 <!-- BARRA RICERCA -->
 <div style="background:var(--paper); border-bottom:1px solid var(--border); padding:1rem 2rem;">
   <div style="max-width:1160px; margin:0 auto; display:flex; gap:0.8rem; flex-wrap:wrap; align-items:center;">
-    <div style="flex:1; min-width:200px; position:relative;">
+    <div style="flex:1; min-width:200px;">
       <input id="search-input" type="text" placeholder="Cerca per parola chiave…" style="width:100%; font-family:'IBM Plex Mono',monospace; font-size:0.78rem; padding:0.6rem 1rem; border:1px solid var(--border); background:white; color:var(--ink); outline:none; box-sizing:border-box;">
     </div>
+    <select id="filter-cat" style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; padding:0.6rem 1rem; border:1px solid var(--border); background:white; color:var(--muted); outline:none;">
+      <option value="">Tutte le categorie</option>
+    </select>
     <select id="filter-tag" style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; padding:0.6rem 1rem; border:1px solid var(--border); background:white; color:var(--muted); outline:none;">
       <option value="">Tutti i tag</option>
     </select>
@@ -33,26 +43,28 @@ title: Archivio
 <div class="archive-wrap">
   <h1 class="page-title">Archivio</h1>
 
-  {% assign postsByYear = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-  <div id="dynamic-list">
+  <!-- LISTA STATICA Jekyll (visibile finché JS non carica) -->
+  <div id="static-list">
     {% assign postsByYear = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
     {% for year in postsByYear %}
+    <div class="year-group">
+      <div class="year-label">{{ year.name }}</div>
+      {% for post in year.items %}
+      <a href="{{ post.url | relative_url }}" class="archive-row">
+        <span class="archive-date">{{ post.date | date: "%d %b" }}</span>
+        <h3>{{ post.title }}{% if post.category %}<span class="tag">{{ post.category }}</span>{% endif %}</h3>
+      </a>
+      {% endfor %}
+    </div>
     {% endfor %}
-   </div>
-  <div class="year-group">
-    <div class="year-label">{{ year.name }}</div>
-    {% for post in year.items %}
-    <a href="{{ post.url }}" class="archive-row">
-      <span class="archive-date">{{ post.date | date: "%d %b" }}</span>
-      <h3>{{ post.title }}{% if post.category %}<span class="tag">{{ post.category }}</span>{% endif %}</h3>
-    </a>
-    {% endfor %}
+    {% if site.posts.size == 0 %}
+    <p style="color:var(--muted); font-style:italic; font-family:'Playfair Display',serif;">Nessun articolo ancora pubblicato.</p>
+    {% endif %}
   </div>
-  {% endfor %}
 
-  {% if site.posts.size == 0 %}
-  <p style="color:var(--muted); font-style:italic; font-family:'Playfair Display',serif;">Nessun articolo ancora pubblicato.</p>
-  {% endif %}
+  <!-- LISTA DINAMICA (popolata da JS quando si cerca) -->
+  <div id="dynamic-list" style="display:none;"></div>
+
 </div>
 
 <script>
@@ -63,7 +75,16 @@ fetch('/search.json')
   .then(data => {
     allPosts = data;
 
-    // Popola tag dropdown
+    // Popola categorie
+    const cats = [...new Set(allPosts.map(p => p.category).filter(c => c))];
+    const catSelect = document.getElementById('filter-cat');
+    cats.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      catSelect.appendChild(opt);
+    });
+
+    // Popola tag
     const tags = [...new Set(allPosts.flatMap(p => p.tags.split(' ').filter(t => t)))];
     const tagSelect = document.getElementById('filter-tag');
     tags.forEach(t => {
@@ -72,7 +93,7 @@ fetch('/search.json')
       tagSelect.appendChild(opt);
     });
 
-    // Popola anni dropdown
+    // Popola anni
     const years = [...new Set(allPosts.map(p => p.date.split(' ')[2]))].sort().reverse();
     const yearSelect = document.getElementById('filter-year');
     years.forEach(y => {
@@ -81,20 +102,48 @@ fetch('/search.json')
       yearSelect.appendChild(opt);
     });
 
-    renderResults(allPosts);
+    // Aggiorna contatore sulla lista statica
+    document.getElementById('search-count').textContent = allPosts.length + ' articoli totali';
   });
 
-function renderResults(posts) {
-  const list = document.getElementById('dynamic-list');
-  const count = document.getElementById('search-count');
-  count.textContent = posts.length + ' articol' + (posts.length === 1 ? 'o' : 'i');
+function filter() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const cat = document.getElementById('filter-cat').value;
+  const tag = document.getElementById('filter-tag').value;
+  const year = document.getElementById('filter-year').value;
 
-  if (posts.length === 0) {
+  const isFiltering = q || cat || tag || year;
+
+  if (!isFiltering) {
+    // Nessun filtro attivo — mostra lista statica Jekyll
+    document.getElementById('static-list').style.display = 'block';
+    document.getElementById('dynamic-list').style.display = 'none';
+    document.getElementById('search-count').textContent = allPosts.length + ' articoli totali';
+    return;
+  }
+
+  const results = allPosts.filter(p => {
+    const matchQ = !q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.tags.toLowerCase().includes(q);
+    const matchCat = !cat || p.category === cat;
+    const matchTag = !tag || p.tags.split(' ').includes(tag);
+    const matchYear = !year || p.date.includes(year);
+    return matchQ && matchCat && matchTag && matchYear;
+  });
+
+  // Mostra lista dinamica
+  document.getElementById('static-list').style.display = 'none';
+  document.getElementById('dynamic-list').style.display = 'block';
+
+  const count = document.getElementById('search-count');
+  count.textContent = results.length + ' articol' + (results.length === 1 ? 'o' : 'i') + ' trovati';
+
+  const list = document.getElementById('dynamic-list');
+  if (results.length === 0) {
     list.innerHTML = '<div style="padding:2rem 0; text-align:center; font-family:\'Playfair Display\',serif; font-style:italic; color:var(--muted);">Nessun articolo trovato.</div>';
     return;
   }
 
-  list.innerHTML = posts.map((p, i) => `
+  list.innerHTML = results.map((p, i) => `
     <a href="${p.url}" class="article-row">
       <div class="article-num">${String(i+1).padStart(2,'0')}</div>
       <div>
@@ -110,22 +159,8 @@ function renderResults(posts) {
   `).join('');
 }
 
-function filter() {
-  const q = document.getElementById('search-input').value.toLowerCase();
-  const tag = document.getElementById('filter-tag').value;
-  const year = document.getElementById('filter-year').value;
-
-  const results = allPosts.filter(p => {
-    const matchQ = !q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.tags.toLowerCase().includes(q);
-    const matchTag = !tag || p.tags.split(' ').includes(tag);
-    const matchYear = !year || p.date.includes(year);
-    return matchQ && matchTag && matchYear;
-  });
-
-  renderResults(results);
-}
-
 document.getElementById('search-input').addEventListener('input', filter);
+document.getElementById('filter-cat').addEventListener('change', filter);
 document.getElementById('filter-tag').addEventListener('change', filter);
 document.getElementById('filter-year').addEventListener('change', filter);
 </script>
