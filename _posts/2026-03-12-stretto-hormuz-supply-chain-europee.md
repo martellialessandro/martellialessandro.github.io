@@ -62,9 +62,6 @@ Il Medio Oriente produce circa l'1% delle unità ferro globali tramite il proces
 ### Prezzi e tempistiche
 I prezzi spot in Asia sono già saliti di circa il 15% su base settimanale, trainati dall'energia. La maggior parte delle aziende occidentali opera su contratti mensili — molti dei contratti di marzo erano già stati conclusi prima dell'escalation. Ci vorranno settimane, in alcuni casi mesi, prima che i clienti finali sentano il pieno impatto.
 
-### Olefine
-Almeno il 6% della capacità globale di olefine — i principali building block chimici — ha già riportato riduzioni o fermi temporanei, tutti in Asia. I mercati rimangono globalmente in eccesso di offerta: nel breve non si prevedono grandi carenze, ma la riduzione dell'offerta sosterrà ulteriormente i prezzi già elevati.
-
 ### Fertilizzanti e inflazione alimentare
 Questo è il canale di trasmissione più sottovalutato. I prezzi dell'urea sono saliti del 20% globalmente (fino al 40% in alcune regioni). Il Medio Oriente è il maggiore esportatore mondiale di fertilizzanti azotati — circa il 35% di tutto il commercio marittimo di urea — con l'85% di questi volumi in transito dallo Stretto di Hormuz.
 
@@ -81,9 +78,6 @@ Da tenere d'occhio anche:
 ### Food
 Le materie prime rappresentano il 30-40% delle vendite per i produttori alimentari, concentrate su pochi input chiave (grano, cacao, caffè, latte). Alcune filiere sono locali per natura (latte fresco), ma altre — caffè, cacao — attraversano supply chain globali complesse e facilmente perturbabili.
 
-### Home & Personal Care
-L'esposizione è meno evidente ma reale: le aziende di home care hanno una chiara dipendenza dalle commodity petrolifere. L'impatto sui margini lordi arriverà con un ritardo di 6-9 mesi, dipendendo dalle politiche di hedging.
-
 ---
 
 ## Industriale ed Elettrico
@@ -95,7 +89,6 @@ Punti specifici:
 - **Rame e nichel**: il canale di rischio principale passa per lo zolfo (25% dell'offerta mondiale dalla regione)
 - **Plastiche**: il Medio Oriente è il maggiore esportatore mondiale di polietilene; prezzi del petrolio più alti aumentano i costi anche altrove
 - **Acciaio elettrico**: la variante processata usata nelle apparecchiature è energivora — vulnerabile all'aumento dei prezzi energetici
-- **Elio**: il Medio Oriente è una fonte significativa; eventuali carenze potrebbero impattare la produzione di chip di memoria, con i semiconduttori HBM già sotto pressione da domanda record
 
 ---
 
