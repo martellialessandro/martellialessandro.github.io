@@ -9,7 +9,7 @@ author: Alessandro Martelli
 excerpt: "La crisi mediorientale non è solo un fatto energetico — è un evento sistemico che colpisce i mercati emergenti attraverso canali multipli: inflazione, bilancia dei pagamenti e curve dei tassi. Un'analisi regione per regione."
 ---
 
-Quando scoppia una crisi in Medio Oriente, il riflesso pavloviano dei mercati è quello di guardare il prezzo del petrolio e fermarsi lì. È comprensibile — ma è anche il modo più rapido per perdersi la metà della storia. Perché il vero impatto sui mercati emergenti viaggia su canali molto più sottili: la bilancia dei pagamenti, le curve dei tassi, le decisioni delle banche centrali sotto pressione. Proviamo a seguire il filo.
+Quando scoppia una crisi in Medio Oriente, il riflesso dei mercati è quello di guardare il prezzo del petrolio e fermarsi lì. È comprensibile — ma è anche il modo più rapido per perdersi la metà della storia. Perché il vero impatto sui mercati emergenti viaggia su canali molto più sottili: la bilancia dei pagamenti, le curve dei tassi, le decisioni delle banche centrali sotto pressione. Proviamo a seguire il filo.
 
 <!--more-->
 
@@ -66,7 +66,3 @@ La chiusura del gap di performance tra gli indici EM in valuta locale e in hard 
 
 *Questo articolo è pubblicato a scopo puramente informativo e non costituisce consulenza finanziaria. Le analisi sono elaborate sulla base di fonti pubbliche disponibili.*
 
-
----
-
-*Questo articolo è pubblicato a scopo puramente informativo e non costituisce consulenza finanziaria. Le analisi sono elaborate sulla base di fonti pubbliche disponibili.*
