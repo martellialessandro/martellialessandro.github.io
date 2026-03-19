@@ -23,7 +23,7 @@ Traduzione pratica: restare a casa non è una strategia. È un po' come fare dec
 
 ---
 
-## Di cosa si tratta, in due righe
+## Di cosa si tratta, in poche parole
 
 In Italia i magistrati sono di due tipologie: i giudici (quelli che decidono) e i PM, pubblici ministeri (quelli che accusano). Possono intraprendere e cambiare ruolo durante la carriera. La riforma impedisce tali cambiamenti potenziali e ridisegna gli organi che li governano.
 
@@ -83,7 +83,7 @@ Italia Viva ha lasciato libertà di voto. Il che, nel panorama politico italiano
 
 ---
 
-## La domanda che vogliamo farci
+## La domanda che vi lascio
 
 Separare ulteriormente chi accusa da chi giudica — con organi distinti e selezione per sorteggio — produce un sistema più equo o più legato all'esecutivo in carica e quindi meno indipendente? Ha senso una riforma costituzionale per un fenomeno che riguarda già meno dello 0,5% dei magistrati?
 
