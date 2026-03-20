@@ -1,0 +1,497 @@
+---
+layout: default
+title: Strumenti
+permalink: /consulenza/strumenti/
+---
+<style>
+  /* ── HERO ── */
+  .hub-hero { background: var(--ink); color: var(--paper); padding: 3rem 2rem; position: relative; overflow: hidden; }
+  .hub-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px); pointer-events: none; }
+  .hub-hero .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .hub-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .hub-hero p { font-size: 0.92rem; color: rgba(245,240,232,0.6); max-width: 620px; line-height: 1.8; }
+
+  .hub-wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+  .section-label { display: flex; align-items: center; gap: 1rem; margin: 0 0 1.8rem; }
+  .section-label span { font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── CARD SELEZIONE ── */
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1rem; }
+  .calc-card { border: 1px solid var(--border); padding: 1.8rem 1.5rem; cursor: pointer; transition: all 0.2s; position: relative; background: white; }
+  .calc-card:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .calc-card.active { border-color: var(--gold); border-width: 2px; background: var(--paper); }
+  .calc-card .card-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--border); line-height: 1; margin-bottom: 1rem; }
+  .calc-card.active .card-num { color: var(--gold); }
+  .calc-card .card-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.5rem; color: var(--ink); }
+  .calc-card .card-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+  .calc-card .card-tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid var(--border); color: var(--muted); margin-top: 1rem; }
+  .calc-card.active .card-tag { border-color: var(--gold); color: var(--gold); }
+  .calc-card .card-arrow { position: absolute; bottom: 1.2rem; right: 1.2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; color: var(--border); transition: color 0.2s; }
+  .calc-card:hover .card-arrow, .calc-card.active .card-arrow { color: var(--gold); }
+
+  /* ── CALCOLATORE ATTIVO ── */
+  .calc-container { display: none; border-top: 2px solid var(--ink); padding-top: 2rem; margin-top: 2rem; }
+  .calc-container.visible { display: block; }
+  .calc-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); cursor: pointer; margin-bottom: 1.5rem; border: none; background: none; padding: 0; transition: color 0.15s; }
+  .calc-back:hover { color: var(--ink); }
+
+  /* ── FORM COMUNE ── */
+  .calc-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .field input, .field select { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--ink); background: white; border: 1px solid var(--border); padding: 0.65rem 0.9rem; outline: none; transition: border-color 0.15s; width: 100%; }
+  .field input:focus, .field select:focus { border-color: var(--ink); }
+  .field .hint { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: var(--border); line-height: 1.5; }
+  .field .hint.warn { color: var(--accent); }
+  .slider-row { display: flex; align-items: center; gap: 0.8rem; }
+  .slider-row input[type=range] { flex: 1; accent-color: var(--gold); }
+  .slider-val { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--ink); min-width: 50px; text-align: right; }
+  .radio-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .radio-group label { display: flex; align-items: center; gap: 0.4rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--ink); cursor: pointer; }
+  .radio-group input[type=radio] { accent-color: var(--gold); }
+
+  /* ── BOTTONI ── */
+  .btn-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-top: 0.5rem; }
+  .calc-btn { background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; border: none; padding: 0.9rem 2rem; cursor: pointer; transition: opacity 0.2s; }
+  .calc-btn:hover { opacity: 0.85; }
+  .reset-btn { background: transparent; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid var(--border); padding: 0.7rem 1.2rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .reset-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* ── RISULTATI ── */
+  .results { display: none; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 2rem; }
+  .results.visible { display: block; }
+  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
+  .result-card { border: 1px solid var(--border); padding: 1.1rem; }
+  .result-card .r-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .result-card .r-value { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; line-height: 1; }
+  .result-card .r-value.gold { color: var(--gold); }
+  .result-card .r-value.accent { color: var(--accent); }
+  .result-card .r-sub { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* Barre */
+  .bar-chart { display: flex; flex-direction: column; gap: 0.4rem; margin: 1.2rem 0; }
+  .bar-row { display: grid; grid-template-columns: 80px 1fr 90px; gap: 0.6rem; align-items: center; }
+  .bar-name { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: var(--muted); text-align: right; }
+  .bar-track { height: 8px; background: var(--border); position: relative; }
+  .bar-fill { height: 100%; transition: width 0.7s ease; position: absolute; left: 0; top: 0; }
+  .bar-amount { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: var(--ink); }
+  .chart-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
+  .legenda { display: flex; gap: 1.2rem; margin-bottom: 0.8rem; }
+  .legenda-item { display: flex; align-items: center; gap: 0.4rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: var(--muted); }
+  .legenda-dot { width: 10px; height: 10px; }
+
+  /* Breakdown obbligazioni */
+  .breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .breakdown-item { padding: 1rem; background: #f8f4ee; border-left: 3px solid var(--border); }
+  .breakdown-item.pos { border-left-color: var(--gold); }
+  .breakdown-item.neg { border-left-color: var(--accent); }
+  .breakdown-item .b-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+  .breakdown-item .b-value { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; }
+  .breakdown-item.pos .b-value { color: var(--gold); }
+  .breakdown-item.neg .b-value { color: var(--accent); }
+
+  /* Narrativa */
+  .narrative { background: #f0ebe0; border-left: 3px solid var(--gold); padding: 1.1rem 1.3rem; margin-top: 1.2rem; font-size: 0.86rem; line-height: 1.8; color: var(--ink); }
+  .narrative strong { color: var(--gold); }
+  .narrative.warn { border-left-color: var(--accent); }
+  .narrative.warn strong { color: var(--accent); }
+
+  .disclaimer-box { border: 1px solid var(--border); padding: 0.9rem 1.1rem; margin-top: 1.2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: var(--muted); line-height: 1.7; }
+
+  /* Stepup */
+  .stepup-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; }
+
+  /* CTA consulenza */
+  .cta-consulenza { background: var(--ink); color: var(--paper); padding: 2rem; margin-top: 3rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .cta-consulenza h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.3rem; }
+  .cta-consulenza p { font-size: 0.82rem; color: rgba(245,240,232,0.6); }
+  .btn-cta { background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.7rem 1.5rem; white-space: nowrap; }
+
+  @media (max-width: 768px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .calc-form { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .breakdown { grid-template-columns: 1fr; }
+    .stepup-grid { grid-template-columns: 1fr 1fr; }
+    .btn-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- HERO -->
+<div class="hub-hero">
+  <div style="max-width:960px; margin:0 auto; position:relative; z-index:1;">
+    <div class="kicker">Consulenza · Strumenti gratuiti</div>
+    <h1>Calcolatori Finanziari</h1>
+    <p>Tre strumenti per rispondere alle domande che tutti si fanno ma in pochi sanno calcolare: quanto rende il mio BTP? Cosa fa davvero l'interesse composto? Quanto accumulo versando in un fondo pensione? Scoprilo in trenta secondi.</p>
+  </div>
+</div>
+
+<div class="hub-wrap">
+
+  <!-- CARD SELEZIONE -->
+  <div id="hub-cards">
+    <div class="section-label"><span>Scegli il calcolatore</span></div>
+    <div class="cards-grid">
+
+      <div class="calc-card" onclick="apriCalcolatore('obbligazioni')">
+        <div class="card-num">01</div>
+        <div class="card-title">Rendimento Obbligazioni e Titoli di Stato</div>
+        <div class="card-desc">Calcola il rendimento netto del tuo BTP, BOT, CCT o obbligazione corporate — cedole, plusvalenze, credito d'imposta e capitale finale.</div>
+        <div class="card-tag">BTP · BOT · Corporate</div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="calc-card" onclick="apriCalcolatore('composto')">
+        <div class="card-num">02</div>
+        <div class="card-title">Interesse Composto</div>
+        <div class="card-desc">Scopri quanto vale il tuo capitale tra 10, 20 o 30 anni con versamenti periodici e un tasso di rendimento atteso. L'ottava meraviglia del mondo, diceva Einstein.</div>
+        <div class="card-tag">PAC · Investimento · Lungo periodo</div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="calc-card" onclick="apriCalcolatore('pensione')">
+        <div class="card-num">03</div>
+        <div class="card-title">Pensione Integrativa e Risparmio Fiscale</div>
+        <div class="card-desc">Stima il capitale accumulato a fine carriera e il risparmio IRPEF annuo grazie alla deducibilità dei versamenti al fondo pensione.</div>
+        <div class="card-tag">Fondo pensione · IRPEF · TFR</div>
+        <div class="card-arrow">→</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- CALCOLATORE 1 — OBBLIGAZIONI               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="calc-container" id="calc-obbligazioni">
+    <button class="calc-back" onclick="tornaHub()">← Torna alla selezione</button>
+    <div class="section-label"><span>01 · Rendimento Obbligazioni e Titoli di Stato</span></div>
+
+    <div class="calc-form">
+      <div class="field"><label>Data di acquisto</label><input type="date" id="o-data-acquisto"></div>
+      <div class="field"><label>Data di scadenza / vendita</label><input type="date" id="o-data-scadenza"></div>
+      <div class="field"><label>Prezzo di acquisto (€ per quota)</label><input type="number" id="o-prezzo-acquisto" min="0" step="0.01" placeholder="es. 98.50"><span class="hint">Per i titoli di Stato il valore nominale è 100€</span></div>
+      <div class="field"><label>Valore di rimborso / prezzo di vendita (€)</label><input type="number" id="o-valore-rimborso" min="0" step="0.01" placeholder="es. 100.00"></div>
+      <div class="field"><label>Capitale investito (€)</label><input type="number" id="o-capitale" min="0" placeholder="es. 10000" oninput="oSync('capitale')"><span class="hint">Oppure inserisci il numero di quote</span></div>
+      <div class="field"><label>Numero di quote</label><input type="number" id="o-quote" min="0" step="1" placeholder="es. 100" oninput="oSync('quote')"></div>
+      <div class="field full"><label>Tipologia di tasso</label>
+        <div class="radio-group">
+          <label><input type="radio" name="o-tipo" value="fisso" checked onchange="oToggleTasso()"> Tasso fisso (BTP, obbligazioni standard)</label>
+          <label><input type="radio" name="o-tipo" value="stepup" onchange="oToggleTasso()"> Tasso step-up (es. BTP Più)</label>
+        </div>
+      </div>
+      <div class="field full" id="o-campo-fisso"><label>Cedola lorda annua (%)</label><input type="number" id="o-cedola" min="0" max="30" step="0.01" placeholder="es. 3.85"></div>
+      <div class="field full" id="o-campo-stepup" style="display:none;">
+        <label>Tassi step-up per periodo</label>
+        <div class="stepup-grid" style="margin-top:0.5rem;">
+          <div class="field"><label>1° tasso (%)</label><input type="number" id="o-t1" step="0.01" placeholder="es. 3.25"></div>
+          <div class="field"><label>Durata (anni)</label><input type="number" id="o-d1" step="1" placeholder="es. 4"></div>
+          <div class="field"><label>2° tasso (%)</label><input type="number" id="o-t2" step="0.01" placeholder="es. 4.00"></div>
+          <div class="field"><label>Durata (anni)</label><input type="number" id="o-d2" step="1" placeholder="es. 4"></div>
+        </div>
+      </div>
+      <div class="field full"><label>Regime fiscale</label>
+        <div class="radio-group">
+          <label><input type="radio" name="o-tassazione" value="0.125" checked> 12,5% — Titoli di Stato (BTP, BOT, CTZ, CCT…)</label>
+          <label><input type="radio" name="o-tassazione" value="0.26"> 26% — Obbligazioni corporate</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="calc-btn" onclick="calcolaObb()">◆ Calcola il rendimento</button>
+      <button class="reset-btn" onclick="resetForm('obbligazioni')">↺ Reset</button>
+    </div>
+
+    <div class="results" id="o-results">
+      <div class="results-grid">
+        <div class="result-card"><div class="r-label">Rendimento annuo netto</div><div class="r-value gold" id="o-annuo">—</div><div class="r-sub" id="o-anni"></div></div>
+        <div class="result-card"><div class="r-label">Rendimento cumulato netto</div><div class="r-value" id="o-cumulato">—</div><div class="r-sub">sull'intero periodo</div></div>
+        <div class="result-card"><div class="r-label">Capitale finale</div><div class="r-value" id="o-finale">—</div><div class="r-sub" id="o-finale-sub"></div></div>
+      </div>
+      <div class="breakdown">
+        <div class="breakdown-item pos"><div class="b-label">Guadagno da cedole (netto)</div><div class="b-value" id="o-cedole-val">—</div></div>
+        <div class="breakdown-item" id="o-bd-cap"><div class="b-label">Guadagno/perdita in conto capitale</div><div class="b-value" id="o-cap-val">—</div></div>
+        <div class="breakdown-item" id="o-bd-rend"><div class="b-label">Rendimento netto totale</div><div class="b-value" id="o-rend-val">—</div></div>
+        <div class="breakdown-item neg" id="o-bd-credito" style="display:none;"><div class="b-label">Credito d'imposta maturato</div><div class="b-value accent" id="o-credito-val">—</div></div>
+      </div>
+      <div class="narrative" id="o-narrative"></div>
+      <div class="disclaimer-box">⚠ Stima basata sui dati inseriti. Non tiene conto di ratei cedola, commissioni o variazioni fiscali future. Non costituisce consulenza finanziaria.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- CALCOLATORE 2 — INTERESSE COMPOSTO         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="calc-container" id="calc-composto">
+    <button class="calc-back" onclick="tornaHub()">← Torna alla selezione</button>
+    <div class="section-label"><span>02 · Interesse Composto</span></div>
+
+    <div class="calc-form">
+      <div class="field"><label>Capitale iniziale (€)</label><input type="number" id="c-capitale" min="0" value="0" placeholder="es. 10000"><span class="hint">Quanto hai già da investire oggi</span></div>
+      <div class="field"><label>Aggiunta periodica (€)</label><input type="number" id="c-aggiunta" min="0" value="0" placeholder="es. 300"></div>
+      <div class="field full"><label>Frequenza delle aggiunte</label>
+        <div class="radio-group">
+          <label><input type="radio" name="c-freq" value="mensile" checked> Mensile</label>
+          <label><input type="radio" name="c-freq" value="annuale"> Annuale</label>
+        </div>
+      </div>
+      <div class="field"><label>Anni di investimento</label>
+        <div class="slider-row"><input type="range" id="c-anni" min="1" max="50" value="20" step="1" oninput="document.getElementById('c-anni-val').textContent=this.value+' anni'"><span class="slider-val" id="c-anni-val">20 anni</span></div>
+      </div>
+      <div class="field"><label>Tasso di rendimento annuo (%)</label>
+        <div class="slider-row"><input type="range" id="c-tasso" min="0.5" max="12" value="7" step="0.5" oninput="document.getElementById('c-tasso-val').textContent=this.value+'%'"><span class="slider-val" id="c-tasso-val">7%</span></div>
+        <span class="hint">Azionario globale storico ~7% · Bilanciato ~4-5% · Obbligazionario ~2-3%</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="calc-btn" onclick="calcolaComposto()">◆ Calcola il capitale futuro</button>
+      <button class="reset-btn" onclick="resetForm('composto')">↺ Reset</button>
+    </div>
+
+    <div class="results" id="c-results">
+      <div class="results-grid">
+        <div class="result-card"><div class="r-label">Capitale finale</div><div class="r-value gold" id="c-finale">—</div><div class="r-sub" id="c-sub"></div></div>
+        <div class="result-card"><div class="r-label">Totale versato</div><div class="r-value accent" id="c-versato">—</div><div class="r-sub">capitale iniziale + aggiunte</div></div>
+        <div class="result-card"><div class="r-label">Interessi maturati</div><div class="r-value" id="c-interessi">—</div><div class="r-sub" id="c-int-pct"></div></div>
+      </div>
+      <div class="chart-label">Composizione del capitale</div>
+      <div class="legenda">
+        <div class="legenda-item"><div class="legenda-dot" style="background:var(--accent)"></div> Versato</div>
+        <div class="legenda-item"><div class="legenda-dot" style="background:var(--gold)"></div> Interessi</div>
+      </div>
+      <div class="bar-chart">
+        <div class="bar-row"><span class="bar-name">Versato</span><div class="bar-track"><div class="bar-fill" id="c-bar-v" style="width:0%; background:var(--accent)"></div></div><span class="bar-amount" id="c-bar-v-val"></span></div>
+        <div class="bar-row"><span class="bar-name">Interessi</span><div class="bar-track"><div class="bar-fill" id="c-bar-i" style="width:0%; background:var(--gold)"></div></div><span class="bar-amount" id="c-bar-i-val"></span></div>
+      </div>
+      <div class="narrative" id="c-narrative"></div>
+      <div class="disclaimer-box">⚠ Stima basata su tasso costante. I mercati non crescono linearmente. Non costituisce consulenza finanziaria.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- CALCOLATORE 3 — PENSIONE                   -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="calc-container" id="calc-pensione">
+    <button class="calc-back" onclick="tornaHub()">← Torna alla selezione</button>
+    <div class="section-label"><span>03 · Pensione Integrativa e Risparmio Fiscale</span></div>
+
+    <div class="calc-form">
+      <div class="field"><label>Età attuale</label><input type="number" id="p-eta" min="18" max="67" placeholder="es. 35" oninput="pEtaHint()"><span class="hint" id="p-eta-hint"></span></div>
+      <div class="field"><label>Età di pensionamento</label><input type="number" id="p-eta-pensione" min="60" max="75" value="67" placeholder="es. 67"></div>
+      <div class="field"><label>Versamento mensile (€)</label><input type="number" id="p-versamento" min="1" max="2000" placeholder="es. 200" oninput="pCheckVers()"><span class="hint warn" id="p-vers-hint"></span></div>
+      <div class="field"><label>Reddito annuo lordo / RAL (€)</label><input type="number" id="p-ral" min="0" placeholder="es. 35000"><span class="hint">Indicato sul CU o sulla busta paga</span></div>
+      <div class="field full"><label>Posizione lavorativa</label>
+        <select id="p-posizione" onchange="pCheckPos()">
+          <option value="">— Seleziona —</option>
+          <option value="dipendente">Dipendente</option>
+          <option value="ordinario">Partita IVA regime ordinario</option>
+          <option value="forfettario">Partita IVA regime forfettario</option>
+        </select>
+        <span class="hint warn" id="p-pos-hint"></span>
+      </div>
+      <div class="field full" id="p-tfr-field" style="display:none;"><label>Vuoi versare anche il TFR?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="p-tfr" value="no" checked> No, tengo il TFR in azienda</label>
+          <label><input type="radio" name="p-tfr" value="si"> Sì, verso anche il TFR</label>
+        </div>
+      </div>
+      <div class="field full"><label>Rendimento annuo atteso (%)</label>
+        <div class="slider-row"><input type="range" id="p-rend" min="1" max="8" value="4" step="0.5" oninput="document.getElementById('p-rend-val').textContent=this.value+'%'"><span class="slider-val" id="p-rend-val">4%</span></div>
+        <span class="hint">Obbligazionario ~2-3% · Bilanciato ~4-5% · Azionario ~5-7%</span>
+      </div>
+      <div class="field full"><label>Capitale già accumulato in un fondo pensione (€)</label><input type="number" id="p-cap-iniz" min="0" value="0" placeholder="0 se non hai ancora un fondo"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="calc-btn" onclick="calcolaPensione()">◆ Calcola la mia pensione integrativa</button>
+      <button class="reset-btn" onclick="resetForm('pensione')">↺ Reset</button>
+    </div>
+
+    <div class="results" id="p-results">
+      <div class="results-grid">
+        <div class="result-card"><div class="r-label">Capitale finale stimato</div><div class="r-value gold" id="p-capitale">—</div><div class="r-sub" id="p-anni"></div></div>
+        <div class="result-card"><div class="r-label">Risparmio fiscale annuo</div><div class="r-value accent" id="p-risparmio">—</div><div class="r-sub" id="p-aliquota"></div></div>
+        <div class="result-card"><div class="r-label">Risparmio fiscale totale</div><div class="r-value" id="p-risp-tot">—</div><div class="r-sub">nell'arco della carriera</div></div>
+      </div>
+      <div class="chart-label">Composizione del capitale finale</div>
+      <div class="bar-chart">
+        <div class="bar-row"><span class="bar-name">Versamenti</span><div class="bar-track"><div class="bar-fill" id="p-bar-v" style="width:0%; background:var(--accent)"></div></div><span class="bar-amount" id="p-bar-v-val"></span></div>
+        <div class="bar-row"><span class="bar-name">Rendimento</span><div class="bar-track"><div class="bar-fill" id="p-bar-r" style="width:0%; background:var(--gold)"></div></div><span class="bar-amount" id="p-bar-r-val"></span></div>
+        <div class="bar-row" id="p-bar-tfr-row" style="display:none;"><span class="bar-name">TFR</span><div class="bar-track"><div class="bar-fill" id="p-bar-tfr" style="width:0%; background:#b8952a99"></div></div><span class="bar-amount" id="p-bar-tfr-val"></span></div>
+      </div>
+      <div class="narrative" id="p-narrative"></div>
+      <div class="disclaimer-box">⚠ Stima basata su ipotesi di rendimento costante. Non tiene conto di inflazione, costi di gestione o modifiche normative. Non costituisce consulenza finanziaria.</div>
+    </div>
+  </div>
+
+  <!-- CTA CONSULENZA -->
+  <div class="cta-consulenza">
+    <div>
+      <h3>Vuoi un'analisi personalizzata?</h3>
+      <p>I calcolatori danno stime — la consulenza dà risposte su misura per la tua situazione specifica.</p>
+    </div>
+    <a href="/consulenza/" class="btn-cta">Richiedi una consulenza →</a>
+  </div>
+
+</div>
+
+<script>
+/* ── UTILITÀ ── */
+function fmt(n) { return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:2}).format(n); }
+function fmtPct(n) { return (n>=0?'+':'')+n.toFixed(2)+'%'; }
+
+function apriCalcolatore(id) {
+  document.getElementById('hub-cards').style.display = 'none';
+  document.querySelectorAll('.calc-container').forEach(el => el.classList.remove('visible'));
+  document.getElementById('calc-'+id).classList.add('visible');
+  window.scrollTo({top: document.getElementById('calc-'+id).offsetTop - 80, behavior:'smooth'});
+}
+
+function tornaHub() {
+  document.getElementById('hub-cards').style.display = 'block';
+  document.querySelectorAll('.calc-container').forEach(el => el.classList.remove('visible'));
+  window.scrollTo({top: document.getElementById('hub-cards').offsetTop - 80, behavior:'smooth'});
+}
+
+function resetForm(id) {
+  const prefix = id === 'obbligazioni' ? 'o' : id === 'composto' ? 'c' : 'p';
+  document.querySelectorAll(`#calc-${id} input[type=number], #calc-${id} input[type=date]`).forEach(el => el.value = '');
+  document.getElementById(prefix+'-results')?.classList.remove('visible');
+}
+
+/* ── CALCOLATORE 1: OBBLIGAZIONI ── */
+function oSync(src) {
+  const pa = parseFloat(document.getElementById('o-prezzo-acquisto').value)||0;
+  if(!pa) return;
+  if(src==='capitale') { const ci=parseFloat(document.getElementById('o-capitale').value)||0; document.getElementById('o-quote').value=ci>0?Math.floor(ci/pa):''; }
+  else { const nq=parseFloat(document.getElementById('o-quote').value)||0; document.getElementById('o-capitale').value=nq>0?(nq*pa).toFixed(2):''; }
+}
+function oToggleTasso() {
+  const tipo = document.querySelector('input[name="o-tipo"]:checked').value;
+  document.getElementById('o-campo-fisso').style.display = tipo==='fisso'?'flex':'none';
+  document.getElementById('o-campo-stepup').style.display = tipo==='stepup'?'flex':'none';
+}
+function calcolaObb() {
+  const DA=new Date(document.getElementById('o-data-acquisto').value);
+  const DS=new Date(document.getElementById('o-data-scadenza').value);
+  const PA=parseFloat(document.getElementById('o-prezzo-acquisto').value);
+  const VR=parseFloat(document.getElementById('o-valore-rimborso').value);
+  const aliquota=parseFloat(document.querySelector('input[name="o-tassazione"]:checked').value);
+  const tipoTasso=document.querySelector('input[name="o-tipo"]:checked').value;
+  let NQ=parseFloat(document.getElementById('o-quote').value);
+  let CI=parseFloat(document.getElementById('o-capitale').value);
+  if(!DA||!DS||isNaN(PA)||isNaN(VR)){alert('Compila date, prezzo acquisto e valore rimborso.');return;}
+  if(DS<=DA){alert('La data di scadenza deve essere successiva alla data di acquisto.');return;}
+  if(!NQ&&!CI){alert('Inserisci il capitale investito o il numero di quote.');return;}
+  if(!NQ) NQ=CI/PA; if(!CI) CI=NQ*PA;
+  const NA=(DS-DA)/(1000*60*60*24*365.25);
+  const VN=NQ*VR;
+  let GTC_lordo=0;
+  if(tipoTasso==='fisso'){const ced=parseFloat(document.getElementById('o-cedola').value)/100;if(isNaN(ced)){alert('Inserisci la cedola annua.');return;}GTC_lordo=VN*ced*NA;}
+  else{const t1=parseFloat(document.getElementById('o-t1').value)/100||0,d1=parseFloat(document.getElementById('o-d1').value)||0,t2=parseFloat(document.getElementById('o-t2').value)/100||0,d2=parseFloat(document.getElementById('o-d2').value)||0;GTC_lordo=VN*(t1*d1+t2*d2);}
+  const GTC_netto=GTC_lordo*(1-aliquota);
+  const GCC=(VR-PA)*NQ;
+  let GCC_netto,credito=0;
+  if(GCC>=0){GCC_netto=GCC*(1-aliquota);}else{GCC_netto=GCC;credito=Math.abs(GCC)*aliquota;}
+  const R=GCC_netto+GTC_netto, RP=R/CI*100, RPMA=RP/NA, cf=CI+R;
+  document.getElementById('o-annuo').textContent=fmtPct(RPMA);
+  document.getElementById('o-annuo').className='r-value '+(RPMA>=0?'gold':'accent');
+  document.getElementById('o-anni').textContent=`su ${NA.toFixed(1)} anni`;
+  document.getElementById('o-cumulato').textContent=fmtPct(RP);
+  document.getElementById('o-finale').textContent=fmt(cf);
+  document.getElementById('o-finale-sub').textContent=`da ${fmt(CI)} investiti`;
+  document.getElementById('o-cedole-val').textContent=fmt(GTC_netto);
+  document.getElementById('o-bd-cap').className='breakdown-item '+(GCC_netto>=0?'pos':'neg');
+  document.getElementById('o-cap-val').textContent=fmt(GCC_netto);
+  document.getElementById('o-bd-rend').className='breakdown-item '+(R>=0?'pos':'neg');
+  document.getElementById('o-rend-val').textContent=fmt(R);
+  if(credito>0){document.getElementById('o-bd-credito').style.display='flex';document.getElementById('o-credito-val').textContent=fmt(credito)+` (${(credito/CI*100).toFixed(2)}%)`;}
+  else{document.getElementById('o-bd-credito').style.display='none';}
+  const tassLabel=aliquota===0.125?'12,5% (titolo di Stato)':'26% (obbligazione corporate)';
+  let nar=R>=0?`Su <strong>${fmt(CI)}</strong> investiti, questo titolo genera <strong>${fmt(R)}</strong> netti in <strong>${NA.toFixed(1)} anni</strong> — pari al <strong>${fmtPct(RPMA)} annuo netto</strong> dopo tassazione al ${tassLabel}. Le cedole contribuiscono <strong>${fmt(GTC_netto)}</strong> netti`:`Attenzione: con questi parametri il rendimento netto risulta <strong>negativo (${fmt(R)})</strong>. Verifica i dati inseriti.`;
+  if(R>=0){if(GCC_netto>0)nar+=`, più un guadagno in conto capitale di <strong>${fmt(GCC_netto)}</strong>`;else if(GCC_netto<0)nar+=`, ridotti da una minusvalenza di <strong>${fmt(Math.abs(GCC_netto))}</strong>`;nar+=`. Capitale finale: <strong>${fmt(cf)}</strong>.`;}
+  if(credito>0)nar+=` La minusvalenza genera un <strong>credito d'imposta di ${fmt(credito)}</strong>, compensabile entro 4 anni.`;
+  const nel=document.getElementById('o-narrative');nel.innerHTML=nar;nel.className=R>=0?'narrative':'narrative warn';
+  document.getElementById('o-results').classList.add('visible');
+}
+
+/* ── CALCOLATORE 2: INTERESSE COMPOSTO ── */
+function calcolaComposto() {
+  const C=parseFloat(document.getElementById('c-capitale').value)||0;
+  const Ar=parseFloat(document.getElementById('c-aggiunta').value)||0;
+  const freq=document.querySelector('input[name="c-freq"]:checked').value;
+  const N=parseInt(document.getElementById('c-anni').value);
+  const R=parseFloat(document.getElementById('c-tasso').value)/100;
+  const A=freq==='mensile'?Ar*12:Ar;
+  if(C===0&&A===0){alert('Inserisci almeno un capitale iniziale o un\'aggiunta periodica.');return;}
+  const cf=C*Math.pow(1+R,N)+(R>0?A*(Math.pow(1+R,N+1)-(1+R))/R:A*N);
+  const tv=C+A*N, int=cf-tv, pct=tv>0?(int/tv*100).toFixed(0):0;
+  document.getElementById('c-finale').textContent=fmt(cf);
+  document.getElementById('c-sub').textContent=`in ${N} anni al ${(R*100).toFixed(1)}%/anno`;
+  document.getElementById('c-versato').textContent=fmt(tv);
+  document.getElementById('c-interessi').textContent=fmt(int);
+  document.getElementById('c-int-pct').textContent=`${pct}% in più rispetto al versato`;
+  const mx=cf;
+  setTimeout(()=>{
+    document.getElementById('c-bar-v').style.width=(tv/mx*100)+'%';
+    document.getElementById('c-bar-v-val').textContent=fmt(tv);
+    document.getElementById('c-bar-i').style.width=(Math.max(0,int)/mx*100)+'%';
+    document.getElementById('c-bar-i-val').textContent=fmt(int);
+  },100);
+  const mol=tv>0?(cf/tv).toFixed(1):'—';
+  let nar=`Investendo <strong>${fmt(C)}</strong> oggi`;
+  if(A>0)nar+=` e aggiungendo <strong>${fmt(Ar)}/${freq==='mensile'?'mese':'anno'}</strong>`;
+  nar+=`, in <strong>${N} anni</strong> potresti accumulare <strong>${fmt(cf)}</strong>. Il capitale si moltiplica per <strong>${mol}x</strong> rispetto a quanto hai effettivamente versato. Su <strong>${fmt(cf)}</strong> finali, solo <strong>${fmt(tv)}</strong> vengono dal tuo portafoglio — il resto li ha generati il tempo.`;
+  document.getElementById('c-narrative').innerHTML=nar;
+  document.getElementById('c-results').classList.add('visible');
+}
+
+/* ── CALCOLATORE 3: PENSIONE ── */
+function pEtaHint(){const e=parseInt(document.getElementById('p-eta').value);if(!e)return;const a=67-e,c=a>=30?'azionario':a>=20?'bilanciato':a>=10?'obbligazionario':'garantito';document.getElementById('p-eta-hint').textContent=`${a} anni al pensionamento → comparto consigliato: ${c}`;}
+function pCheckVers(){const v=parseFloat(document.getElementById('p-versamento').value)||0;document.getElementById('p-vers-hint').textContent=v>430.38?'⚠ Sopra €430/mese perdi la deducibilità sulla quota eccedente.':'';}
+function pCheckPos(){const pos=document.getElementById('p-posizione').value;document.getElementById('p-pos-hint').textContent=pos==='forfettario'?'⚠ In regime forfettario non puoi dedurre i contributi — valuta bene se conviene.':'';document.getElementById('p-tfr-field').style.display=pos==='dipendente'?'flex':'none';}
+function getAliquota(ral){if(ral<=15000)return 0.23;if(ral<=28000)return 0.25;if(ral<=50000)return 0.35;return 0.43;}
+function calcolaPensione(){
+  const eta=parseInt(document.getElementById('p-eta').value);
+  const ep=parseInt(document.getElementById('p-eta-pensione').value);
+  const vm=parseFloat(document.getElementById('p-versamento').value);
+  const ral=parseFloat(document.getElementById('p-ral').value);
+  const pos=document.getElementById('p-posizione').value;
+  const R=parseFloat(document.getElementById('p-rend').value)/100;
+  const ci=parseFloat(document.getElementById('p-cap-iniz').value)||0;
+  const tfrSi=document.querySelector('input[name="p-tfr"]:checked')?.value==='si';
+  if(!eta||!ep||!vm||!ral||!pos){alert('Compila tutti i campi.');return;}
+  if(ep<=eta){alert('L\'età di pensionamento deve essere maggiore dell\'età attuale.');return;}
+  const anni=ep-eta, va=vm*12, MAX=5164.57;
+  const vded=Math.min(va,MAX);
+  const aliq=pos==='forfettario'?0:getAliquota(ral);
+  const rann=vded*aliq, rtot=rann*anni;
+  const tfrAnn=tfrSi?ral/13.5:0;
+  let cf=ci*Math.pow(1+R,anni),mv=0,mt=0;
+  for(let i=0;i<anni;i++){mv+=va*Math.pow(1+R,anni-i);if(tfrSi)mt+=tfrAnn*Math.pow(1+R,anni-i);}
+  cf+=mv+mt;
+  const tv=va*anni+ci, rend=cf-tv-mt;
+  document.getElementById('p-capitale').textContent=fmt(cf);
+  document.getElementById('p-anni').textContent=`in ${anni} anni al ${(R*100).toFixed(1)}%/anno`;
+  document.getElementById('p-risparmio').textContent=fmt(rann);
+  document.getElementById('p-aliquota').textContent=pos==='forfettario'?'nessuna deduzione (forfettario)':`aliquota IRPEF: ${(aliq*100).toFixed(0)}%`;
+  document.getElementById('p-risp-tot').textContent=fmt(rtot);
+  const mx=cf;
+  setTimeout(()=>{
+    document.getElementById('p-bar-v').style.width=(tv/mx*100)+'%';document.getElementById('p-bar-v-val').textContent=fmt(tv);
+    document.getElementById('p-bar-r').style.width=(Math.max(0,rend)/mx*100)+'%';document.getElementById('p-bar-r-val').textContent=fmt(Math.max(0,rend));
+    if(tfrSi&&mt>0){document.getElementById('p-bar-tfr-row').style.display='flex';document.getElementById('p-bar-tfr').style.width=(mt/mx*100)+'%';document.getElementById('p-bar-tfr-val').textContent=fmt(mt);}
+  },100);
+  let nar=`Versando <strong>${fmt(vm)}/mese</strong> per <strong>${anni} anni</strong>, potresti accumulare circa <strong>${fmt(cf)}</strong>. `;
+  if(aliq>0)nar+=`Ogni anno risparmieresti <strong>${fmt(rann)}</strong> di IRPEF — <strong>${fmt(rtot)}</strong> in tutta la carriera. Il costo reale mensile è circa <strong>${fmt(vm-rann/12)}</strong> invece di ${fmt(vm)}. `;
+  if(tfrSi)nar+=`Il TFR aggiunge circa <strong>${fmt(tfrAnn)}/anno</strong> al fondo. `;
+  nar+=`Questi numeri sono stime — il rendimento effettivo dipende dall'andamento dei mercati e dai costi del fondo.`;
+  document.getElementById('p-narrative').innerHTML=nar;
+  document.getElementById('p-results').classList.add('visible');
+}
+</script>
