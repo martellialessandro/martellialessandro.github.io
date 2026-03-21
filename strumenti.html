@@ -106,9 +106,14 @@ permalink: /consulenza/strumenti/
 
   /* ── GUIDA ── */
   .guida { margin-bottom: 2rem; }
-  .guida-intro { font-size: 0.92rem; line-height: 1.9; color: var(--ink); margin-bottom: 1.5rem; }
-  .guida-intro p { margin-bottom: 1rem; }
-  .guida-concetti { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .guida-intro { font-size: 0.9rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.2rem; border-left: 3px solid var(--gold); padding-left: 1rem; }
+  /* Accordion concetti */
+  .concetti-toggle { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); cursor: pointer; border: none; background: none; padding: 0; margin-bottom: 1rem; transition: color 0.15s; }
+  .concetti-toggle:hover { color: var(--ink); }
+  .concetti-toggle .ct-arrow { transition: transform 0.2s; }
+  .concetti-toggle.open .ct-arrow { transform: rotate(180deg); }
+  .guida-concetti { display: none; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.2rem; }
+  .guida-concetti.open { display: grid; }
   .concetto { background: white; border: 1px solid var(--border); border-top: 3px solid var(--gold); padding: 1.1rem; }
   .concetto .c-titolo { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
   .concetto .c-testo { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
@@ -192,43 +197,23 @@ permalink: /consulenza/strumenti/
     <!-- GUIDA OBBLIGAZIONI -->
     <div class="guida">
       <div class="guida-intro">
-        <p>Un'obbligazione è, nella sostanza, un prestito che fai a qualcuno — uno Stato, una banca, un'azienda. In cambio, ti promettono di restituirti il capitale a scadenza e di pagarti nel frattempo degli interessi periodici chiamati <strong>cedole</strong>. Semplice in teoria, meno semplice quando si tratta di capire quanto rende davvero dopo le tasse.</p>
-        <p>Il rendimento di un'obbligazione non dipende solo dalla cedola dichiarata, ma anche da <strong>quanto l'hai pagata</strong>. Se hai comprato un BTP a 98 che ti rimborserà 100, quella differenza di 2 euro per quota è un guadagno aggiuntivo. Se l'hai pagato 102, è una perdita. Questo calcolatore tiene conto di entrambe le componenti e calcola il rendimento netto reale — quello che finisce in tasca a te, non all'Agenzia delle Entrate.</p>
+        Un'obbligazione è un prestito che fai a uno Stato o un'azienda. In cambio, ti pagano interessi periodici (le cedole) e ti restituiscono il capitale a scadenza. Il rendimento reale dipende però da quanto hai pagato il titolo, dalla tassazione applicata e da eventuali guadagni o perdite in conto capitale — non solo dalla cedola dichiarata.
       </div>
-
+      <button class="concetti-toggle" onclick="toggleConcetti(this)"><span class="ct-arrow">▾</span> Glossario dei termini</button>
       <div class="guida-concetti">
-        <div class="concetto">
-          <div class="c-titolo">Cedola</div>
-          <div class="c-testo">L'interesse periodico pagato dall'emittente sul valore nominale del titolo. Un BTP con cedola al 3,85% paga 3,85€ l'anno per ogni 100€ di valore nominale. Le cedole vengono tassate al momento dello stacco.</div>
-        </div>
-        <div class="concetto">
-          <div class="c-titolo">Plusvalenza / Minusvalenza</div>
-          <div class="c-testo">Se compri sotto la pari (es. 98) e vieni rimborsato a 100, guadagni 2€ per quota — è una plusvalenza. Se compri sopra la pari (es. 102), perdi 2€ — è una minusvalenza. Entrambe hanno implicazioni fiscali diverse.</div>
-        </div>
-        <div class="concetto">
-          <div class="c-titolo">Credito d'imposta</div>
-          <div class="c-testo">Quando hai una minusvalenza in conto capitale, matura un credito d'imposta che puoi usare entro 4 anni per compensare plusvalenze su azioni, certificati o obbligazioni. Non si può usare per dividendi o cedole.</div>
-        </div>
-        <div class="concetto">
-          <div class="c-titolo">Tassazione agevolata</div>
-          <div class="c-testo">I titoli di Stato italiani ed equiparati (BTP, BOT, CTZ, CCT, BTP Più, BTP Italia) godono di una tassazione al 12,5% invece del 26% previsto per le obbligazioni corporate. Una differenza che può pesare molto sul rendimento netto finale.</div>
-        </div>
-        <div class="concetto">
-          <div class="c-titolo">Tasso step-up</div>
-          <div class="c-testo">Alcuni titoli come il BTP Più hanno un tasso cedolare che aumenta nel tempo secondo uno schema predefinito — più basso nei primi anni, più alto nella seconda metà della vita del titolo. Pensato per chi tiene fino a scadenza.</div>
-        </div>
-        <div class="concetto">
-          <div class="c-titolo">Rendimento annuo netto</div>
-          <div class="c-testo">La misura più utile per confrontare strumenti diversi: quanta percentuale del capitale investito guadagni ogni anno, al netto di tutte le tasse. Permette di confrontare un BTP con un conto deposito o un fondo obbligazionario a parità di condizioni.</div>
-        </div>
+        <div class="concetto"><div class="c-titolo">Cedola</div><div class="c-testo">L'interesse periodico pagato sul valore nominale. Un BTP al 3,85% paga 3,85€ l'anno per ogni 100€ nominali, tassato al momento dello stacco.</div></div>
+        <div class="concetto"><div class="c-titolo">Plusvalenza / Minusvalenza</div><div class="c-testo">Se compri a 98 e vieni rimborsato a 100, guadagni 2€ per quota (plusvalenza). Se compri a 102, perdi 2€ (minusvalenza). Entrambe hanno trattamenti fiscali diversi.</div></div>
+        <div class="concetto"><div class="c-titolo">Credito d'imposta</div><div class="c-testo">La minusvalenza in conto capitale genera un credito d'imposta compensabile entro 4 anni con plusvalenze su azioni, certificati o obbligazioni — non su dividendi o cedole.</div></div>
+        <div class="concetto"><div class="c-titolo">Tassazione agevolata</div><div class="c-testo">I titoli di Stato italiani (BTP, BOT, CTZ, CCT, BTP Più) sono tassati al 12,5% invece del 26% delle obbligazioni corporate. Una differenza che pesa molto sul rendimento netto.</div></div>
+        <div class="concetto"><div class="c-titolo">Tasso step-up</div><div class="c-testo">Titoli come il BTP Più hanno cedole crescenti nel tempo: tasso più basso nei primi anni, più alto nella seconda metà. Pensato per chi tiene il titolo fino a scadenza.</div></div>
+        <div class="concetto"><div class="c-titolo">Rendimento annuo netto</div><div class="c-testo">La misura più utile per confrontare strumenti diversi: percentuale del capitale guadagnata ogni anno, al netto di tutte le tasse e dei guadagni/perdite in conto capitale.</div></div>
       </div>
-
       <div class="guida-faq">
         <div class="guida-faq-title">Domande frequenti</div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Perché il rendimento netto è diverso dalla cedola dichiarata?</div><div class="faq-a">La cedola dichiarata è lorda e si applica al valore nominale del titolo (tipicamente 100€). Il rendimento netto tiene conto anche delle tasse sulla cedola, del guadagno o perdita in conto capitale se hai comprato a un prezzo diverso da 100, e degli anni effettivi di detenzione. Due titoli con la stessa cedola possono avere rendimenti netti molto diversi se sono stati acquistati a prezzi diversi.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Cosa succede se vendo prima della scadenza?</div><div class="faq-a">Puoi inserire come "data di scadenza" la data in cui prevedi di vendere e come "valore di rimborso" il prezzo di mercato atteso. Il calcolo funziona allo stesso modo. Tieni presente che il prezzo di mercato di un'obbligazione varia in funzione dei tassi: se i tassi salgono dopo il tuo acquisto, il prezzo del titolo scende — e viceversa. È il cosiddetto rischio di tasso.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Conviene comprare un BTP sopra la pari?</div><div class="faq-a">Non necessariamente no. Dipende dal rendimento netto complessivo. Un BTP a 105 con cedola alta può rendere più di uno a 98 con cedola bassa. La minusvalenza in conto capitale genera però un credito d'imposta — utile solo se hai plusvalenze da compensare. Se non le hai, quella perdita è secca. Il calcolatore ti mostra esattamente la situazione.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Il rischio dei titoli di Stato è davvero zero?</div><div class="faq-a">No — questa è una semplificazione pericolosa. I titoli di Stato italiani hanno un rischio di credito basso (ma non nullo: l'Italia ha un debito/PIL al 140%), un rischio di tasso significativo se vendi prima della scadenza, e un rischio di inflazione sempre presente. "Sicuri" vuol dire che è molto improbabile che l'Italia non rimborsi — non che il prezzo non possa scendere nel frattempo.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Perché il rendimento netto è diverso dalla cedola dichiarata?</div><div class="faq-a">La cedola è lorda e si applica al valore nominale. Il rendimento netto tiene conto anche delle tasse sulla cedola, del guadagno o perdita in conto capitale se hai comprato a un prezzo diverso da 100, e degli anni effettivi di detenzione. Due titoli con la stessa cedola possono avere rendimenti netti molto diversi se acquistati a prezzi diversi.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Cosa succede se vendo prima della scadenza?</div><div class="faq-a">Inserisci come "data di scadenza" la data prevista di vendita e come "valore di rimborso" il prezzo di mercato atteso. Il calcolo funziona allo stesso modo. Tieni presente che se i tassi salgono dopo il tuo acquisto, il prezzo del titolo scende — è il rischio di tasso.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Conviene comprare un BTP sopra la pari?</div><div class="faq-a">Dipende dal rendimento netto complessivo. Un BTP a 105 con cedola alta può rendere più di uno a 98 con cedola bassa. La minusvalenza genera un credito d'imposta — utile solo se hai plusvalenze da compensare. Il calcolatore ti mostra esattamente la situazione.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">I titoli di Stato sono davvero privi di rischio?</div><div class="faq-a">No. Il rischio di credito è basso ma non nullo (l'Italia ha un debito/PIL al 140%). Il rischio di tasso è reale se vendi prima della scadenza. "Sicuri" significa che è molto improbabile il mancato rimborso — non che il prezzo non possa scendere nel frattempo.</div></div>
       </div>
     </div>
     <hr class="guida-divider">
@@ -296,12 +281,26 @@ permalink: /consulenza/strumenti/
     <!-- GUIDA INTERESSE COMPOSTO -->
     <div class="guida">
       <div class="guida-intro">
-        <p>Einstein — o almeno così vuole la leggenda — lo chiamò "l'ottava meraviglia del mondo". L'interesse composto è il meccanismo per cui i tuoi guadagni generano altri guadagni, che a loro volta ne generano altri ancora. Non è magia: è matematica. Ma i suoi effetti nel lungo periodo sono talmente controintuitivi da sembrare magia lo stesso.</p>
-        <p>La differenza fondamentale rispetto all'interesse semplice è che nell'interesse composto gli interessi vengono <strong>reinvestiti</strong> anziché incassati. Un capitale di 10.000€ al 7% annuo con interesse semplice cresce di 700€ ogni anno — sempre uguale. Con interesse composto, dopo il primo anno cresce di 700€, ma il secondo anno cresce di 749€ (perché il 7% si applica ora a 10.700€), e così via. Dopo 30 anni la differenza è abissale.</p>
-        <p>Questo calcolatore mostra anche l'effetto delle aggiunte periodiche — un PAC mensile o annuale — che è il modo in cui la maggior parte delle persone investe nella realtà. Non bisogna avere un capitale iniziale enorme: la costanza nel tempo vale molto di più.</p>
+        L'interesse composto è il meccanismo per cui i tuoi guadagni generano altri guadagni — all'infinito. A differenza dell'interesse semplice, gli interessi vengono reinvestiti anziché incassati. Gli effetti nel lungo periodo sono controintuitivi: il tempo vale spesso più del capitale iniziale, e iniziare tardi costa più che investire poco.
       </div>
-
+      <button class="concetti-toggle" onclick="toggleConcetti(this)"><span class="ct-arrow">▾</span> Glossario dei termini</button>
       <div class="guida-concetti">
+        <div class="concetto"><div class="c-titolo">Capitale iniziale</div><div class="c-testo">La somma investita oggi. Anche zero va bene — l'importante è iniziare. Un capitale iniziale più alto fa differenza nel lungo periodo perché ha più tempo per comporre.</div></div>
+        <div class="concetto"><div class="c-titolo">PAC</div><div class="c-testo">Piano di Accumulo del Capitale. Versamenti periodici regolari. Diluisce il rischio di entrare ai massimi di mercato e permette di investire gradualmente il proprio reddito nel tempo.</div></div>
+        <div class="concetto"><div class="c-titolo">Tasso di rendimento</div><div class="c-testo">Rendimento medio annuo atteso. L'azionario globale ha reso storicamente ~7% annuo. Il bilanciato ~4-5%. Le obbligazioni ~2-3%. Non è garantito — è una media con oscillazioni anche ampie nel breve.</div></div>
+        <div class="concetto"><div class="c-titolo">Il "punto di svolta"</div><div class="c-testo">Il momento in cui gli interessi maturati superano il capitale versato di tasca tua. Da lì i mercati lavorano più di te. Di solito avviene intorno all'anno 10-15.</div></div>
+        <div class="concetto"><div class="c-titolo">La formula</div><div class="c-testo">F = C(1+R)^N + A[(1+R)^(N+1) − (1+R)] / R. La potenza N è la chiave: è lì che vive la magia del compounding.</div></div>
+        <div class="concetto"><div class="c-titolo">Tempo vs capitale</div><div class="c-testo">100€/mese per 30 anni al 5% → ~83.000€. Iniziare 10 anni dopo versando 200€/mese per 20 anni → ~82.000€. Il doppio del versamento non compensa il tempo perso.</div></div>
+      </div>
+      <div class="guida-faq">
+        <div class="guida-faq-title">Domande frequenti</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Qual è un tasso di rendimento realistico?</div><div class="faq-a">Dipende da cosa investi. L'azionario globale (es. ETF MSCI World) ha reso storicamente il 7-9% annuo lordo negli ultimi 30 anni — con anni molto positivi e molto negativi. Il bilanciato si aggira sul 4-6%, le obbligazioni sul 2-3%. Per un orizzonte lungo usa 5-7%; per uno prudente il 3-4%. Ricorda: questi sono rendimenti lordi, le tasse e i costi del prodotto riducono il risultato.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Il calcolatore tiene conto dell'inflazione?</div><div class="faq-a">No. Il capitale finale è in euro con il potere d'acquisto di oggi. Per avere un'idea del valore reale, sottrai l'inflazione attesa (~2% in Europa) dal tasso inserito. Per un rendimento reale del 5%, inserisci 5% — non 7%.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Cosa sono i costi e perché contano?</div><div class="faq-a">I costi di gestione (TER) di un fondo si mangiano una fetta del rendimento ogni anno. Un TER dell'1% sembra poco, ma su 30 anni può ridurre il capitale finale del 20-25%. Per questo gli ETF a basso costo (TER 0,1-0,2%) sono diventati lo strumento preferito per investire a lungo termine.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Ha senso iniziare anche con poco?</div><div class="faq-a">Assolutamente sì. Anche 50€ al mese per 25 anni al 6% diventano ~34.000€, di cui solo 15.000€ versati. La barriera del "non ho abbastanza per iniziare" è uno degli errori più costosi in finanza personale — ogni anno perso è un anno di compounding in meno.</div></div>
+      </div>
+    </div>
+    <hr class="guida-divider">
         <div class="concetto">
           <div class="c-titolo">Capitale iniziale</div>
           <div class="c-testo">La somma di partenza investita oggi. Anche zero va bene — l'importante è iniziare. Un capitale iniziale più alto fa una differenza enorme nel lungo periodo perché ha più tempo per comporre.</div>
@@ -391,12 +390,26 @@ permalink: /consulenza/strumenti/
     <!-- GUIDA PENSIONE -->
     <div class="guida">
       <div class="guida-intro">
-        <p>La pensione pubblica italiana — quella dell'INPS — si sta progressivamente riducendo per chi è entrato nel mercato del lavoro dopo il 1995, quando è passata dal sistema retributivo a quello contributivo. In parole semplici: non prenderai più una percentuale del tuo ultimo stipendio, ma una percentuale di quanto hai versato nell'arco della carriera. Per molti giovani lavoratori, questo significa una pensione pubblica intorno al 50-60% dell'ultimo reddito, se va bene.</p>
-        <p>Il fondo pensione complementare serve a colmare questo gap. Non è un investimento qualsiasi: è uno strumento che combina l'interesse composto nel lungo periodo con un vantaggio fiscale immediato — la deducibilità dei versamenti dall'imponibile IRPEF fino a 5.164,57€ l'anno. In pratica, parte dei soldi che versi al fondo pensione li avrebbe presi comunque lo Stato come tasse. Stai solo decidendo dove vanno.</p>
-        <p>Per i dipendenti c'è anche la possibilità di versare il TFR nel fondo pensione invece di lasciarlo in azienda. Nel fondo, il TFR viene investito sui mercati finanziari — con rendimenti storicamente superiori alla rivalutazione legale del TFR (1,5% + 0,75% dell'inflazione annua).</p>
+        La pensione pubblica INPS si sta riducendo per chi lavora dal 1995 in poi: non riceverai più una percentuale dell'ultimo stipendio, ma di quanto hai versato in carriera. Per molti giovani significa una pensione intorno al 50-60% dell'ultimo reddito. Il fondo pensione complementare serve a colmare questo gap — con il vantaggio di dedurre i versamenti dall'IRPEF fino a 5.164,57€/anno.
       </div>
-
+      <button class="concetti-toggle" onclick="toggleConcetti(this)"><span class="ct-arrow">▾</span> Glossario dei termini</button>
       <div class="guida-concetti">
+        <div class="concetto"><div class="c-titolo">Deducibilità IRPEF</div><div class="c-testo">Versamenti deducibili fino a 5.164,57€/anno (~430€/mese). Versare 300€/mese ti costa realmente 225€ se sei nello scaglione al 25% — il resto lo risparmia il fisco.</div></div>
+        <div class="concetto"><div class="c-titolo">Aliquota IRPEF marginale</div><div class="c-testo">23% fino a 15.000€ · 25% fino a 28.000€ · 35% fino a 50.000€ · 43% oltre. Chi guadagna di più risparmia proporzionalmente di più — un'ironia del sistema fiscale italiano.</div></div>
+        <div class="concetto"><div class="c-titolo">Il TFR</div><div class="c-testo">Circa 1/13,5 della RAL annua. Lasciato in azienda si rivaluta dell'1,5% + 0,75% inflazione (legge del 1982). Nel fondo pensione viene investito sui mercati — storicamente di più, ma con più volatilità.</div></div>
+        <div class="concetto"><div class="c-titolo">Comparto di investimento</div><div class="c-testo">Azionario (più rendimento, più rischio), bilanciato, obbligazionario, garantito. Più sei lontano dalla pensione, più puoi permetterti il comparto azionario.</div></div>
+        <div class="concetto"><div class="c-titolo">Tassazione in uscita</div><div class="c-testo">Al pensionamento: 15% che scende dello 0,30% per ogni anno oltre il quindicesimo, fino al 9% minimo. Molto meno dell'IRPEF ordinaria o del 26% sulle plusvalenze azionarie.</div></div>
+        <div class="concetto"><div class="c-titolo">Regime forfettario</div><div class="c-testo">In regime forfettario non puoi dedurre i contributi — il principale vantaggio fiscale viene meno. Il fondo diventa puro accumulo a lungo termine. Valuta attentamente le alternative.</div></div>
+      </div>
+      <div class="guida-faq">
+        <div class="guida-faq-title">Domande frequenti</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Quanti soldi posso versare al fondo pensione?</div><div class="faq-a">Puoi versare quanto vuoi, ma la deducibilità è limitata a 5.164,57€/anno (~430€/mese). Versare di più è possibile ma non conveniente fiscalmente. Eccezione: nei primi cinque anni di lavoro, le quote non dedotte possono essere recuperate nei vent'anni successivi fino a 2.582,29€/anno extra.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Posso ritirare i soldi prima della pensione?</div><div class="faq-a">In casi specifici sì: fino al 75% per spese sanitarie gravi (subito), fino al 75% per acquisto/ristrutturazione prima casa (dopo 8 anni), fino al 30% per qualsiasi motivo (dopo 8 anni). In caso di perdita del lavoro o invalidità esistono anche riscatti totali o parziali. Non è un conto corrente — ma non è un cassetto chiuso a chiave.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Fondo aperto o chiuso (di categoria)?</div><div class="faq-a">I fondi chiusi (negoziali) sono per categoria (es. Cometa per metalmeccanici) e spesso prevedono un contributo aggiuntivo del datore di lavoro. I fondi aperti sono per tutti, più flessibili, ma senza contributo aziendale. Se hai accesso a un fondo chiuso con contributo datoriale, di solito è la scelta migliore come punto di partenza.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Come funziona la tassazione all'uscita?</div><div class="faq-a">Aliquota del 15% che si riduce dello 0,30% per ogni anno oltre il quindicesimo, fino al 9% minimo. Dopo 40 anni nel fondo, paghi il 9% — molto meno dell'IRPEF ordinaria e del 26% sulle plusvalenze azionarie standard.</div></div>
+      </div>
+    </div>
+    <hr class="guida-divider">
         <div class="concetto">
           <div class="c-titolo">Deducibilità IRPEF</div>
           <div class="c-testo">I versamenti volontari al fondo pensione sono deducibili dall'imponibile IRPEF fino a 5.164,57€/anno (circa 430€/mese). Questo significa che versare 300€/mese al fondo pensione ti costa realmente 225€ se sei nello scaglione al 25% — il resto lo risparmia il fisco.</div>
@@ -409,30 +422,6 @@ permalink: /consulenza/strumenti/
           <div class="c-titolo">Il TFR</div>
           <div class="c-testo">Il Trattamento di Fine Rapporto matura ogni anno pari a circa 1/13,5 della RAL. Lasciato in azienda si rivaluta dell'1,5% + 0,75% dell'inflazione — una formula fissata per legge nel 1982. Versato nel fondo pensione, viene investito sui mercati con rendimenti storicamente superiori, ma con più volatilità.</div>
         </div>
-        <div class="concetto">
-          <div class="c-titolo">Comparto di investimento</div>
-          <div class="c-testo">I fondi pensione offrono diversi comparti: azionario (più rischioso, più rendimento nel lungo periodo), bilanciato, obbligazionario e garantito. La scelta dipende dall'orizzonte temporale: più sei lontano dalla pensione, più puoi permetterti rischio e rendimento atteso maggiore.</div>
-        </div>
-        <div class="concetto">
-          <div class="c-titolo">Tassazione in uscita</div>
-          <div class="c-testo">Al momento del pensionamento, le prestazioni del fondo pensione sono tassate con un'aliquota agevolata che parte dal 15% e scende fino al 9% per ogni anno oltre il quindicesimo di partecipazione. Molto inferiore all'IRPEF ordinaria che pagheresti su altri redditi.</div>
-        </div>
-        <div class="concetto">
-          <div class="c-titolo">Regime forfettario: attenzione</div>
-          <div class="c-testo">Chi è in regime forfettario non può dedurre i contributi al fondo pensione dall'imponibile — il principale vantaggio fiscale viene meno. In questo caso, il fondo pensione diventa uno strumento di puro accumulo a lungo termine, senza il beneficio immediato del risparmio IRPEF. Valuta attentamente le alternative.</div>
-        </div>
-      </div>
-
-      <div class="guida-faq">
-        <div class="guida-faq-title">Domande frequenti</div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Quanti soldi posso versare al fondo pensione?</div><div class="faq-a">Puoi versare quanto vuoi, ma la deducibilità fiscale è limitata a 5.164,57€ l'anno (circa 430€/mese). Versare di più è possibile ma non conveniente fiscalmente — la quota eccedente non è deducibile. Fanno eccezione i primi cinque anni di lavoro: le quote non dedotte possono essere recuperate nei vent'anni successivi fino a 2.582,29€/anno extra.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Posso ritirare i soldi prima della pensione?</div><div class="faq-a">In casi specifici sì. Puoi richiedere anticipazioni fino al 75% per spese sanitarie gravi (in qualsiasi momento), fino al 75% per acquisto o ristrutturazione prima casa (dopo 8 anni), e fino al 30% per qualsiasi motivo (dopo 8 anni). In caso di perdita del lavoro o invalidità ci sono anche le possibilità di riscatto totale o parziale. Non è un conto corrente — ma non è neanche un cassetto chiuso a chiave.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Fondo pensione aperto o chiuso (di categoria)?</div><div class="faq-a">I fondi chiusi (negoziali) sono specifici per categoria lavorativa (es. Cometa per i metalmeccanici, Espero per i dipendenti pubblici) e spesso prevedono un contributo aggiuntivo del datore di lavoro se versi almeno la quota minima. I fondi aperti sono accessibili a tutti, offrono più flessibilità nella scelta dei comparti ma in genere non hanno il contributo del datore. Se hai accesso a un fondo chiuso con contributo aziendale, di solito è la scelta migliore come punto di partenza.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Come funziona la tassazione all'uscita?</div><div class="faq-a">La prestazione finale è tassata con un'aliquota del 15% che si riduce dello 0,30% per ogni anno oltre il quindicesimo di partecipazione, fino a un minimo del 9%. Quindi dopo 40 anni nel fondo, paghi il 9% sul montante — molto meno dell'IRPEF ordinaria. Da confrontare con la tassazione del 26% sui guadagni di un investimento azionario standard.</div></div>
-      </div>
-    </div>
-    <hr class="guida-divider">
-
     <div class="calc-form">
       <div class="field"><label>Età attuale</label><input type="number" id="p-eta" min="18" max="67" placeholder="es. 35" oninput="pEtaHint()"><span class="hint" id="p-eta-hint"></span></div>
       <div class="field"><label>Età di pensionamento</label><input type="number" id="p-eta-pensione" min="60" max="75" value="67" placeholder="es. 67"></div>
@@ -498,6 +487,7 @@ permalink: /consulenza/strumenti/
 function fmt(n) { return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:2}).format(n); }
 function fmtPct(n) { return (n>=0?'+':'')+n.toFixed(2)+'%'; }
 function toggleFaq(el) { el.classList.toggle('open'); el.nextElementSibling.classList.toggle('open'); }
+function toggleConcetti(btn) { btn.classList.toggle('open'); btn.nextElementSibling.classList.toggle('open'); }
 
 function apriCalcolatore(id) {
   document.getElementById('hub-cards').style.display = 'none';
