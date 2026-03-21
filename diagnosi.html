@@ -1,0 +1,380 @@
+---
+layout: default
+title: Diagnosi di Portafoglio
+permalink: /consulenza/diagnosi/
+---
+<style>
+  /* ── HERO ── */
+  .diag-hero { background: var(--ink); color: var(--paper); padding: 3.5rem 2rem; position: relative; overflow: hidden; }
+  .diag-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px); pointer-events: none; }
+  .diag-hero .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .diag-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .diag-hero p { font-size: 0.95rem; color: rgba(245,240,232,0.65); max-width: 600px; line-height: 1.9; margin-bottom: 1.5rem; }
+  .diag-hero .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary-light { display: inline-block; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.75rem 1.8rem; transition: opacity 0.2s; }
+  .btn-primary-light:hover { opacity: 0.85; }
+  .btn-ghost-light { display: inline-block; background: transparent; color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.75rem 1.8rem; border: 1px solid rgba(245,240,232,0.3); transition: border-color 0.2s; }
+  .btn-ghost-light:hover { border-color: var(--paper); }
+
+  .diag-wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+  .section-label { display: flex; align-items: center; gap: 1rem; margin: 0 0 1.5rem; }
+  .section-label span { font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── COSA ANALIZZIAMO ── */
+  .analisi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 2.5rem; }
+  .analisi-card { border: 1px solid var(--border); padding: 1.4rem; background: white; }
+  .analisi-card .a-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--border); line-height: 1; margin-bottom: 0.8rem; }
+  .analisi-card .a-titolo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--ink); }
+  .analisi-card .a-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+  .analisi-card .a-tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid var(--gold); color: var(--gold); margin-top: 0.8rem; }
+
+  /* ── COSA RICEVI ── */
+  .ricevi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2.5rem; }
+  .ricevi-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background: #f8f4ee; }
+  .ricevi-item .r-icon { font-family: 'IBM Plex Mono', monospace; font-size: 1rem; color: var(--gold); flex-shrink: 0; padding-top: 0.1rem; }
+  .ricevi-item .r-testo { font-size: 0.85rem; color: var(--ink); line-height: 1.7; }
+  .ricevi-item .r-testo strong { color: var(--ink); }
+
+  /* ── STRUMENTI ANALIZZATI ── */
+  .strumenti-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
+  .strumento-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1px solid var(--border); color: var(--muted); }
+
+  /* ── PROCESSO ── */
+  .processo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 2.5rem; }
+  .processo-step { padding: 1.4rem 1rem; border: 1px solid var(--border); border-right: none; position: relative; background: white; }
+  .processo-step:last-child { border-right: 1px solid var(--border); }
+  .processo-step .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.5rem; }
+  .processo-step .p-titolo { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .processo-step .p-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── FORM RICHIESTA ── */
+  .form-wrap { background: var(--ink); color: var(--paper); padding: 2.5rem; margin-bottom: 2.5rem; }
+  .form-wrap h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .form-wrap .f-sub { font-size: 0.88rem; color: rgba(245,240,232,0.6); margin-bottom: 2rem; line-height: 1.7; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-field label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.5); }
+  .form-field input, .form-field select, .form-field textarea {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem;
+    color: var(--paper); background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15); padding: 0.65rem 0.9rem;
+    outline: none; transition: border-color 0.15s; width: 100%;
+  }
+  .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(245,240,232,0.25); }
+  .form-field input:focus, .form-field select, .form-field textarea:focus { border-color: var(--gold); }
+  .form-field select option { background: var(--ink); color: var(--paper); }
+  .form-field textarea { resize: vertical; min-height: 90px; }
+
+  /* ISIN ROWS */
+  .isin-container { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .isin-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; align-items: center; }
+  .isin-row input { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--paper); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 0.6rem 0.8rem; outline: none; width: 100%; }
+  .isin-row input::placeholder { color: rgba(245,240,232,0.25); }
+  .btn-add-isin { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(245,240,232,0.6); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; padding: 0.5rem 0.8rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .btn-add-isin:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-del-isin { background: none; border: 1px solid rgba(200,57,43,0.3); color: rgba(200,57,43,0.6); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; padding: 0.5rem 0.7rem; cursor: pointer; transition: all 0.15s; }
+  .btn-del-isin:hover { border-color: var(--accent); color: var(--accent); }
+  .isin-hint { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: rgba(245,240,232,0.35); margin-bottom: 0.8rem; }
+
+  .form-submit { width: 100%; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; border: none; padding: 0.9rem; cursor: pointer; margin-top: 0.5rem; transition: opacity 0.2s; }
+  .form-submit:hover { opacity: 0.85; }
+  .form-note { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: rgba(245,240,232,0.35); margin-top: 0.8rem; line-height: 1.6; }
+
+  /* SUCCESSO */
+  .form-success { display: none; text-align: center; padding: 2rem 0; }
+  .form-success .s-icon { font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; }
+  .form-success h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .form-success p { font-size: 0.88rem; color: rgba(245,240,232,0.6); }
+
+  /* ── FAQ ── */
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; gap: 1rem; color: var(--ink); }
+  .faq-q::after { content: '▾'; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--gold); transition: transform 0.2s; flex-shrink: 0; }
+  .faq-q.open::after { transform: rotate(180deg); }
+  .faq-a { font-size: 0.86rem; color: var(--muted); line-height: 1.8; padding-bottom: 1rem; display: none; }
+  .faq-a.open { display: block; }
+
+  /* CTA FINALE */
+  .cta-box { background: #f0ebe0; border-left: 3px solid var(--gold); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .cta-box h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .cta-box p { font-size: 0.84rem; color: var(--muted); }
+  .btn-primary { display: inline-block; background: var(--accent); color: var(--paper); font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.7rem 1.5rem; transition: opacity 0.2s; border: none; cursor: pointer; }
+  .btn-primary:hover { opacity: 0.85; }
+
+  @media (max-width: 768px) {
+    .analisi-grid { grid-template-columns: 1fr; }
+    .ricevi-grid { grid-template-columns: 1fr; }
+    .processo { grid-template-columns: 1fr 1fr; }
+    .processo-step { border-right: 1px solid var(--border); }
+    .form-grid { grid-template-columns: 1fr; }
+    .isin-row { grid-template-columns: 1fr 1fr; }
+    .isin-row .btn-del-isin { grid-column: 1 / -1; width: fit-content; }
+  }
+</style>
+
+<!-- HERO -->
+<div class="diag-hero">
+  <div style="max-width:960px; margin:0 auto; position:relative; z-index:1;">
+    <div class="kicker">Consulenza · Servizio gratuito</div>
+    <h1>Diagnosi di Portafoglio</h1>
+    <p>Conosci davvero i rischi che stai correndo? E i costi che stai pagando? Inviami gli ISIN dei tuoi strumenti e ricevi un'analisi indipendente e dettagliata — senza conflitti di interesse, senza impegno.</p>
+    <div class="btn-row">
+      <a href="#richiedi" class="btn-primary-light">Richiedi la diagnosi</a>
+      <a href="/consulenza/" class="btn-ghost-light">Tutti i servizi</a>
+    </div>
+  </div>
+</div>
+
+<div class="diag-wrap">
+
+  <!-- COSA ANALIZZIAMO -->
+  <div class="section-label"><span>Cosa viene analizzato</span></div>
+  <div class="analisi-grid">
+    <div class="analisi-card">
+      <div class="a-num">01</div>
+      <div class="a-titolo">Rischio / Rendimento</div>
+      <div class="a-desc">Verifichiamo se i rischi che corri sono adeguatamente remunerati dai rendimenti attesi. Un portafoglio efficiente deve stare sulla frontiera efficiente — non distante da essa.</div>
+      <div class="a-tag">Sharpe · VaR · Drawdown</div>
+    </div>
+    <div class="analisi-card">
+      <div class="a-num">02</div>
+      <div class="a-titolo">Costi e onerosità</div>
+      <div class="a-desc">Fondi e polizze hanno costi spesso nascosti che erodono il rendimento nel lungo periodo. Li rendiamo espliciti: TER, commissioni di gestione, performance fee e costi impliciti.</div>
+      <div class="a-tag">TER · Commissioni · Efficienza</div>
+    </div>
+    <div class="analisi-card">
+      <div class="a-num">03</div>
+      <div class="a-titolo">Diversificazione</div>
+      <div class="a-desc">Analizziamo le correlazioni tra gli strumenti e l'effettiva esposizione geografica e per asset class. Molti portafogli che sembrano diversificati non lo sono affatto.</div>
+      <div class="a-tag">Correlazione · Asset class · Geografia</div>
+    </div>
+    <div class="analisi-card">
+      <div class="a-num">04</div>
+      <div class="a-titolo">Performance storica</div>
+      <div class="a-desc">Confrontiamo l'andamento del portafoglio con il benchmark di riferimento su diversi orizzonti temporali — 1, 3 e 5 anni — nelle diverse fasi di mercato.</div>
+      <div class="a-tag">Benchmark · Alfa · Beta</div>
+    </div>
+    <div class="analisi-card">
+      <div class="a-num">05</div>
+      <div class="a-titolo">Evoluzione probabilistica</div>
+      <div class="a-desc">Mostriamo come potrebbe evolvere il portafoglio nei prossimi anni in tre scenari: ottimistico, centrale e pessimistico. Con i numeri, non con le promesse.</div>
+      <div class="a-tag">Proiezioni · Scenari · Monte Carlo</div>
+    </div>
+    <div class="analisi-card">
+      <div class="a-num">06</div>
+      <div class="a-titolo">Commento finale</div>
+      <div class="a-desc">Non solo numeri. Il report si chiude con un'analisi qualitativa: punti di forza, inefficienze rilevate e — se necessario — indicazioni su come migliorare l'allocation.</div>
+      <div class="a-tag">Analisi · Raccomandazioni</div>
+    </div>
+  </div>
+
+  <!-- COSA RICEVI -->
+  <div class="section-label"><span>Cosa ricevi</span></div>
+  <div class="ricevi-grid">
+    <div class="ricevi-item">
+      <div class="r-icon">◆</div>
+      <div class="r-testo"><strong>Report PDF professionale</strong> — completo di grafici, tabelle e commento personalizzato sulla situazione del tuo portafoglio.</div>
+    </div>
+    <div class="ricevi-item">
+      <div class="r-icon">◆</div>
+      <div class="r-testo"><strong>Analisi indipendente</strong> — nessun prodotto da vendere, nessuna commissione. Solo un'analisi onesta di quello che hai.</div>
+    </div>
+    <div class="ricevi-item">
+      <div class="r-icon">◆</div>
+      <div class="r-testo"><strong>Entro 48-72 ore lavorative</strong> — il report viene preparato manualmente e inviato via email all'indirizzo indicato.</div>
+    </div>
+    <div class="ricevi-item">
+      <div class="r-icon">◆</div>
+      <div class="r-testo"><strong>Nessun impegno</strong> — la diagnosi è gratuita e non comporta nessun obbligo di acquisto o sottoscrizione di servizi aggiuntivi.</div>
+    </div>
+  </div>
+
+  <!-- STRUMENTI -->
+  <div class="section-label"><span>Strumenti analizzabili</span></div>
+  <div class="strumenti-list">
+    <span class="strumento-tag">ETF</span>
+    <span class="strumento-tag">Fondi comuni</span>
+    <span class="strumento-tag">Azioni</span>
+    <span class="strumento-tag">Obbligazioni / BTP</span>
+    <span class="strumento-tag">Polizze assicurative</span>
+    <span class="strumento-tag">Fondi pensione</span>
+    <span class="strumento-tag">Certificati</span>
+    <span class="strumento-tag">Prodotti bancari</span>
+  </div>
+
+  <!-- PROCESSO -->
+  <div class="section-label"><span>Come funziona</span></div>
+  <div class="processo">
+    <div class="processo-step">
+      <div class="p-num">01 — INVIO</div>
+      <div class="p-titolo">Compila il form</div>
+      <div class="p-desc">Inserisci gli ISIN dei tuoi strumenti e i pesi nel portafoglio. Bastano 2 minuti.</div>
+    </div>
+    <div class="processo-step">
+      <div class="p-num">02 — ANALISI</div>
+      <div class="p-titolo">Preparo il report</div>
+      <div class="p-desc">Analizzo ogni strumento e il portafoglio nel suo complesso. Entro 48-72 ore lavorative.</div>
+    </div>
+    <div class="processo-step">
+      <div class="p-num">03 — CONSEGNA</div>
+      <div class="p-titolo">Ricevi il PDF</div>
+      <div class="p-desc">Il report completo arriva via email. Grafici, metriche e commento personalizzato.</div>
+    </div>
+    <div class="processo-step">
+      <div class="p-num">04 — FOLLOW-UP</div>
+      <div class="p-titolo">Opzionale</div>
+      <div class="p-desc">Se vuoi approfondire, puoi richiedere una call gratuita per discutere i risultati.</div>
+    </div>
+  </div>
+
+  <!-- FORM RICHIESTA -->
+  <div class="form-wrap" id="richiedi">
+    <h2>Richiedi la diagnosi</h2>
+    <p class="f-sub">Compila il form con i tuoi dati e gli ISIN degli strumenti che vuoi analizzare. Trovi l'ISIN sul rendiconto della tua banca, sull'estratto conto titoli o cercando il nome del fondo su Google seguito da "ISIN".</p>
+
+    <div id="form-content">
+      <form action="https://formspree.io/f/mkoqrgoe" method="POST" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="_subject" value="Richiesta Diagnosi di Portafoglio">
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Nome e cognome *</label>
+            <input type="text" name="nome" placeholder="Mario Rossi" required>
+          </div>
+          <div class="form-field">
+            <label>Email *</label>
+            <input type="email" name="email" placeholder="mario@email.com" required>
+          </div>
+          <div class="form-field">
+            <label>Valore approssimativo del portafoglio (€)</label>
+            <select name="valore">
+              <option value="">— Seleziona —</option>
+              <option>Meno di 10.000€</option>
+              <option>10.000 – 50.000€</option>
+              <option>50.000 – 100.000€</option>
+              <option>100.000 – 250.000€</option>
+              <option>Oltre 250.000€</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Orizzonte temporale</label>
+            <select name="orizzonte">
+              <option value="">— Seleziona —</option>
+              <option>Breve (1-3 anni)</option>
+              <option>Medio (3-7 anni)</option>
+              <option>Lungo (oltre 7 anni)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ISIN DINAMICI -->
+        <div class="form-field full" style="margin-bottom:0.3rem;">
+          <label>Strumenti del portafoglio (ISIN + peso %)</label>
+        </div>
+        <p class="isin-hint">Inserisci ISIN o ticker Yahoo Finance (es. IE00B4L5Y983 oppure VWCE.DE) e il peso percentuale. Aggiungi fino a 15 strumenti.</p>
+        <div class="isin-container" id="isin-container">
+          <div class="isin-row">
+            <input type="text" name="isin[]" placeholder="ISIN o Ticker (es. IE00B4L5Y983)" style="text-transform:uppercase;">
+            <input type="number" name="peso[]" placeholder="Peso %" min="0" max="100" step="0.1">
+            <button type="button" class="btn-del-isin" onclick="rimuoviIsin(this)" style="visibility:hidden;">✕</button>
+          </div>
+        </div>
+        <button type="button" class="btn-add-isin" onclick="aggiungiIsin()">+ Aggiungi strumento</button>
+
+        <div class="form-grid" style="margin-top:1rem;">
+          <div class="form-field full">
+            <label>Note aggiuntive (opzionale)</label>
+            <textarea name="note" placeholder="Descrivi brevemente il tuo profilo di rischio, obiettivi di investimento o qualsiasi altra informazione utile..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit">◆ Invia richiesta diagnosi</button>
+        <p class="form-note">I tuoi dati vengono utilizzati esclusivamente per la preparazione del report e non vengono condivisi con terze parti. Puoi richiedere la cancellazione in qualsiasi momento scrivendo a {{ site.email }}.</p>
+      </form>
+    </div>
+
+    <div class="form-success" id="form-success">
+      <div class="s-icon">◆</div>
+      <h3>Richiesta ricevuta.</h3>
+      <p>Riceverai il report via email entro 48-72 ore lavorative.<br>Se hai domande nel frattempo, scrivi a {{ site.email }}</p>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-label"><span>Domande frequenti</span></div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Dove trovo l'ISIN dei miei strumenti?</div>
+    <div class="faq-a">L'ISIN si trova sul rendiconto della tua banca o sull'estratto conto titoli. In alternativa, cerca il nome del fondo o ETF su Google seguito da "ISIN" — o su siti come Morningstar, JustETF o Borsa Italiana. È un codice di 12 caratteri che inizia con due lettere (es. IE00B4L5Y983 per il Vanguard FTSE All-World).</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Devo inserire tutti gli strumenti?</div>
+    <div class="faq-a">Più strumenti inserisci, più completa e accurata sarà l'analisi. Puoi anche inserire solo una parte del portafoglio — in quel caso l'analisi sarà relativa agli strumenti forniti. Indicami nella sezione "Note" se stai analizzando solo una parte del portafoglio totale.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">La diagnosi è davvero gratuita? Qual è il motivo?</div>
+    <div class="faq-a">Sì, completamente gratuita e senza impegno. Il motivo è semplice: questo sito nasce per fare educazione finanziaria indipendente. La diagnosi è uno strumento utile per capire se il proprio portafoglio funziona — e a me serve per mostrare concretamente come lavoro. Non vendo prodotti, non ho accordi commerciali con banche o SGR.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Cosa succede dopo che ricevo il report?</div>
+    <div class="faq-a">Nulla di obbligatorio. Il report è tuo. Se vuoi discuterne, puoi richiedere una call gratuita. Se vuoi procedere con una consulenza più approfondita, puoi farne richiesta. Ma non c'è nessun follow-up automatico e nessuna pressione commerciale.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Quanto tempo ci vuole per ricevere il report?</div>
+    <div class="faq-a">Il report viene preparato manualmente entro 48-72 ore lavorative dalla ricezione della richiesta. Nei periodi di alta domanda potrebbe richiedere qualche giorno in più — in quel caso ti avviserò via email.</div>
+  </div>
+
+  <!-- CTA STRUMENTI -->
+  <div class="cta-box" style="margin-top:2.5rem;">
+    <div>
+      <h3>Nel frattempo, prova i calcolatori</h3>
+      <p>Interesse composto, rendimento obbligazioni e pensione integrativa — gratis e immediati.</p>
+    </div>
+    <a href="/consulenza/strumenti/" class="btn-primary">Vai agli strumenti →</a>
+  </div>
+
+</div>
+
+<script>
+function aggiungiIsin() {
+  const container = document.getElementById('isin-container');
+  if (container.children.length >= 15) { alert('Massimo 15 strumenti.'); return; }
+  const row = document.createElement('div');
+  row.className = 'isin-row';
+  row.innerHTML = `
+    <input type="text" name="isin[]" placeholder="ISIN o Ticker" style="text-transform:uppercase;">
+    <input type="number" name="peso[]" placeholder="Peso %" min="0" max="100" step="0.1">
+    <button type="button" class="btn-del-isin" onclick="rimuoviIsin(this)">✕</button>
+  `;
+  container.appendChild(row);
+  // Mostra pulsante rimozione sulla prima riga
+  container.querySelector('.btn-del-isin').style.visibility = 'visible';
+}
+
+function rimuoviIsin(btn) {
+  const container = document.getElementById('isin-container');
+  if (container.children.length > 1) {
+    btn.closest('.isin-row').remove();
+    if (container.children.length === 1) {
+      container.querySelector('.btn-del-isin').style.visibility = 'hidden';
+    }
+  }
+}
+
+function handleSubmit(e) {
+  // Lascia che Formspree gestisca il submit normale
+  // Mostra messaggio di successo dopo un momento
+  setTimeout(() => {
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }, 800);
+}
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+</script>
