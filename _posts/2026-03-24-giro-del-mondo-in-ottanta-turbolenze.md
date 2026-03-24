@@ -2,7 +2,7 @@
 layout: post
 title: "Medio Oriente in fiamme: due scenari per l'economia globale (e nessuno dei due è divertente)"
 date: 2026-03-24
-category: Geopolitica
+category: Mercati
 tags: [medio oriente, petrolio, Fed, BCE, Cina, macro globale]
 reading_time: "7 min"
 author: Alessandro Martelli
