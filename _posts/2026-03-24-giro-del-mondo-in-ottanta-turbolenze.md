@@ -4,6 +4,8 @@ title: "Medio Oriente in fiamme: due scenari per l'economia globale (e nessuno d
 date: 2026-03-24
 category: Geopolitica
 tags: [medio oriente, petrolio, Fed, BCE, Cina, macro globale]
+reading_time: "7 min"
+author: Alessandro Martelli
 excerpt: "Notizie dal fronte orientale? Dalla scrivania della Lagarde, passando per Powell fino a Pechino. Un giro del mondo in ottanta turbolenze."
 ---
 
