@@ -19,7 +19,7 @@ Benvenuti all'analisi di questa settimana. Allacciate le cinture — o almeno st
 
 ---
 
-## Scenario 1: "Va tutto bene, tranquilli" (quello ottimista)
+## Scenario 1: "Va tutto bene, tranquilli" (l'inguaribile ottimista)
 
 Se le tensioni allo Stretto di Hormuz si rivelano una perturbazione passeggera — il classico temporale estivo della geopolitica — l'impatto su crescita e inflazione globale dovrebbe essere **limitato**.
 
@@ -29,7 +29,7 @@ Questo scenario è il preferito degli ottimisti cronici, di chi compra sempre i 
 
 ---
 
-## Scenario 2: "Houston, abbiamo un problema" (quello che tiene svegli la notte)
+## Scenario 2: "Houston, abbiamo un problema" (the nightmare before pasqua)
 
 Se invece la chiusura dello Stretto si prolunga, entriamo in territorio decisamente più scomodo. **Il petrolio sopra i 100 dollari al barile** non sarebbe più un'ipotesi da war game, ma una costante con cui fare i conti ogni mattina al distributore.
 
@@ -92,4 +92,4 @@ Che è esattamente quello che cerchiamo di fare qui.
 
 ---
 
-*Le analisi pubblicate su questo sito sono a scopo informativo e non costituiscono consulenza finanziaria. Per una valutazione del tuo portafoglio alla luce degli scenari macro descritti, puoi richiedere una [consulenza indipendente](/consulenza/).*
+*Le analisi pubblicate su questo sito sono a scopo informativo e non costituiscono consulenza finanziaria.*
