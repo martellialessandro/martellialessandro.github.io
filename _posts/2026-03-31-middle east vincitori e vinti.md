@@ -7,9 +7,6 @@ tags: [Medio Oriente, Mercati Globali, Commodities, Tassi, Energia]
 reading_time: "9 min"
 author: Alessandro Martelli
 excerpt: "Virata a ribasso delle prospettive economiche globali? Tra catene di fornitura strozzate e un'inflazione rampante, chi potrebbe farsi male e chi invece si sfrega le mani?"
----
-
-Ecco la versione estesa, raffinata e strutturata in Markdown, basata esclusivamente sui dati tecnici forniti. Il tono resta quello dell'analista che non ha paura di guardare in faccia il grafico peggiore della giornata, mantenendo però il rigore necessario per un report strategico.
 
 ---
 
