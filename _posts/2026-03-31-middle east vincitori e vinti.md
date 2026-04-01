@@ -10,8 +10,6 @@ excerpt: "Virata a ribasso delle prospettive economiche globali? Tra catene di f
 
 ---
 
-# L’Imbuto di Hormuz: Se il Mondo Trattiene il Respiro, l'Economia Va in Apnea
-
 Mentre i palazzi della politica si interrogano sulla durata del conflitto, i mercati hanno già smesso di credere alle favole. La realtà è che lo Stretto di Hormuz non è solo un punto sulla mappa: è la giugulare dell’economia globale, e in questo momento è stretta in una morsa che non accenna a mollare. Nonostante le rassicurazioni su una risoluzione rapida, siamo in piena modalità "wait and see", con una visibilità sui rischi futuri che definire scarsa è un eufemismo.
 
 ## 1. La Matematica del Disastro: Oltre il 2,7%
