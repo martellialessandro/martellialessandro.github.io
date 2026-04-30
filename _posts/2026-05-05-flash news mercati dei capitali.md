@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Il rally a imbuto: quando il mercato sale, ma non insieme"
-date: 2026-05-05
+date: 2026-05-30
 category: Mercati
 author: Alessandro Martelli
 reading_time: "8 min"
