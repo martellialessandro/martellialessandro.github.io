@@ -507,7 +507,7 @@ permalink: /servizi/strumenti/
         <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);padding-bottom:0.6rem;border-bottom:1px solid var(--border);margin-bottom:1rem;">◆ Acquisto con mutuo</div>
         <div class="field">
           <label>Valore immobile (€)</label>
-          <input type="number" id="av-prezzo" value="300000" step="5000">
+          <input type="number" id="av-prezzo" value="300000" step="5000" oninput="avSync()">
         </div>
         <div class="field">
           <label>Anticipo (%)</label>
@@ -752,8 +752,13 @@ function toggleConcetti(btn) { btn.classList.toggle('open'); btn.nextElementSibl
 function apriCalcolatore(id) {
   document.getElementById('hub-cards').style.display = 'none';
   document.querySelectorAll('.calc-container').forEach(el => el.classList.remove('visible'));
-  document.getElementById('calc-'+id).classList.add('visible');
-  window.scrollTo({top: document.getElementById('calc-'+id).offsetTop - 80, behavior:'smooth'});
+  var target = document.getElementById('calc-'+id);
+  if(!target){ console.error('Calcolatore non trovato: calc-'+id); return; }
+  target.classList.add('visible');
+  requestAnimationFrame(function(){
+    var top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+    window.scrollTo({top: top, behavior:'smooth'});
+  });
 }
 
 function tornaHub() {
@@ -909,8 +914,7 @@ function avSync(){
   document.getElementById('av-ltv-val').textContent=ltv+'%';
   if(p){ const ant=p*ltv/100, mut=p-ant; document.getElementById('av-anticipo-hint').textContent=`Anticipo: ${fmt(ant)} — Mutuo: ${fmt(mut)}`; }
 }
-document.getElementById('av-prezzo')?.addEventListener('input',avSync);
-document.getElementById('av-ltv')?.addEventListener('input',avSync);
+// avSync chiamata inline via oninput negli slider — nessun addEventListener necessario
 
 function calcolaAffitto(){
   const prezzo=parseFloat(document.getElementById('av-prezzo').value)||0;
