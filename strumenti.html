@@ -160,7 +160,7 @@ permalink: /servizi/strumenti/
     <div class="section-label"><span>Scegli il calcolatore</span></div>
     <div class="cards-grid">
 
-      <div class="calc-card" onclick="apriCalcolatore('obbligazioni')">
+      <div class="calc-card" data-calc="obbligazioni">
         <div class="card-num">01</div>
         <div class="card-title">Rendimento Obbligazioni e Titoli di Stato</div>
         <div class="card-desc">Calcola il rendimento netto del tuo BTP, BOT, CCT o obbligazione corporate — cedole, plusvalenze, credito d'imposta e capitale finale.</div>
@@ -168,7 +168,7 @@ permalink: /servizi/strumenti/
         <div class="card-arrow">→</div>
       </div>
 
-      <div class="calc-card" onclick="apriCalcolatore('composto')">
+      <div class="calc-card" data-calc="composto">
         <div class="card-num">02</div>
         <div class="card-title">Interesse Composto</div>
         <div class="card-desc">Scopri quanto vale il tuo capitale tra 10, 20 o 30 anni con versamenti periodici e un tasso di rendimento atteso. L'ottava meraviglia del mondo, diceva Einstein.</div>
@@ -176,7 +176,7 @@ permalink: /servizi/strumenti/
         <div class="card-arrow">→</div>
       </div>
 
-      <div class="calc-card" onclick="apriCalcolatore('pensione')">
+      <div class="calc-card" data-calc="pensione">
         <div class="card-num">03</div>
         <div class="card-title">Pensione Integrativa e Risparmio Fiscale</div>
         <div class="card-desc">Stima il capitale accumulato a fine carriera e il risparmio IRPEF annuo grazie alla deducibilità dei versamenti al fondo pensione.</div>
@@ -190,7 +190,7 @@ permalink: /servizi/strumenti/
     <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;">Strumenti per decisioni di lungo periodo: comprare o affittare casa, pianificare l'indipendenza finanziaria. Più complessi, più potenti.</p>
     <div class="cards-grid" style="grid-template-columns:1fr 1fr;">
 
-      <div class="calc-card" onclick="apriCalcolatore('affitto')">
+      <div class="calc-card" data-calc="affitto">
         <div class="card-num">04</div>
         <div class="card-title">Affitto vs Mutuo</div>
         <div class="card-desc">Comprare casa è davvero più conveniente? Confronta costo totale dell'acquisto con mutuo e costo dell'affitto, incluso il costo opportunità del capitale e l'apprezzamento immobiliare atteso.</div>
@@ -198,7 +198,7 @@ permalink: /servizi/strumenti/
         <div class="card-arrow">→</div>
       </div>
 
-      <div class="calc-card" onclick="apriCalcolatore('fire')">
+      <div class="calc-card" data-calc="fire">
         <div class="card-num">05</div>
         <div class="card-title">Calcolatore FIRE</div>
         <div class="card-desc">Quanti soldi ti servono per raggiungere l'indipendenza finanziaria? Calcola il tuo FIRE Number, gli anni al traguardo e la composizione del patrimonio con Lean, Fat o Barista FIRE.</div>
@@ -273,7 +273,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaObb()">◆ Calcola il rendimento</button>
-      <button class="reset-btn" onclick="resetForm('obbligazioni')">↺ Reset</button>
+      <button class="reset-btn" data-reset="obbligazioni">↺ Reset</button>
     </div>
 
     <div class="results" id="o-results">
@@ -344,7 +344,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaComposto()">◆ Calcola il capitale futuro</button>
-      <button class="reset-btn" onclick="resetForm('composto')">↺ Reset</button>
+      <button class="reset-btn" data-reset="composto">↺ Reset</button>
     </div>
 
     <div class="results" id="c-results">
@@ -438,7 +438,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaPensione()">◆ Calcola la mia pensione integrativa</button>
-      <button class="reset-btn" onclick="resetForm('pensione')">↺ Reset</button>
+      <button class="reset-btn" data-reset="pensione">↺ Reset</button>
     </div>
 
     <div class="results" id="p-results">
@@ -583,7 +583,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaAffitto()">Calcola convenienza</button>
-      <button class="reset-btn" onclick="resetForm('affitto')">Reset</button>
+      <button class="reset-btn" data-reset="affitto">Reset</button>
     </div>
 
     <div class="results" id="av-results">
@@ -709,7 +709,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaFire()">Calcola il mio FIRE</button>
-      <button class="reset-btn" onclick="resetForm('fire')">Reset</button>
+      <button class="reset-btn" data-reset="fire">Reset</button>
     </div>
 
     <div class="results" id="fi-results">
@@ -750,21 +750,29 @@ function toggleFaq(el) { el.classList.toggle('open'); el.nextElementSibling.clas
 function toggleConcetti(btn) { btn.classList.toggle('open'); btn.nextElementSibling.classList.toggle('open'); }
 
 function apriCalcolatore(id) {
-  document.getElementById('hub-cards').style.display = 'none';
-  document.querySelectorAll('.calc-container').forEach(el => el.classList.remove('visible'));
+  var hub = document.getElementById('hub-cards');
   var target = document.getElementById('calc-'+id);
-  if(!target){ console.error('Calcolatore non trovato: calc-'+id); return; }
+  if(!hub || !target) { return; }
+  hub.style.display = 'none';
+  document.querySelectorAll('.calc-container').forEach(function(el){ el.classList.remove('visible'); });
   target.classList.add('visible');
-  requestAnimationFrame(function(){
-    var top = target.getBoundingClientRect().top + window.pageYOffset - 80;
-    window.scrollTo({top: top, behavior:'smooth'});
-  });
+  setTimeout(function(){
+    var rect = target.getBoundingClientRect();
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    window.scrollTo({ top: rect.top + scrollTop - 80, behavior: 'smooth' });
+  }, 50);
 }
 
 function tornaHub() {
-  document.getElementById('hub-cards').style.display = 'block';
-  document.querySelectorAll('.calc-container').forEach(el => el.classList.remove('visible'));
-  window.scrollTo({top: document.getElementById('hub-cards').offsetTop - 80, behavior:'smooth'});
+  var hub = document.getElementById('hub-cards');
+  if(!hub) return;
+  hub.style.display = 'block';
+  document.querySelectorAll('.calc-container').forEach(function(el){ el.classList.remove('visible'); });
+  setTimeout(function(){
+    var rect = hub.getBoundingClientRect();
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    window.scrollTo({ top: rect.top + scrollTop - 80, behavior: 'smooth' });
+  }, 50);
 }
 
 function resetForm(id) {
@@ -1026,4 +1034,14 @@ function calcolaFire(){
   document.getElementById('fi-narrative').innerHTML=nar;
   document.getElementById('fi-results').classList.add('visible');
 }
+
+/* ── EVENT DELEGATION — gestisce data-calc e data-reset ── */
+document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('[data-calc]');
+    if (card) { apriCalcolatore(card.getAttribute('data-calc')); return; }
+    var reset = e.target.closest('[data-reset]');
+    if (reset) { resetForm(reset.getAttribute('data-reset')); return; }
+  });
+});
 </script>
