@@ -1,0 +1,231 @@
+---
+layout: default
+title: Affitto vs Mutuo — L'Analista Imperfetto
+permalink: /servizi/strumenti/affitto-vs-mutuo/
+---
+<style>
+  :root {
+    --ink: #0f0e0c; --paper: #f5f0e8; --accent: #c8392b;
+    --gold: #b8952a; --muted: #6b6560; --border: #d4cec4; --green: #2a7a45;
+  }
+  .calc-hero { background:var(--ink); color:var(--paper); padding:3rem 2rem 2.5rem; position:relative; overflow:hidden; }
+  .calc-hero::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,0.02) 60px,rgba(255,255,255,0.02) 61px); pointer-events:none; }
+  .calc-hero .breadcrumb { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.4); margin-bottom:1rem; }
+  .calc-hero .breadcrumb a { color:var(--gold); text-decoration:none; }
+  .calc-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:700; line-height:1.2; margin-bottom:0.8rem; }
+  .calc-hero p { font-size:0.9rem; color:rgba(245,240,232,0.6); max-width:580px; line-height:1.8; }
+  .calc-wrap { max-width:980px; margin:0 auto; padding:2.5rem 2rem 4rem; }
+  .intro-box { border-left:3px solid var(--gold); padding:1.2rem 1.5rem; background:#f8f4ee; margin-bottom:2.5rem; font-size:0.88rem; line-height:1.8; color:var(--ink); }
+  .intro-box strong { color:var(--gold); }
+  .section-label { display:flex; align-items:center; gap:1rem; margin:0 0 1.5rem; }
+  .section-label span { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+  .calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2rem; }
+  .calc-panel { border:1px solid var(--border); padding:1.8rem; background:white; }
+  .panel-title { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:1.4rem; padding-bottom:0.8rem; border-bottom:2px solid var(--ink); }
+  .panel-title.affitto { border-color:var(--accent); }
+  .panel-title.mutuo { border-color:var(--gold); }
+  .field { margin-bottom:1.2rem; }
+  .field label { display:block; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:0.4rem; }
+  .field input[type="number"] { width:100%; font-family:'IBM Plex Mono',monospace; font-size:0.88rem; color:var(--ink); background:var(--paper); border:1px solid var(--border); padding:0.6rem 0.8rem; outline:none; transition:border-color 0.15s; -moz-appearance:textfield; box-sizing:border-box; }
+  .field input[type="number"]:focus { border-color:var(--gold); }
+  .field input[type="number"]::-webkit-outer-spin-button, .field input[type="number"]::-webkit-inner-spin-button { -webkit-appearance:none; }
+  .slider-wrap { position:relative; padding-top:1.6rem; }
+  .slider-val { position:absolute; right:0; top:0; font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--gold); font-weight:bold; }
+  input[type="range"] { -webkit-appearance:none; appearance:none; width:100%; height:3px; background:var(--border); border:none; padding:0; cursor:pointer; outline:none; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--gold); border:2px solid white; box-shadow:0 0 0 1px var(--gold); }
+  .common-panel { border:1px solid var(--border); padding:1.8rem; background:white; margin-bottom:2rem; }
+  .common-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+  .btn-calc { display:block; width:100%; background:var(--accent); color:var(--paper); font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; border:none; padding:1rem; cursor:pointer; transition:opacity 0.2s; margin-bottom:2rem; }
+  .btn-calc:hover { opacity:0.85; }
+  .risultati { display:none; }
+  .risultati.visible { display:block; }
+  .winner-box { padding:1.5rem 2rem; margin-bottom:1.5rem; border-left:4px solid; font-size:1rem; line-height:1.7; }
+  .winner-box.affitto { border-color:var(--accent); background:#fdf5f4; }
+  .winner-box.mutuo { border-color:var(--gold); background:#fdf8ee; }
+  .winner-box .verdict { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:0.5rem; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-bottom:1.5rem; }
+  .kpi { background:white; padding:1.2rem 1rem; text-align:center; }
+  .kpi .kpi-val { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--ink); line-height:1; margin-bottom:0.3rem; }
+  .kpi .kpi-val.pos { color:var(--green); }
+  .kpi .kpi-val.neg { color:var(--accent); }
+  .kpi .kpi-lbl { font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .compare-table { width:100%; border-collapse:collapse; margin-bottom:1.5rem; }
+  .compare-table th { background:var(--ink); color:white; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 1rem; text-align:left; }
+  .compare-table td { padding:0.7rem 1rem; font-size:0.83rem; border-bottom:1px solid var(--border); font-family:'IBM Plex Mono',monospace; }
+  .compare-table tr:nth-child(even) td { background:#f8f4ee; }
+  .compare-table .highlight td { font-weight:bold; background:#f0ebe0 !important; border-top:2px solid var(--gold); }
+  .chart-wrap { background:white; border:1px solid var(--border); padding:1.5rem; margin-bottom:1.5rem; }
+  .chart-title { font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:1rem; }
+  .commento-box { background:#f8f4ee; border-left:3px solid var(--gold); padding:1.2rem 1.5rem; font-size:0.86rem; line-height:1.8; color:var(--ink); margin-bottom:2rem; }
+  .faq-item { border-bottom:1px solid var(--border); }
+  .faq-q { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:1rem 0; gap:1rem; color:var(--ink); }
+  .faq-q::after { content:'▾'; font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--gold); transition:transform 0.2s; flex-shrink:0; }
+  .faq-q.open::after { transform:rotate(180deg); }
+  .faq-a { font-size:0.86rem; color:var(--muted); line-height:1.8; padding-bottom:1rem; display:none; }
+  .faq-a.open { display:block; }
+  .disclaimer { font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--muted); line-height:1.7; margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+  @media(max-width:768px){ .calc-grid{grid-template-columns:1fr;} .common-grid{grid-template-columns:1fr 1fr;} .kpi-grid{grid-template-columns:1fr 1fr;} }
+</style>
+
+<div class="calc-hero">
+  <div style="max-width:980px;margin:0 auto;position:relative;z-index:1;">
+    <div class="breadcrumb"><a href="/consulenza/strumenti/">← Strumenti gratuiti</a></div>
+    <h1>Affitto vs Mutuo</h1>
+    <p>La domanda da un milione di euro — letteralmente. Confrontiamo il costo totale delle due opzioni nel tempo, incluso il costo opportunità del capitale immobilizzato.</p>
+  </div>
+</div>
+
+<div class="calc-wrap">
+  <div class="intro-box">
+    <strong>Cosa fa questo calcolatore</strong><br>
+    Il confronto affitto/mutuo è più complicato di quanto sembri: l'alternativa all'acquisto non è "buttare soldi" — è investire il capitale che non hai immobilizzato nell'immobile. Il calcolatore stima il <strong>costo netto totale</strong> di entrambe le opzioni su un orizzonte scelto, tenendo conto di canoni, interessi, manutenzione, rivalutazione dell'immobile e rendimento alternativo del capitale.
+  </div>
+
+  <div class="section-label"><span>Scenario affitto</span></div>
+  <div class="calc-grid">
+    <div class="calc-panel">
+      <div class="panel-title affitto">Parametri affitto</div>
+      <div class="field"><label>Canone mensile (€)</label><input type="number" id="canone" value="1200" min="100" max="10000" step="50"></div>
+      <div class="field"><label>Aumento annuo del canone</label>
+        <div class="slider-wrap"><span class="slider-val" id="val-aum">2.0%</span><input type="range" id="aum-canone" min="0" max="8" step="0.1" value="2"></div>
+      </div>
+      <div class="field"><label>Spese condominiali mensili (€)</label><input type="number" id="spese-cond" value="80" min="0" max="500" step="10"></div>
+    </div>
+    <div class="calc-panel">
+      <div class="panel-title mutuo">Parametri acquisto</div>
+      <div class="field"><label>Prezzo immobile (€)</label><input type="number" id="prezzo" value="300000" min="50000" max="2000000" step="5000"></div>
+      <div class="field"><label>Acconto (€)</label><input type="number" id="acconto" value="60000" min="0" max="500000" step="5000"></div>
+      <div class="field"><label>Tasso mutuo annuo</label>
+        <div class="slider-wrap"><span class="slider-val" id="val-tasso">3.5%</span><input type="range" id="tasso-mutuo" min="1" max="8" step="0.1" value="3.5"></div>
+      </div>
+      <div class="field"><label>Durata mutuo</label>
+        <div class="slider-wrap"><span class="slider-val" id="val-durata">25 anni</span><input type="range" id="durata-mutuo" min="5" max="30" step="1" value="25"></div>
+      </div>
+      <div class="field"><label>Spese acquisto — notaio, imposte, agenzia (€)</label><input type="number" id="spese-acq" value="8000" min="0" max="50000" step="500"></div>
+      <div class="field"><label>Manutenzione annua (% valore immobile)</label>
+        <div class="slider-wrap"><span class="slider-val" id="val-manut">1.0%</span><input type="range" id="manutenzione" min="0.2" max="3" step="0.1" value="1"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label"><span>Parametri comuni</span></div>
+  <div class="common-panel">
+    <div class="common-grid">
+      <div class="field"><label>Orizzonte temporale</label>
+        <div class="slider-wrap"><span class="slider-val" id="val-orizz">20 anni</span><input type="range" id="orizzonte" min="5" max="40" step="1" value="20"></div>
+      </div>
+      <div class="field"><label>Rivalutazione immobile annua</label>
+        <div class="slider-wrap"><span class="slider-val" id="val-rival">2.0%</span><input type="range" id="rival" min="0" max="6" step="0.1" value="2"></div>
+      </div>
+      <div class="field"><label>Rendimento alternativo investimento</label>
+        <div class="slider-wrap"><span class="slider-val" id="val-rend-alt">5.0%</span><input type="range" id="rend-alt" min="1" max="10" step="0.1" value="5"></div>
+      </div>
+    </div>
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:0.5rem;">Il rendimento alternativo rappresenta quanto renderebbe il capitale (acconto + spese) se investito anziché immobilizzato nell'immobile.</p>
+  </div>
+
+  <button class="btn-calc" onclick="calcola()">◆ Calcola il confronto</button>
+
+  <div class="risultati" id="risultati">
+    <div class="section-label"><span>Risultati</span></div>
+    <div class="winner-box" id="winner-box">
+      <div class="verdict" id="verdict-label"></div>
+      <div id="verdict-text"></div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-val" id="kpi-aff"></div><div class="kpi-lbl">Costo netto affitto</div></div>
+      <div class="kpi"><div class="kpi-val" id="kpi-mut"></div><div class="kpi-lbl">Costo netto acquisto</div></div>
+      <div class="kpi"><div class="kpi-val" id="kpi-diff"></div><div class="kpi-lbl">Differenza</div></div>
+      <div class="kpi"><div class="kpi-val" id="kpi-imm"></div><div class="kpi-lbl">Valore immobile finale</div></div>
+    </div>
+    <table class="compare-table">
+      <thead><tr><th>Voce</th><th>Affitto</th><th>Acquisto</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="chart-wrap">
+      <div class="chart-title">Costo cumulato nel tempo (€)</div>
+      <canvas id="grafico" height="280"></canvas>
+    </div>
+    <div class="commento-box" id="commento"></div>
+  </div>
+
+  <div class="section-label"><span>Domande frequenti</span></div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="faq(this)">Cosa si intende per "costo opportunità"?</div>
+    <div class="faq-a">Il costo opportunità è il rendimento che avresti ottenuto investendo il capitale invece di usarlo per l'acconto. Se metti 60.000€ di acconto, quei soldi non sono più disponibili per investimenti — e il mancato guadagno è un costo reale, anche se invisibile sul conto corrente.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="faq(this)">Perché il mutuo non è sempre la scelta migliore?</div>
+    <div class="faq-a">Il mutuo "vince" quando la rivalutazione dell'immobile supera il rendimento alternativo del capitale, oppure quando i canoni d'affitto sono elevati rispetto alla rata. Se invece il mercato immobiliare è piatto e i tuoi investimenti rendono bene, affittare può essere più conveniente — specialmente su orizzonti brevi.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="faq(this)">Quanto conta la rivalutazione dell'immobile?</div>
+    <div class="faq-a">Moltissimo, specialmente su orizzonti lunghi. A Milano o Roma il mercato ha storicamente rivalutato più della media nazionale; in piccoli centri la rivalutazione può essere negativa. Usa valori conservativi (1–2%) per essere prudente.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="faq(this)">Il calcolatore considera i benefici fiscali del mutuo?</div>
+    <div class="faq-a">No — la detrazione degli interessi passivi (19% su max 4.000€/anno per prima casa) non è inclusa per semplicità. Considera che riduce marginalmente il costo del mutuo, ma raramente cambia il verdetto finale.</div>
+  </div>
+
+  <div class="disclaimer">⚠ Questo calcolatore è a scopo educativo e non costituisce consulenza finanziaria o immobiliare. I risultati dipendono sensibilmente dalle ipotesi inserite — in particolare dalla rivalutazione immobiliare e dal rendimento alternativo, variabili incerte per definizione.</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+const sliders=[['aum-canone','val-aum',v=>v+'%'],['tasso-mutuo','val-tasso',v=>v+'%'],['durata-mutuo','val-durata',v=>v+' anni'],['manutenzione','val-manut',v=>v+'%'],['orizzonte','val-orizz',v=>v+' anni'],['rival','val-rival',v=>v+'%'],['rend-alt','val-rend-alt',v=>v+'%']];
+sliders.forEach(([id,vid,fmt])=>{const e=document.getElementById(id),v=document.getElementById(vid);e.addEventListener('input',()=>v.textContent=fmt(e.value));});
+let chart=null;
+const eur=n=>new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+function calcola(){
+  const canone=+document.getElementById('canone').value;
+  const aumC=+document.getElementById('aum-canone').value/100;
+  const condm=+document.getElementById('spese-cond').value;
+  const prezzo=+document.getElementById('prezzo').value;
+  const acconto=+document.getElementById('acconto').value;
+  const tasso=+document.getElementById('tasso-mutuo').value/100;
+  const durata=+document.getElementById('durata-mutuo').value;
+  const speseA=+document.getElementById('spese-acq').value;
+  const manut=+document.getElementById('manutenzione').value/100;
+  const anni=+document.getElementById('orizzonte').value;
+  const rivalA=+document.getElementById('rival').value/100;
+  const rendAlt=+document.getElementById('rend-alt').value/100;
+  const capitale=prezzo-acconto;
+  const rm=tasso/12, nr=durata*12;
+  const rata=rm>0?capitale*rm/(1-Math.pow(1+rm,-nr)):capitale/nr;
+  let canoneC=canone, valImm=prezzo, debito=capitale;
+  let totAff=0,totInt=0,totManut=0,totCanoni=0;
+  const cumAff=[0],cumMut=[0];
+  for(let a=1;a<=anni;a++){
+    const canAnno=canoneC*12+condm*12; totCanoni+=canAnno; totAff+=canAnno; canoneC*=(1+aumC);
+    let intAnno=0;
+    if(a<=durata){for(let m=0;m<12;m++){const i=debito*rm,c=rata-i;intAnno+=i;debito=Math.max(0,debito-c);}}
+    const mAnno=valImm*manut; totInt+=intAnno; totManut+=mAnno;
+    const costoMAnno=intAnno+mAnno+(a===1?speseA:0);
+    valImm*=(1+rivalA);
+    cumAff.push(Math.round(totAff));
+    cumMut.push(Math.round(totInt+totManut+speseA));
+  }
+  const plusValue=valImm-prezzo;
+  const costoOpp=(acconto+speseA)*(Math.pow(1+rendAlt,anni)-1);
+  const debitoFin=anni<durata?debito:0;
+  const nettoAff=totAff;
+  const nettoMut=totInt+totManut+speseA-plusValue+debitoFin+costoOpp;
+  const diff=nettoAff-nettoMut;
+  document.getElementById('risultati').classList.add('visible');
+  document.getElementById('kpi-aff').textContent=eur(nettoAff);
+  const km=document.getElementById('kpi-mut'); km.textContent=eur(nettoMut); km.className='kpi-val '+(nettoMut<nettoAff?'pos':'neg');
+  const kd=document.getElementById('kpi-diff'); kd.textContent=eur(Math.abs(diff)); kd.className='kpi-val '+(diff>0?'pos':'neg');
+  document.getElementById('kpi-imm').textContent=eur(valImm);
+  const wb=document.getElementById('winner-box');
+  if(diff>0){wb.className='winner-box mutuo';document.getElementById('verdict-label').textContent='▼ Acquistare conviene';document.getElementById('verdict-text').innerHTML=`Su <strong>${anni} anni</strong>, acquistare è più conveniente di <strong>${eur(diff)}</strong> rispetto all'affitto, al netto di rivalutazione e costo opportunità.`;}
+  else{wb.className='winner-box affitto';document.getElementById('verdict-label').textContent='▼ Affittare conviene';document.getElementById('verdict-text').innerHTML=`Su <strong>${anni} anni</strong>, affittare è più conveniente di <strong>${eur(Math.abs(diff))}</strong> rispetto all'acquisto, considerando il costo opportunità del capitale immobilizzato.`;}
+  document.getElementById('tbody').innerHTML=`<tr><td>Canoni totali pagati</td><td>${eur(totCanoni)}</td><td>—</td></tr><tr><td>Rate mutuo totali</td><td>—</td><td>${eur(rata*Math.min(durata,anni)*12)}</td></tr><tr><td>Di cui interessi</td><td>—</td><td>${eur(totInt)}</td></tr><tr><td>Manutenzione</td><td>—</td><td>${eur(totManut)}</td></tr><tr><td>Spese acquisto iniziali</td><td>—</td><td>${eur(speseA)}</td></tr><tr><td>Costo opportunità acconto</td><td>—</td><td>${eur(costoOpp)}</td></tr><tr><td>Rivalutazione immobile</td><td>—</td><td>− ${eur(plusValue)}</td></tr><tr><td>Debito residuo</td><td>—</td><td>${anni<durata?eur(debitoFin):'€ 0 (estinto)'}</td></tr><tr class="highlight"><td>Costo netto totale</td><td>${eur(nettoAff)}</td><td>${eur(nettoMut)}</td></tr>`;
+  document.getElementById('commento').innerHTML=`L'immobile, rivalutandosi del ${rivalA*100}% annuo per ${anni} anni, varrebbe <strong>${eur(valImm)}</strong> — un guadagno di <strong>${eur(plusValue)}</strong>. Il capitale iniziale di <strong>${eur(acconto+speseA)}</strong>, investito al ${rendAlt*100}%, avrebbe invece prodotto <strong>${eur(costoOpp)}</strong>. `+(rivalA>rendAlt?`La rivalutazione immobiliare <strong>supera</strong> il rendimento alternativo: acquistare conviene in questo scenario.`:`Il rendimento degli investimenti <strong>supera</strong> la rivalutazione immobiliare: affittare conviene in questo scenario.`);
+  const labels=Array.from({length:anni+1},(_,i)=>'Anno '+i);
+  if(chart)chart.destroy();
+  chart=new Chart(document.getElementById('grafico'),{type:'line',data:{labels,datasets:[{label:'Costo netto affitto',data:cumAff,borderColor:'#c8392b',backgroundColor:'rgba(200,57,43,0.05)',borderWidth:2.5,pointRadius:0,fill:true,tension:0.3},{label:'Costo netto acquisto (flussi)',data:cumMut,borderColor:'#b8952a',backgroundColor:'rgba(184,149,42,0.05)',borderWidth:2.5,pointRadius:0,fill:true,tension:0.3}]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{font:{family:'IBM Plex Mono',size:11},color:'#6b6560'}},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+eur(c.parsed.y)}}},scales:{x:{grid:{color:'#d4cec4'},ticks:{font:{family:'IBM Plex Mono',size:10},color:'#6b6560',maxTicksLimit:8}},y:{grid:{color:'#d4cec4'},ticks:{font:{family:'IBM Plex Mono',size:10},color:'#6b6560',callback:v=>'€'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}}}});
+  document.getElementById('risultati').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function faq(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
+</script>
