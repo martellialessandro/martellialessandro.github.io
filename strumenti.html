@@ -149,7 +149,7 @@ permalink: /servizi/strumenti/
   <div style="max-width:960px; margin:0 auto; position:relative; z-index:1;">
     <div class="kicker">Consulenza · Strumenti gratuiti</div>
     <h1>Calcolatori Finanziari</h1>
-    <p>Cinque strumenti per rispondere alle domande che tutti si fanno ma in pochi sanno calcolare. Dai BTP all'interesse composto, dalla pensione integrativa al confronto affitto vs mutuo, fino all'indipendenza finanziaria. Scoprilo in trenta secondi.</p>
+    <p>Tre strumenti per rispondere alle domande che tutti si fanno ma in pochi sanno calcolare: quanto rende il mio BTP? Cosa fa davvero l'interesse composto? Quanto accumulo versando in un fondo pensione? Scoprilo in trenta secondi.</p>
   </div>
 </div>
 
@@ -160,7 +160,7 @@ permalink: /servizi/strumenti/
     <div class="section-label"><span>Scegli il calcolatore</span></div>
     <div class="cards-grid">
 
-      <div class="calc-card" data-calc="obbligazioni">
+      <div class="calc-card" onclick="apriCalcolatore('obbligazioni')">
         <div class="card-num">01</div>
         <div class="card-title">Rendimento Obbligazioni e Titoli di Stato</div>
         <div class="card-desc">Calcola il rendimento netto del tuo BTP, BOT, CCT o obbligazione corporate — cedole, plusvalenze, credito d'imposta e capitale finale.</div>
@@ -168,7 +168,7 @@ permalink: /servizi/strumenti/
         <div class="card-arrow">→</div>
       </div>
 
-      <div class="calc-card" data-calc="composto">
+      <div class="calc-card" onclick="apriCalcolatore('composto')">
         <div class="card-num">02</div>
         <div class="card-title">Interesse Composto</div>
         <div class="card-desc">Scopri quanto vale il tuo capitale tra 10, 20 o 30 anni con versamenti periodici e un tasso di rendimento atteso. L'ottava meraviglia del mondo, diceva Einstein.</div>
@@ -176,33 +176,11 @@ permalink: /servizi/strumenti/
         <div class="card-arrow">→</div>
       </div>
 
-      <div class="calc-card" data-calc="pensione">
+      <div class="calc-card" onclick="apriCalcolatore('pensione')">
         <div class="card-num">03</div>
         <div class="card-title">Pensione Integrativa e Risparmio Fiscale</div>
         <div class="card-desc">Stima il capitale accumulato a fine carriera e il risparmio IRPEF annuo grazie alla deducibilità dei versamenti al fondo pensione.</div>
         <div class="card-tag">Fondo pensione · IRPEF · TFR</div>
-        <div class="card-arrow">→</div>
-      </div>
-
-    </div>
-
-    <div class="section-label" style="margin-top:2.5rem;"><span>Previsori</span></div>
-    <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;">Strumenti per decisioni di lungo periodo: comprare o affittare casa, pianificare l'indipendenza finanziaria. Più complessi, più potenti.</p>
-    <div class="cards-grid" style="grid-template-columns:1fr 1fr;">
-
-      <div class="calc-card" data-calc="affitto">
-        <div class="card-num">04</div>
-        <div class="card-title">Affitto vs Mutuo</div>
-        <div class="card-desc">Comprare casa è davvero più conveniente? Confronta costo totale dell'acquisto con mutuo e costo dell'affitto, incluso il costo opportunità del capitale e l'apprezzamento immobiliare atteso.</div>
-        <div class="card-tag">Immobiliare · Break-even · Costo opportunità</div>
-        <div class="card-arrow">→</div>
-      </div>
-
-      <div class="calc-card" data-calc="fire">
-        <div class="card-num">05</div>
-        <div class="card-title">Calcolatore FIRE</div>
-        <div class="card-desc">Quanti soldi ti servono per raggiungere l'indipendenza finanziaria? Calcola il tuo FIRE Number, gli anni al traguardo e la composizione del patrimonio con Lean, Fat o Barista FIRE.</div>
-        <div class="card-tag">FIRE · Indipendenza · Regola del 4%</div>
         <div class="card-arrow">→</div>
       </div>
 
@@ -273,7 +251,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaObb()">◆ Calcola il rendimento</button>
-      <button class="reset-btn" data-reset="obbligazioni">↺ Reset</button>
+      <button class="reset-btn" onclick="resetForm('obbligazioni')">↺ Reset</button>
     </div>
 
     <div class="results" id="o-results">
@@ -344,7 +322,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaComposto()">◆ Calcola il capitale futuro</button>
-      <button class="reset-btn" data-reset="composto">↺ Reset</button>
+      <button class="reset-btn" onclick="resetForm('composto')">↺ Reset</button>
     </div>
 
     <div class="results" id="c-results">
@@ -397,7 +375,7 @@ permalink: /servizi/strumenti/
       </div>
     </div>
     <hr class="guida-divider">
-        <div class="concetto">
+         <!--<div class="concetto">
           <div class="c-titolo">Deducibilità IRPEF</div>
           <div class="c-testo">I versamenti volontari al fondo pensione sono deducibili dall'imponibile IRPEF fino a 5.164,57€/anno (circa 430€/mese). Questo significa che versare 300€/mese al fondo pensione ti costa realmente 225€ se sei nello scaglione al 25% — il resto lo risparmia il fisco.</div>
         </div>
@@ -408,7 +386,7 @@ permalink: /servizi/strumenti/
         <div class="concetto">
           <div class="c-titolo">Il TFR</div>
           <div class="c-testo">Il Trattamento di Fine Rapporto matura ogni anno pari a circa 1/13,5 della RAL. Lasciato in azienda si rivaluta dell'1,5% + 0,75% dell'inflazione — una formula fissata per legge nel 1982. Versato nel fondo pensione, viene investito sui mercati con rendimenti storicamente superiori, ma con più volatilità.</div>
-        </div>
+        </div>-->
     <div class="calc-form">
       <div class="field"><label>Età attuale</label><input type="number" id="p-eta" min="18" max="67" placeholder="es. 35" oninput="pEtaHint()"><span class="hint" id="p-eta-hint"></span></div>
       <div class="field"><label>Età di pensionamento</label><input type="number" id="p-eta-pensione" min="60" max="75" value="67" placeholder="es. 67"></div>
@@ -438,7 +416,7 @@ permalink: /servizi/strumenti/
 
     <div class="btn-row">
       <button class="calc-btn" onclick="calcolaPensione()">◆ Calcola la mia pensione integrativa</button>
-      <button class="reset-btn" data-reset="pensione">↺ Reset</button>
+      <button class="reset-btn" onclick="resetForm('pensione')">↺ Reset</button>
     </div>
 
     <div class="results" id="p-results">
@@ -458,286 +436,13 @@ permalink: /servizi/strumenti/
     </div>
   </div>
 
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- CALCOLATORE 4 — AFFITTO VS MUTUO           -->
-  <!-- ═══════════════════════════════════════════ -->
-  <div class="calc-container" id="calc-affitto">
-    <button class="calc-back" onclick="tornaHub()">← Torna alla selezione</button>
-    <div class="section-label"><span>04 · Affitto vs Mutuo</span></div>
-
-    <div class="guida">
-      <div class="guida-intro">
-        Comprare casa è un sogno. Ma è anche il modo più efficiente di allocare il tuo capitale? Questo calcolatore confronta il costo totale dell'acquisto con mutuo rispetto al costo dell'affitto nello stesso orizzonte temporale, tenendo conto del costo opportunità del capitale immobilizzato, dell'apprezzamento atteso dell'immobile e dei costi di transazione.
-      </div>
-
-      <button class="concetti-toggle" onclick="toggleConcetti(this)">
-        <span class="ct-arrow">▾</span> Glossario dei termini
-      </button>
-      <div class="guida-concetti">
-        <div class="concetto"><div class="c-titolo">LTV (Loan to Value)</div><div class="c-testo">Rapporto tra il mutuo richiesto e il valore dell'immobile. LTV 80% = finanzi l'80% con il mutuo e copri il 20% con l'anticipo.</div></div>
-        <div class="concetto"><div class="c-titolo">Costo opportunità</div><div class="c-testo">Il rendimento che avresti ottenuto investendo l'anticipo in un portafoglio diversificato invece di immobilizzarlo nell'immobile.</div></div>
-        <div class="concetto"><div class="c-titolo">Break-even temporale</div><div class="c-testo">Il numero di anni dopo il quale il costo totale dell'acquisto diventa inferiore al costo dell'affitto. Prima di quel punto affittare è più conveniente.</div></div>
-        <div class="concetto"><div class="c-titolo">Prezzo/Fitto ratio</div><div class="c-testo">Dividi il prezzo per il canone annuo. Sopra 25-30: mercato caro. Sotto 15-20: acquisto più interessante. A Milano centro supera spesso 35-40.</div></div>
-        <div class="concetto"><div class="c-titolo">Quota capitale vs interessi</div><div class="c-testo">La rata del mutuo ha due componenti: la quota interessi (costo puro del debito) e la quota capitale (risparmio forzato che aumenta il tuo patrimonio).</div></div>
-        <div class="concetto"><div class="c-titolo">Apprezzamento immobiliare</div><div class="c-testo">La crescita annua attesa del valore dell'immobile. In Italia storicamente 1-2% reale nelle grandi città, negativo in molte aree periferiche.</div></div>
-      </div>
-
-      <div class="guida-faq">
-        <div class="guida-faq-title">Domande frequenti</div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Comprare è sempre meglio di affittare nel lungo periodo?</div>
-          <div class="faq-a">No — e chiunque ti dica il contrario sta vendendo qualcosa. La convenienza dipende dal prezzo/fitto ratio del mercato locale, dal costo del denaro e dal tuo orizzonte temporale. In mercati con fitti bassi rispetto ai prezzi e in presenza di tassi elevati, affittare e investire la differenza può essere finanziariamente superiore.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Come scelgo il tasso di rendimento alternativo?</div>
-          <div class="faq-a">Rappresenta cosa faresti con il capitale dell'anticipo se non lo immobilizzassi. Un portafoglio azionario globale ha reso storicamente circa il 7% lordo annuo; un bilanciato circa il 4-5%. Per stime conservative usa il rendimento dei BTP a lungo termine (~3,5-4%).</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Cosa non considera questo calcolatore?</div>
-          <div class="faq-a">Fiscalità specifica (detrazione interessi passivi, IMU, TASI), costi di manutenzione annua (~1-2% del valore), ristrutturazioni, e il valore non finanziario della stabilità abitativa. Per una decisione reale questi fattori contano eccome.</div>
-        </div>
-      </div>
-      <hr class="guida-divider">
-    </div>
-
-    <div class="calc-form" style="grid-template-columns:1fr 1fr;">
-      <!-- COL ACQUISTO -->
-      <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);padding-bottom:0.6rem;border-bottom:1px solid var(--border);margin-bottom:1rem;">◆ Acquisto con mutuo</div>
-        <div class="field">
-          <label>Valore immobile (€)</label>
-          <input type="number" id="av-prezzo" value="300000" step="5000" oninput="avSync()">
-        </div>
-        <div class="field">
-          <label>Anticipo (%)</label>
-          <div class="slider-row">
-            <input type="range" id="av-ltv" min="10" max="50" value="20" step="5" oninput="avSync()">
-            <span class="slider-val" id="av-ltv-val">20%</span>
-          </div>
-          <span class="hint" id="av-anticipo-hint">Anticipo: €60.000 — Mutuo: €240.000</span>
-        </div>
-        <div class="field">
-          <label>Tasso mutuo TAN (%)</label>
-          <div class="slider-row">
-            <input type="range" id="av-tasso" min="1" max="8" value="3.5" step="0.1" oninput="document.getElementById('av-tasso-val').textContent=parseFloat(this.value).toFixed(1)+'%'">
-            <span class="slider-val" id="av-tasso-val">3.5%</span>
-          </div>
-        </div>
-        <div class="field">
-          <label>Durata mutuo (anni)</label>
-          <div class="slider-row">
-            <input type="range" id="av-durata" min="10" max="30" value="25" step="5" oninput="document.getElementById('av-durata-val').textContent=this.value+' anni'">
-            <span class="slider-val" id="av-durata-val">25 anni</span>
-          </div>
-        </div>
-        <div class="field">
-          <label>Apprezzamento annuo immobile (%)</label>
-          <div class="slider-row">
-            <input type="range" id="av-appr" min="-1" max="5" value="1.5" step="0.5" oninput="document.getElementById('av-appr-val').textContent=parseFloat(this.value).toFixed(1)+'%'">
-            <span class="slider-val" id="av-appr-val">1.5%</span>
-          </div>
-        </div>
-        <div class="field">
-          <label>Spese acquisto (notaio, imposte, agenzia) (€)</label>
-          <input type="number" id="av-spese" value="15000" step="1000">
-          <span class="hint">Tipicamente 4-8% del valore (prima casa: ~3-5%)</span>
-        </div>
-      </div>
-      <!-- COL AFFITTO -->
-      <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);padding-bottom:0.6rem;border-bottom:1px solid var(--border);margin-bottom:1rem;">◆ Affitto</div>
-        <div class="field">
-          <label>Canone mensile (€)</label>
-          <input type="number" id="av-canone" value="1200" step="50">
-        </div>
-        <div class="field">
-          <label>Rivalutazione annua affitto (%)</label>
-          <div class="slider-row">
-            <input type="range" id="av-rival" min="0" max="5" value="1.5" step="0.5" oninput="document.getElementById('av-rival-val').textContent=parseFloat(this.value).toFixed(1)+'%'">
-            <span class="slider-val" id="av-rival-val">1.5%</span>
-          </div>
-        </div>
-        <div class="field">
-          <label>Rendimento alternativo anticipo (%/anno)</label>
-          <div class="slider-row">
-            <input type="range" id="av-rend" min="1" max="10" value="5" step="0.5" oninput="document.getElementById('av-rend-val').textContent=parseFloat(this.value).toFixed(1)+'%'">
-            <span class="slider-val" id="av-rend-val">5.0%</span>
-          </div>
-          <span class="hint">Rendimento atteso se investissi l'anticipo</span>
-        </div>
-        <div class="field">
-          <label>Orizzonte temporale (anni)</label>
-          <div class="slider-row">
-            <input type="range" id="av-oriz" min="5" max="30" value="15" step="1" oninput="document.getElementById('av-oriz-val').textContent=this.value+' anni'">
-            <span class="slider-val" id="av-oriz-val">15 anni</span>
-          </div>
-        </div>
-        <div class="field">
-          <label>Spese condominiali/manutenzione mensili proprietario (€)</label>
-          <input type="number" id="av-cond" value="100" step="10">
-          <span class="hint">IMU, manutenzione straordinaria, spese condominiali non ribaltabili</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="calc-btn" onclick="calcolaAffitto()">Calcola convenienza</button>
-      <button class="reset-btn" data-reset="affitto">Reset</button>
-    </div>
-
-    <div class="results" id="av-results">
-      <div class="results-grid" style="grid-template-columns:repeat(3,1fr);">
-        <div class="result-card"><div class="r-label">Verdetto</div><div class="r-value" id="av-verdetto" style="font-size:1rem;">—</div><div class="r-sub" id="av-risparmio">—</div></div>
-        <div class="result-card"><div class="r-label">Rata mensile mutuo</div><div class="r-value gold" id="av-rata">—</div><div class="r-sub">quota capitale + interessi</div></div>
-        <div class="result-card"><div class="r-label">Break-even</div><div class="r-value" id="av-breakeven">—</div><div class="r-sub">anno in cui comprare conviene</div></div>
-        <div class="result-card"><div class="r-label">Costo netto acquisto</div><div class="r-value" id="av-costo-acq">—</div><div class="r-sub">interessi + spese − rivalutazione</div></div>
-        <div class="result-card"><div class="r-label">Costo netto affitto</div><div class="r-value" id="av-costo-aff">—</div><div class="r-sub">canoni − rendimento alternativo</div></div>
-        <div class="result-card"><div class="r-label">Prezzo / Fitto ratio</div><div class="r-value" id="av-pfratio">—</div><div class="r-sub" id="av-pf-sub">—</div></div>
-      </div>
-      <div class="narrative" id="av-narrative"></div>
-      <div class="disclaimer-box">⚠ Il calcolatore non considera la fiscalità specifica (detrazioni interessi, IMU, TASI), costi di ristrutturazione o variazioni di mercato imprevedibili. Non costituisce consulenza finanziaria o immobiliare.</div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- CALCOLATORE 5 — FIRE                       -->
-  <!-- ═══════════════════════════════════════════ -->
-  <div class="calc-container" id="calc-fire">
-    <button class="calc-back" onclick="tornaHub()">← Torna alla selezione</button>
-    <div class="section-label"><span>05 · Calcolatore FIRE — Indipendenza Finanziaria</span></div>
-
-    <div class="guida">
-      <div class="guida-intro">
-        Financial Independence, Retire Early. Il metodo FIRE si basa su un principio semplice: se accumuli un patrimonio pari a <strong>25 volte le tue spese annue</strong> (la famosa "regola del 4%"), puoi teoricamente vivere di rendita indefinitamente prelevando il 4% ogni anno senza intaccare il capitale nel lungo periodo. Questo calcolatore ti mostra quanto manca al traguardo — e quanti soldi devi accumulare.
-      </div>
-
-      <button class="concetti-toggle" onclick="toggleConcetti(this)">
-        <span class="ct-arrow">▾</span> Glossario dei termini
-      </button>
-      <div class="guida-concetti">
-        <div class="concetto"><div class="c-titolo">Regola del 4%</div><div class="c-testo">Studio Trinity (1998): un portafoglio diversificato può sostenere prelievi annui del 4% del capitale iniziale con altissima probabilità di non esaurirsi in 30 anni.</div></div>
-        <div class="concetto"><div class="c-titolo">FIRE Number</div><div class="c-testo">Il patrimonio target da raggiungere. Formula: Spese annue × 25 (per SWR 4%) o × 33 (per SWR 3%, più conservativo per orizzonti > 30 anni).</div></div>
-        <div class="concetto"><div class="c-titolo">Lean FIRE</div><div class="c-testo">Indipendenza finanziaria con stile di vita frugale, spese annue tipicamente sotto i 25.000€. Richiede un patrimonio minore ma implica vincoli sul tenore di vita.</div></div>
-        <div class="concetto"><div class="c-titolo">Fat FIRE</div><div class="c-testo">Indipendenza finanziaria mantenendo uno stile di vita agiato, spese annue tipicamente oltre gli 80.000€. Richiede un patrimonio molto più elevato.</div></div>
-        <div class="concetto"><div class="c-titolo">Barista FIRE</div><div class="c-testo">Indipendenza parziale: si copre la maggior parte delle spese col patrimonio e si integra con un lavoro part-time o a basso stress. Abbassa il FIRE Number necessario.</div></div>
-        <div class="concetto"><div class="c-titolo">Tasso di risparmio</div><div class="c-testo">Percentuale del reddito netto investita ogni mese. Al 50% di tasso di risparmio raggiungi l'indipendenza in ~17 anni partendo da zero — è la leva più potente del FIRE.</div></div>
-      </div>
-
-      <div class="guida-faq">
-        <div class="guida-faq-title">Domande frequenti</div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">La regola del 4% funziona davvero?</div>
-          <div class="faq-a">Lo studio Trinity del 1998 ha analizzato portafogli USA dal 1926 al 1995: con prelievi del 4% annuo, la probabilità di esaurire il capitale in 30 anni era inferiore al 5%. Attenzione: lo studio riguarda il mercato USA in un periodo storicamente favorevole. Per orizzonti superiori a 30 anni, tassi di prelievo del 3-3.5% sono più prudenti.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Quale rendimento annuo atteso usare?</div>
-          <div class="faq-a">Il rendimento reale (al netto di inflazione e tasse) di un portafoglio azionario globale è storicamente intorno al 3-5% annuo in termini reali. Non usare i rendimenti degli ultimi 5 anni: probabilmente sovrastimano le aspettative future.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Il FIRE è realizzabile in Italia?</div>
-          <div class="faq-a">Sì, ma con complicazioni: la tassazione sui capital gain (26%) riduce il rendimento effettivo; il costo della vita varia enormemente (Milano vs Puglia); la pensione pubblica riduce il FIRE Number necessario se la si pianifica. Richiede anche attenzione alla pianificazione fiscale.</div>
-        </div>
-      </div>
-      <hr class="guida-divider">
-    </div>
-
-    <!-- SELETTORE PROFILO -->
-    <div style="margin-bottom:1.5rem;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.8rem;">Profilo FIRE</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.6rem;">
-        <div id="fp-lean" class="result-card" style="cursor:pointer;border-color:var(--gold);background:var(--paper);" onclick="setFireProfilo('lean')"><div class="r-label">01</div><div class="r-value" style="font-size:1rem;color:var(--gold);">Lean FIRE</div><div class="r-sub">Frugale</div></div>
-        <div id="fp-regular" class="result-card" style="cursor:pointer;" onclick="setFireProfilo('regular')"><div class="r-label">02</div><div class="r-value" style="font-size:1rem;">FIRE</div><div class="r-sub">Standard</div></div>
-        <div id="fp-fat" class="result-card" style="cursor:pointer;" onclick="setFireProfilo('fat')"><div class="r-label">03</div><div class="r-value" style="font-size:1rem;">Fat FIRE</div><div class="r-sub">Agiato</div></div>
-        <div id="fp-barista" class="result-card" style="cursor:pointer;" onclick="setFireProfilo('barista')"><div class="r-label">04</div><div class="r-value" style="font-size:1rem;">Barista</div><div class="r-sub">Semi-pensione</div></div>
-      </div>
-    </div>
-
-    <div class="calc-form">
-      <div class="field">
-        <label>Età attuale</label>
-        <input type="number" id="fi-eta" value="32" min="18" max="65">
-      </div>
-      <div class="field">
-        <label>Patrimonio attuale (€)</label>
-        <input type="number" id="fi-pat" value="50000" step="5000">
-      </div>
-      <div class="field">
-        <label>Risparmio mensile investito (€)</label>
-        <input type="number" id="fi-risp" value="1500" step="100">
-      </div>
-      <div class="field">
-        <label>Spese mensili target in pensione (€)</label>
-        <input type="number" id="fi-spese" value="2500" step="100">
-      </div>
-      <div class="field">
-        <label>Reddito parziale post-FIRE (€/mese)</label>
-        <input type="number" id="fi-parz" value="0" step="100">
-        <span class="hint">Affitti, part-time, pensione futura, Barista FIRE…</span>
-      </div>
-      <div class="field">
-        <label>Aliquota fiscale capital gain (%)</label>
-        <div class="slider-row">
-          <input type="range" id="fi-fisc" min="0" max="40" value="26" step="1" oninput="document.getElementById('fi-fisc-val').textContent=this.value+'%'">
-          <span class="slider-val" id="fi-fisc-val">26%</span>
-        </div>
-        <span class="hint">Italia ETF armonizzati: 26% · PIR: 0%</span>
-      </div>
-      <div class="field">
-        <label>Rendimento annuo atteso lordo (%)</label>
-        <div class="slider-row">
-          <input type="range" id="fi-rend" min="1" max="12" value="6" step="0.5" oninput="document.getElementById('fi-rend-val').textContent=parseFloat(this.value).toFixed(1)+'%'">
-          <span class="slider-val" id="fi-rend-val">6.0%</span>
-        </div>
-      </div>
-      <div class="field">
-        <label>Inflazione attesa (%)</label>
-        <div class="slider-row">
-          <input type="range" id="fi-infl" min="0" max="5" value="2" step="0.5" oninput="document.getElementById('fi-infl-val').textContent=parseFloat(this.value).toFixed(1)+'%'">
-          <span class="slider-val" id="fi-infl-val">2.0%</span>
-        </div>
-      </div>
-      <div class="field">
-        <label>Tasso di prelievo annuo — SWR (%)</label>
-        <div class="slider-row">
-          <input type="range" id="fi-swr" min="2" max="6" value="4" step="0.5" oninput="document.getElementById('fi-swr-val').textContent=parseFloat(this.value).toFixed(1)+'%'">
-          <span class="slider-val" id="fi-swr-val">4.0%</span>
-        </div>
-        <span class="hint">Standard: 4% · Conservativo: 3-3.5% · Aggressivo: 4.5-5%</span>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="calc-btn" onclick="calcolaFire()">Calcola il mio FIRE</button>
-      <button class="reset-btn" data-reset="fire">Reset</button>
-    </div>
-
-    <div class="results" id="fi-results">
-      <div class="results-grid">
-        <div class="result-card"><div class="r-label">FIRE Number</div><div class="r-value gold" id="fi-number">—</div><div class="r-sub" id="fi-number-sub">—</div></div>
-        <div class="result-card"><div class="r-label">Anni al traguardo</div><div class="r-value" id="fi-anni">—</div><div class="r-sub" id="fi-eta-fire">—</div></div>
-        <div class="result-card"><div class="r-label">Rendita mensile netta</div><div class="r-value gold" id="fi-rendita">—</div><div class="r-sub">dal portafoglio al FIRE</div></div>
-      </div>
-
-      <div class="chart-label">Composizione del patrimonio finale</div>
-      <div class="bar-chart">
-        <div class="bar-row"><div class="bar-name">Versato</div><div class="bar-track"><div class="bar-fill" id="fi-bar-v" style="background:var(--muted);width:0%"></div></div><div class="bar-amount" id="fi-bar-v-val">—</div></div>
-        <div class="bar-row"><div class="bar-name">Pat. iniziale</div><div class="bar-track"><div class="bar-fill" id="fi-bar-p" style="background:var(--gold);width:0%"></div></div><div class="bar-amount" id="fi-bar-p-val">—</div></div>
-        <div class="bar-row"><div class="bar-name">Interessi</div><div class="bar-track"><div class="bar-fill" id="fi-bar-i" style="background:var(--ink);width:0%"></div></div><div class="bar-amount" id="fi-bar-i-val">—</div></div>
-      </div>
-
-      <div class="narrative" id="fi-narrative"></div>
-      <div class="disclaimer-box">⚠ Stima basata su rendimento reale costante. Non considera variazioni di reddito, spese straordinarie, successioni o la pensione pubblica. Non costituisce consulenza finanziaria o previdenziale.</div>
-    </div>
-  </div>
-
   <!-- CTA CONSULENZA -->
   <div class="cta-consulenza">
     <div>
       <h3>Vuoi un'analisi personalizzata?</h3>
-      <p>I calcolatori danno stime — la consulenza dà risposte su misura per la tua situazione specifica.</p>
+      <p>I calcolatori danno stime — un'analisi ad-hoc dà risposte su misura per la tua situazione specifica.</p>
     </div>
-    <a href="/consulenza/" class="btn-cta">Richiedi una consulenza →</a>
+    <a href="/servizi/" class="btn-cta">Richiedi un' Analisi →</a>
   </div>
 
 </div>
@@ -750,36 +455,22 @@ function toggleFaq(el) { el.classList.toggle('open'); el.nextElementSibling.clas
 function toggleConcetti(btn) { btn.classList.toggle('open'); btn.nextElementSibling.classList.toggle('open'); }
 
 function apriCalcolatore(id) {
-  var hub = document.getElementById('hub-cards');
-  var target = document.getElementById('calc-'+id);
-  if(!hub || !target) { return; }
-  hub.style.display = 'none';
-  document.querySelectorAll('.calc-container').forEach(function(el){ el.classList.remove('visible'); });
-  target.classList.add('visible');
-  setTimeout(function(){
-    var rect = target.getBoundingClientRect();
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    window.scrollTo({ top: rect.top + scrollTop - 80, behavior: 'smooth' });
-  }, 50);
+  document.getElementById('hub-cards').style.display = 'none';
+  document.querySelectorAll('.calc-container').forEach(el => el.classList.remove('visible'));
+  document.getElementById('calc-'+id).classList.add('visible');
+  window.scrollTo({top: document.getElementById('calc-'+id).offsetTop - 80, behavior:'smooth'});
 }
 
 function tornaHub() {
-  var hub = document.getElementById('hub-cards');
-  if(!hub) return;
-  hub.style.display = 'block';
-  document.querySelectorAll('.calc-container').forEach(function(el){ el.classList.remove('visible'); });
-  setTimeout(function(){
-    var rect = hub.getBoundingClientRect();
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    window.scrollTo({ top: rect.top + scrollTop - 80, behavior: 'smooth' });
-  }, 50);
+  document.getElementById('hub-cards').style.display = 'block';
+  document.querySelectorAll('.calc-container').forEach(el => el.classList.remove('visible'));
+  window.scrollTo({top: document.getElementById('hub-cards').offsetTop - 80, behavior:'smooth'});
 }
 
 function resetForm(id) {
-  const prefix = id === 'obbligazioni' ? 'o' : id === 'composto' ? 'c' : id === 'pensione' ? 'p' : id === 'affitto' ? 'av' : 'fi';
+  const prefix = id === 'obbligazioni' ? 'o' : id === 'composto' ? 'c' : 'p';
   document.querySelectorAll(`#calc-${id} input[type=number], #calc-${id} input[type=date]`).forEach(el => el.value = '');
   document.getElementById(prefix+'-results')?.classList.remove('visible');
-  if(id==='affitto'||id==='fire') document.querySelectorAll(`#calc-${id} input[type=range]`).forEach(el=>el.dispatchEvent(new Event('input')));
 }
 
 /* ── CALCOLATORE 1: OBBLIGAZIONI ── */
@@ -912,134 +603,4 @@ function calcolaPensione(){
   document.getElementById('p-narrative').innerHTML=nar;
   document.getElementById('p-results').classList.add('visible');
 }
-
-/* ── CALCOLATORE 4: AFFITTO VS MUTUO ── */
-let fireProfilo = 'lean';
-
-function avSync(){
-  const p=parseFloat(document.getElementById('av-prezzo').value)||0;
-  const ltv=parseFloat(document.getElementById('av-ltv').value)||20;
-  document.getElementById('av-ltv-val').textContent=ltv+'%';
-  if(p){ const ant=p*ltv/100, mut=p-ant; document.getElementById('av-anticipo-hint').textContent=`Anticipo: ${fmt(ant)} — Mutuo: ${fmt(mut)}`; }
-}
-// avSync chiamata inline via oninput negli slider — nessun addEventListener necessario
-
-function calcolaAffitto(){
-  const prezzo=parseFloat(document.getElementById('av-prezzo').value)||0;
-  const ltv=parseFloat(document.getElementById('av-ltv').value)/100;
-  const tasso=parseFloat(document.getElementById('av-tasso').value)/100;
-  const durata=parseFloat(document.getElementById('av-durata').value);
-  const appr=parseFloat(document.getElementById('av-appr').value)/100;
-  const speseAcq=parseFloat(document.getElementById('av-spese').value)||0;
-  const condMens=parseFloat(document.getElementById('av-cond').value)||0;
-  const canoneMens=parseFloat(document.getElementById('av-canone').value)||0;
-  const rival=parseFloat(document.getElementById('av-rival').value)/100;
-  const rendAlt=parseFloat(document.getElementById('av-rend').value)/100;
-  const oriz=parseFloat(document.getElementById('av-oriz').value);
-  if(!prezzo||!canoneMens){alert('Inserisci il valore dell'immobile e il canone mensile.');return;}
-  const anticipo=prezzo*ltv, mutuo=prezzo-anticipo;
-  const r=tasso/12, n=durata*12;
-  const rata=mutuo*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
-  // Costo acquisto: interessi pagati + spese + condominio - rivalutazione
-  let saldo=mutuo, totInt=0;
-  for(let m=0;m<Math.min(oriz,durata)*12;m++){const i=saldo*r;totInt+=i;saldo-=(rata-i);}
-  const valFin=prezzo*Math.pow(1+appr,oriz);
-  const costoAcq=speseAcq+totInt+condMens*12*oriz-(valFin-prezzo);
-  // Costo affitto: canoni - rendimento opportunità anticipo
-  let totAff=0, c=canoneMens*12;
-  for(let a=0;a<oriz;a++){totAff+=c;c*=(1+rival);}
-  const capFin=(anticipo+speseAcq)*Math.pow(1+rendAlt,oriz);
-  const oppCost=capFin-(anticipo+speseAcq);
-  const costoAff=totAff-oppCost;
-  // Break-even
-  let be=null, cA=speseAcq, cF=0, sM=mutuo, cC=canoneMens*12, pA=anticipo+speseAcq;
-  for(let a=1;a<=30;a++){
-    cA+=(sM>0?rata*12:0)+condMens*12;
-    for(let m=0;m<12&&sM>0;m++){const i=sM*r;sM-=(rata-i);}
-    pA*=(1+rendAlt); cF+=cC; cC*=(1+rival);
-    const vI=prezzo*Math.pow(1+appr,a);
-    if(be===null&&(cA-(vI-prezzo))<(cF-(pA-(anticipo+speseAcq))))be=a;
-  }
-  const pf=(prezzo/(canoneMens*12)).toFixed(1);
-  const conv=costoAcq<costoAff;
-  document.getElementById('av-verdetto').textContent=conv?'Acquisto più conveniente':'Affitto più conveniente';
-  document.getElementById('av-verdetto').className='r-value '+(conv?'gold':'accent');
-  document.getElementById('av-risparmio').textContent=`Risparmio netto: ${fmt(Math.abs(costoAcq-costoAff))} su ${oriz} anni`;
-  document.getElementById('av-rata').textContent=fmt(rata)+'/mese';
-  document.getElementById('av-breakeven').textContent=be?`Anno ${be}`:'> 30 anni';
-  document.getElementById('av-breakeven').className='r-value '+(be&&be<=oriz?'gold':'accent');
-  document.getElementById('av-costo-acq').textContent=fmt(Math.abs(costoAcq));
-  document.getElementById('av-costo-aff').textContent=fmt(Math.abs(costoAff));
-  document.getElementById('av-pfratio').textContent=pf+'x';
-  document.getElementById('av-pf-sub').textContent=pf>25?'Mercato caro — fitti bassi rispetto ai prezzi':pf>18?'Nella media':'Mercato conveniente';
-  let nar=conv
-    ?`Con un prezzo/fitto ratio di <strong>${pf}x</strong>, acquistare risulta più conveniente di <strong>${fmt(Math.abs(costoAcq-costoAff))}</strong> sull'orizzonte di ${oriz} anni.`
-    :`Con un prezzo/fitto ratio di <strong>${pf}x</strong>, affittare e investire il capitale risulta più conveniente di <strong>${fmt(Math.abs(costoAcq-costoAff))}</strong> sull'orizzonte di ${oriz} anni.`;
-  nar+=be?` Il break-even è all'<strong>anno ${be}</strong>: prima di allora affittare è preferibile.`:' Il break-even supera i 30 anni: considera attentamente il tuo orizzonte temporale prima di acquistare.';
-  document.getElementById('av-narrative').innerHTML=nar;
-  document.getElementById('av-results').classList.add('visible');
-}
-
-/* ── CALCOLATORE 5: FIRE ── */
-function setFireProfilo(p){
-  fireProfilo=p;
-  ['lean','regular','fat','barista'].forEach(k=>{
-    const el=document.getElementById('fp-'+k);
-    if(el){ el.style.borderColor=k===p?'var(--gold)':'var(--border)'; el.style.background=k===p?'var(--paper)':'white'; el.querySelector('.r-value').style.color=k===p?'var(--gold)':'var(--ink)'; }
-  });
-}
-
-function calcolaFire(){
-  const eta=parseInt(document.getElementById('fi-eta').value)||0;
-  const patIniz=parseFloat(document.getElementById('fi-pat').value)||0;
-  const rispMens=parseFloat(document.getElementById('fi-risp').value)||0;
-  const speseMens=parseFloat(document.getElementById('fi-spese').value)||0;
-  const reddParz=parseFloat(document.getElementById('fi-parz').value)||0;
-  const fiscPct=parseFloat(document.getElementById('fi-fisc').value)/100;
-  const rendLordo=parseFloat(document.getElementById('fi-rend').value)/100;
-  const infl=parseFloat(document.getElementById('fi-infl').value)/100;
-  const swrPct=parseFloat(document.getElementById('fi-swr').value)/100;
-  if(!eta||!speseMens){alert('Inserisci almeno età attuale e spese mensili target.');return;}
-  const rendNetto=rendLordo*(1-fiscPct)-infl;
-  const speseAnnue=(speseMens-reddParz)*12;
-  const speseTarget=speseAnnue>0?speseAnnue:speseMens*12;
-  const fireNum=speseTarget/swrPct;
-  const rispAnnuo=rispMens*12;
-  let patrimonio=patIniz, anni=0;
-  while(patrimonio<fireNum&&anni<60){patrimonio=patrimonio*(1+rendNetto)+rispAnnuo;anni++;}
-  const etaFire=eta+anni;
-  const capVersato=rispAnnuo*anni;
-  const patRiv=patIniz*Math.pow(1+rendNetto,anni)-patIniz;
-  const interessi=Math.max(0,patrimonio-capVersato-patIniz-patRiv);
-  const tot=capVersato+patIniz+patRiv+interessi;
-  const renditaMens=(fireNum*swrPct)/12;
-  const nomi={lean:'Lean FIRE',regular:'FIRE',fat:'Fat FIRE',barista:'Barista FIRE'};
-  document.getElementById('fi-number').textContent=fmt(fireNum);
-  document.getElementById('fi-number-sub').textContent=`${(fireNum/(speseMens*12)).toFixed(1)}x spese annue · SWR ${(swrPct*100).toFixed(1)}%`;
-  document.getElementById('fi-anni').textContent=anni<=60?anni+' anni':'> 60 anni';
-  document.getElementById('fi-anni').className='r-value '+(anni<=20?'gold':anni<=35?'':'accent');
-  document.getElementById('fi-eta-fire').textContent=`Età al FIRE: ${etaFire} anni`;
-  document.getElementById('fi-rendita').textContent=fmt(renditaMens)+'/mese';
-  setTimeout(()=>{
-    document.getElementById('fi-bar-v').style.width=(capVersato/tot*100)+'%'; document.getElementById('fi-bar-v-val').textContent=fmt(capVersato);
-    document.getElementById('fi-bar-p').style.width=((patIniz+patRiv)/tot*100)+'%'; document.getElementById('fi-bar-p-val').textContent=fmt(patIniz+patRiv);
-    document.getElementById('fi-bar-i').style.width=(interessi/tot*100)+'%'; document.getElementById('fi-bar-i-val').textContent=fmt(interessi);
-  },100);
-  let nar=`Con il profilo <strong>${nomi[fireProfilo]}</strong>, il tuo FIRE Number è <strong>${fmt(fireNum)}</strong> — pari a <strong>${(fireNum/(speseMens*12)).toFixed(1)}x</strong> le spese annue. `;
-  if(anni<=15)nar+=`Il traguardo è a <strong>${anni} anni</strong> (età: ${etaFire}). Risultato eccellente — sei sulla strada giusta.`;
-  else if(anni<=25)nar+=`Il traguardo è a <strong>${anni} anni</strong> (età: ${etaFire}). Un orizzonte lungo ma realistico. Ogni aumento del risparmio mensile accelera il percorso in modo non lineare.`;
-  else if(anni<=60)nar+=`Il traguardo è a <strong>${anni} anni</strong> (età: ${etaFire}). Valuta se aumentare il risparmio mensile o ridurre le spese target — sono le leve più efficaci del FIRE.`;
-  else nar+=`Con i parametri attuali il FIRE non è raggiungibile entro 60 anni. Aumenta il risparmio mensile, riduci le spese target o considera il Barista FIRE come obiettivo intermedio.`;
-  if(reddParz>0)nar+=` Il reddito parziale di <strong>${fmt(reddParz)}/mese</strong> riduce il patrimonio necessario di <strong>${fmt(reddParz*12/swrPct)}</strong>.`;
-  document.getElementById('fi-narrative').innerHTML=nar;
-  document.getElementById('fi-results').classList.add('visible');
-}
-
-/* ── EVENT DELEGATION — gestisce data-calc e data-reset ── */
-document.addEventListener('click', function(e) {
-  var card = e.target.closest('[data-calc]');
-  if (card) { apriCalcolatore(card.getAttribute('data-calc')); return; }
-  var reset = e.target.closest('[data-reset]');
-  if (reset) { resetForm(reset.getAttribute('data-reset')); return; }
-});
 </script>
