@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Medio Oriente, petrolio e ordine mondiale: il punto sulla situazione globale"
-date: 2026-04-24
+date: 2026-05-30
 category: Geopolitica
 tags: [medio oriente, petrolio, Fed, BCE, Cina, macro globale, Trump, Bretton Woods]
 excerpt: "Crescita globale tagliata al 2,7%, inflazione in rialzo, banche centrali in imbarazzo e un sistema internazionale che scricchiola come un parquet dell'Ottocento. Benvenuti all'aggiornamento macro di aprile."
