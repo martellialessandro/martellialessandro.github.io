@@ -164,4 +164,4 @@ Queste riforme sono complesse. Ma hanno anche il potenziale di creare **nuove op
 
 *Non è un momento facile per fare previsioni. Ma è esattamente il momento in cui capire le dinamiche in gioco vale di più — prima che diventino titoli di giornale.*
 
-*Tutte le analisi pubblicate su questo sito sono a scopo informativo e non costituiscono consulenza finanziaria. Per una valutazione del tuo portafoglio alla luce degli scenari macro descritti, puoi richiedere un' [analisi indipendente](/servizi/).*
+*Tutte le analisi pubblicate su questo sito sono a scopo informativo e non costituiscono consulenza finanziaria. Per una valutazione, puoi richiedere un' [analisi indipendente](/servizi/).*
