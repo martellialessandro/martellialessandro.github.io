@@ -737,7 +737,7 @@ permalink: /servizi/strumenti/
       <h3>Vuoi un'analisi personalizzata?</h3>
       <p>I calcolatori danno stime — la consulenza dà risposte su misura per la tua situazione specifica.</p>
     </div>
-    <a href="/consulenza/" class="btn-cta">Richiedi una consulenza →</a>
+    <a href="/servizi/" class="btn-cta">Richiedi un' analisi →</a>
   </div>
 
 </div>
@@ -949,14 +949,36 @@ function calcolaAffitto(){
   const capFin=(anticipo+speseAcq)*Math.pow(1+rendAlt,oriz);
   const oppCost=capFin-(anticipo+speseAcq);
   const costoAff=totAff-oppCost;
-  // Break-even
-  let be=null, cA=speseAcq, cF=0, sM=mutuo, cC=canoneMens*12, pA=anticipo+speseAcq;
-  for(let a=1;a<=30;a++){
-    cA+=(sM>0?rata*12:0)+condMens*12;
-    for(let m=0;m<12&&sM>0;m++){const i=sM*r;sM-=(rata-i);}
-    pA*=(1+rendAlt); cF+=cC; cC*=(1+rival);
-    const vI=prezzo*Math.pow(1+appr,a);
-    if(be===null&&(cA-(vI-prezzo))<(cF-(pA-(anticipo+speseAcq))))be=a;
+ // Break-even (Corretto)
+  let be = null, sM = mutuo, cC = canoneMens * 12, totIntAccumulati = 0, totAffAccumulati = 0;
+  
+  for (let a = 1; a <= 30; a++) {
+    // 1. Calcola gli interessi di questo specifico anno e aggiorna il debito residuo
+    for (let m = 0; m < 12; m++) {
+      if (sM > 0) {
+        const i = sM * r;
+        totIntAccumulati += i;
+        sM -= (rata - i);
+      }
+    }
+    
+    // 2. Costo Acquisto Netto all'anno 'a' (interessi + spese + condominio - rivalutazione)
+    const vI = prezzo * Math.pow(1 + appr, a);
+    const rivalutazioneAttuale = vI - prezzo;
+    const costoAcqProgressivo = speseAcq + totIntAccumulati + (condMens * 12 * a) - rivalutazioneAttuale;
+    
+    // 3. Costo Affitto Netto all'anno 'a' (affitti pagati - costo opportunità dell'anticipo)
+    totAffAccumulati += cC;
+    cC *= (1 + rival); // applica rivalutazione per l'anno successivo
+    
+    const capFinProgressivo = (anticipo + speseAcq) * Math.pow(1 + rendAlt, a);
+    const oppCostProgressivo = capFinProgressivo - (anticipo + speseAcq);
+    const costoAffProgressivo = totAffAccumulati - oppCostProgressivo;
+    
+    // 4. Verifica il punto di pareggio
+    if (be === null && costoAcqProgressivo < costoAffProgressivo) {
+      be = a;
+    }
   }
   const pf=(prezzo/(canoneMens*12)).toFixed(1);
   const conv=costoAcq<costoAff;
