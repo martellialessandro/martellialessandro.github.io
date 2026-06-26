@@ -11,7 +11,7 @@ C'è una telefonata che circola da qualche giorno. Donald Trump, al G7 di Évian
 
 Abbiamo già la nostra hit estiva dell'estate 2026, dove le relazioni internazionali si gestiscono sui Social e i vertici G7 finiscono in pagine di gossip politico.
 
-Ma prima di ridere — o di allarmarsi troppo — facciamo un passo indietro. Molto indietro.
+Ma prima di ridere, o di allarmarsi troppo, facciamo un passo indietro. Molto indietro.
 
 <!--more-->
 
