@@ -1,4 +1,4 @@
-# Meridiano Capitale — Guida al sito
+# Analista Imperfetto — Guida al sito
 
 ## Come pubblicare un nuovo articolo
 
@@ -34,7 +34,7 @@ Altro testo...
 - Punto elenco 2
 ```
 
-5. Clicca **"Commit changes"** → online in 30 secondi!
+5. Clicca **"Commit changes"** → online
 
 ## Categorie disponibili
 - Mercati
