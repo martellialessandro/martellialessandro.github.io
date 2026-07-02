@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Cosa succede sui mercati: le due facce dell'America, Hong Kong e la sua crisi di mezza età"
-date: 2026-07-01
+date: 2026-06-31
 category: Mercati
 tags: [nasdaq, s&p 500, europa, kospi, hang seng, mercati azionari]
 excerpt: "Wall Street separata in casa tra big tech e small cap, Europa timida, e Hong Kong super short. Il giro del mondo settimanale nei flussi che contano davvero."
