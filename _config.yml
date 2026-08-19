@@ -35,6 +35,8 @@ sitemap:
   exclude:
     - "/404.html"
     - "/consulenza-wip.html"
+    - "/consulenzaINACTIVE/"
+    - "/googleaf2fb602e932027d.html"
 
 # ── FEED RSS ───────────────────────────────────────────────────────────────────
 feed:
@@ -62,6 +64,5 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
-  -consulenzaINACTIVE.html
   - "*.py"
   - "*.ipynb"
