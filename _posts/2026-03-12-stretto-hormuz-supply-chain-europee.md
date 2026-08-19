@@ -7,6 +7,9 @@ tags: [Medio Oriente, Supply Chain, Commodities, Europa, Energia]
 reading_time: "9 min"
 author: Alessandro Martelli
 excerpt: "Con lo Stretto di Hormuz di fatto chiuso e il conflitto in Medio Oriente ancora aperto, le catene di fornitura globali sono sotto pressione. Facciamo un'analisi settore per settore delle vulnerabilità per le aziende europee."
+
+description: "La crisi nello Stretto di Hormuz colpisce le supply chain europee settore per settore. Petrolio, gas, shipping e impatto sui mercati finanziari italiani."
+
 ---
 
 Nonostante le dichiarazioni di Trump su una possibile risoluzione rapida del conflitto con l'Iran, l'incertezza rimane elevata e lo Stretto di Hormuz è di fatto ancora chiuso. Vale la pena fare un punto sistematico sulle vulnerabilità delle catene di fornitura per le aziende europee — non in modo allarmistico, ma con la precisione che la situazione richiede.
