@@ -7,6 +7,9 @@ tags: [Emergenti, Geopolitica, FX, Tassi, Asia, CEE]
 reading_time: "5 min"
 author: Alessandro Martelli
 excerpt: "La crisi mediorientale non è solo un fatto energetico — è un evento sistemico che colpisce i mercati emergenti attraverso canali multipli: inflazione, bilancia dei pagamenti e curve dei tassi. Un'analisi regione per regione."
+
+description: "Come la crisi mediorientale si trasmette ai mercati emergenti: Asia, CEE, canali di contagio e rischi sottovalutati per gli investitori europei."
+
 ---
 
 Quando scoppia una crisi in Medio Oriente, il riflesso dei mercati è quello di guardare il prezzo del petrolio e fermarsi lì. È comprensibile — ma è anche il modo più rapido per perdersi la metà della storia. Perché il vero impatto sui mercati emergenti viaggia su canali molto più sottili: la bilancia dei pagamenti, le curve dei tassi, le decisioni delle banche centrali sotto pressione. Proviamo a seguire il filo.
