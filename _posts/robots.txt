@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Escludi pagine non rilevanti per Google
+Disallow: /consulenza-wip.html
+Disallow: /consulenza-vera.html
+
+# Sitemap
+Sitemap: https://martellialessandro.github.io/sitemap.xml
