@@ -7,6 +7,9 @@ tags: [Italia, Referendum, Giustizia, Costituzione, Magistratura]
 reading_time: "7 min"
 author: Alessandro Martelli
 excerpt: "Il 22 marzo si vota su una riforma costituzionale che ridisegna la magistratura italiana. Separazione delle carriere, due CSM, sorteggio, Alta Corte. Proviamo a capire cosa significa — senza addormentarsi."
+
+description: "Analisi del referendum sulla separazione delle carriere dei magistrati: cosa cambia davvero, l'Alta Corte disciplinare e il sorteggio al CSM."
+
 ---
 
 Il 22 e 23 marzo si vota su una riforma Costituzionale sulla magistratura italiana. Se la vostra reazione a questa frase è stata un mezzo sbadiglio, è esattamente per voi che ho scritto questo articolo.
