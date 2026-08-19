@@ -7,6 +7,9 @@ tags: [Europa, Difesa, BTP, Obbligazioni, NATO, Fiscal Policy]
 reading_time: "10 min"
 author: Alessandro Martelli
 excerpt: "Con il consenso politico che si sposta verso una spesa per la difesa senza precedenti, l'Europa ridisegna le sue priorità fiscali. Chi guadagna davvero — e chi paga il conto."
+
+description: "L'aumento della spesa militare europea apre opportunità per BTP difesa, infrastrutture dual-use e industria. Chi vince davvero dal riarmo? Analisi indipendente."
+
 ---
 
 Il voto del Parlamento Europeo sullo scudo difensivo comune segna un punto di non ritorno. Per la prima volta dalla crisi del debito del 2012, i governi dell'Eurozona hanno ricevuto un implicito via libera a espandere i deficit per ragioni di sicurezza. Le implicazioni per i mercati obbligazionari — e per chi detiene BTP in portafoglio — sono profonde e ancora sottovalutate dalla maggior parte degli investitori retail.
