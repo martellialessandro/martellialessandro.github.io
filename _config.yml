@@ -2,12 +2,65 @@ title: "L'analista imperfetto"
 tagline: "La Stanza dei Bottoni: Mercati, geopolitica e trend senza filtri"
 description: "Mercati, geopolitica e macro. Senza filtri."
 url: "https://martellialessandro.github.io"
-author: "Alessandro Martelli"
-email: "alessandro__martelli@libero.it"
+baseurl: ""
+author:
+  name: "Alessandro Martelli"
+  email: "alessandro__martelli@libero.it"
+  twitter: ""
+  linkedin: "https://www.linkedin.com/in/alessandro-martelli-"
 
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
-plugins: \n - jekyll-sitemap
+# ── SEO ────────────────────────────────────────────────────────────────────────
+lang: "it_IT"
+locale: "it_IT"
+logo: "/logo.svg"
 
+# Open Graph / Social
+twitter:
+  card: summary_large_image
+
+# ── JEKYLL ─────────────────────────────────────────────────────────────────────
+excerpt_separator: "<!--more-->"
+permalink: /:year/:month/:day/:title/
+
+# ── PLUGIN ─────────────────────────────────────────────────────────────────────
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+
+# ── SITEMAP ────────────────────────────────────────────────────────────────────
+sitemap:
+  exclude:
+    - "/404.html"
+    - "/consulenza-wip.html"
+
+# ── FEED RSS ───────────────────────────────────────────────────────────────────
+feed:
+  title: "L'analista imperfetto"
+  description: "Analisi indipendente su mercati, geopolitica e macro."
+  path: "feed.xml"
+
+# ── COLLECTIONS / DEFAULTS ─────────────────────────────────────────────────────
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Alessandro Martelli"
+      image: "/logo.svg"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+
+# ── ESCLUSIONI BUILD ───────────────────────────────────────────────────────────
 exclude:
+  - Gemfile
+  - Gemfile.lock
   - README.md
+  - "*.py"
+  - "*.ipynb"
